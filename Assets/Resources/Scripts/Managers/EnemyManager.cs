@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : IManageables
 {
+    List<MeleeEnemy> meleeEnemies;
     #region Singleton
 
     private static EnemyManager instance = null;
@@ -25,18 +26,32 @@ public class EnemyManager : IManageables
     #endregion
     public void Initialize()
     {
-        throw new System.NotImplementedException();
+        meleeEnemies = new List<MeleeEnemy>();
+        meleeEnemies.AddRange(GameObject.FindObjectsOfType<MeleeEnemy>());
+        foreach (var meleeE in meleeEnemies)
+        {
+            meleeE.Initialize();
+        }
     }
     public void PostInitialize()
     {
-        throw new System.NotImplementedException();
+        foreach (var meleeE in meleeEnemies)
+        {
+            meleeE.PostInitialize();
+        }
     }
     public void Refresh()
     {
-        throw new System.NotImplementedException();
+        foreach (var meleeE in meleeEnemies)
+        {
+            meleeE.Refresh();
+        }
     }
     public void PhysicsRefresh()
     {
-        throw new System.NotImplementedException();
+        foreach (var meleeE in meleeEnemies)
+        {
+            meleeE.PhysicsRefresh();
+        }
     }
 }
