@@ -6,8 +6,6 @@ public class EnemyUnit : MonoBehaviour
 {
     [HideInInspector]
     public Rigidbody2D rb;
-    [HideInInspector]
-    public Transform target;
 
     public float speed;
     public float jumpForce;
@@ -17,7 +15,6 @@ public class EnemyUnit : MonoBehaviour
     public virtual void Initialize()
     {
         rb = GetComponent<Rigidbody2D>();
-        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
     public virtual void PostInitialize()
     {
