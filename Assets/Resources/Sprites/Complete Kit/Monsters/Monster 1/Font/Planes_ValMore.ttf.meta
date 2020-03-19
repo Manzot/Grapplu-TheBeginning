@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 1e17017a76fbf114a9dead16959b8917
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Planes_ValMore
+  fontNames:
+  - Planes_ValMore
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 0c626ef3e2ef8744188eb2c9b7941ec2, type: 3}
+  - {fileID: 12800000, guid: 10e0dddf76c709745a4496bf4555340a, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -6,11 +6,12 @@ public class MeleeEnemy : EnemyUnit
 {
     bool moveRight = true;
     bool targetFound;
-    bool canJump = false;
+    bool isJumping = false;
+   
 
     Collider2D groundCheckColi;
 
-    float jumpTime = 2f;
+    float jumpTime = 0.5f;
 
     public float moveTime;
     float moveTimeCounter;
@@ -33,13 +34,18 @@ public class MeleeEnemy : EnemyUnit
     {
         base.PostInitialize();
         walkable = FindObjectOfType<SetupWalkableArea>();
-        aStar = new AStarPathfinding(walkable.walkAbleArea);
+        //aStar = new AStarPathfinding(walkable.walkAbleArea);
     }
 
     public override void Refresh()
     {
         moveTimeCounter -= Time.deltaTime;
         jumpTime -= Time.deltaTime;
+
+        if(jumpTime < 0)
+        {
+            isJumping = false;
+        }
 
         DirectionFacing();
         PlatformCheck();
@@ -51,31 +57,17 @@ public class MeleeEnemy : EnemyUnit
         }
         else // When target is found
         {
-            if (target.position.y > transform.position.y + .5f || target.position.y < transform.position.y - .5f)
+            if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) > .5f)
             {
-                if (Grounded())
+                if (!isJumping)
                 {
                     FollowWithAstar();
-                }
-             
-                if (target.position.y > transform.position.y + 1.5f)
-                {
-                    if (Grounded() && jumpTime < 0 && canJump)
-                    Jump();
                 }
             }
             else
             {
-                if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) > .5f)
-                    FollowPlayer();
-                else
-                    rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.velocity = new Vector2(0, rb.velocity.y);
             }
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (Grounded() && jumpTime < 0)
-                Jump();
         }
 
     }
@@ -103,10 +95,11 @@ public class MeleeEnemy : EnemyUnit
     /// Check to see if the target is in range of enemy or not
     bool TargetFound()
     {
-        //Debug.DrawRay(transform.position, transform.right * 15, Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(feet.position, transform.right, 15f);
+        Debug.DrawRay(transform.position, transform.right * 5, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 5f);
         if (hit.collider)
         {
+            Debug.Log(hit.collider.name);
             if (hit.collider.gameObject.CompareTag("Player"))
             {
                 targetFound = true;
@@ -124,18 +117,32 @@ public class MeleeEnemy : EnemyUnit
     {
         Debug.Log("AStar On Work");
         aStar = new AStarPathfinding(walkable.walkAbleArea);
-        aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x, (int)transform.position.y), new Vector2Int((int)target.position.x, (int)target.position.y));
-        //DrawLine(aStarPath);
+        aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + 1, (int)transform.position.y + 1), new Vector2Int((int)target.position.x + 1, (int)target.position.y + 1));
+        DrawLine(aStarPath);
         if (aStarPath.Count > 0)
-            rb.velocity = new Vector2(aStarPath[1].position.x - transform.position.x, 0).normalized * speed * Time.deltaTime + new Vector2(0, rb.velocity.y);
+        {
+            Vector2 newPath = new Vector2(aStarPath[1].position.x - transform.position.x, 0).normalized;
+            rb.velocity = newPath * speed * Time.deltaTime + new Vector2(0, rb.velocity.y);
+            if (aStarPath[1].position.y > transform.position.y + 1f)
+            {
+                if (Grounded() && jumpTime < 0)
+                {
+                    Jump();
+                    isJumping = true;
+                }
+            }
+        }
         else
             FollowPlayer();
+
+       
+
     }
     /// Jumping function
     void Jump()
     {
-        rb.AddForce(new Vector2(rb.velocity.x + transform.right.x, jumpForce * Time.deltaTime), ForceMode2D.Impulse);
-        jumpTime = 1f;
+        rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.deltaTime), ForceMode2D.Impulse);
+        jumpTime = 0.5f;
     }
     /// To check if the enemy is on the ground or not
     bool Grounded()
@@ -147,14 +154,14 @@ public class MeleeEnemy : EnemyUnit
     {
         if (targetFound)
         {
-            Debug.DrawRay(transform.position, transform.up * 1f, Color.red);
-            Debug.DrawRay(transform.position, transform.right * 2f, Color.red);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 1f, LayerMask.GetMask("Ground"));
-            RaycastHit2D hit2 = Physics2D.Raycast(feet.position, transform.right, 2f, LayerMask.GetMask("Ground"));
-            if (hit.collider || hit2.collider)
-                canJump = true;
-            else
-                canJump = false;
+            Debug.DrawRay(transform.position, transform.up * 1.2f, Color.red);
+            Debug.DrawRay(transform.position, transform.right * 1.2f, Color.red);
+            //RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 1.2f, LayerMask.GetMask("Ground"));
+            //RaycastHit2D hit2 = Physics2D.Raycast(transform.position, transform.right, 1.2f, LayerMask.GetMask("Ground"));
+            //if (hit.collider || hit2.collider)
+            //    canJump = true;
+            //else
+            //    canJump = false;
         }
     }
     /// Drawing Line that shows walking path
@@ -170,10 +177,10 @@ public class MeleeEnemy : EnemyUnit
         line.SetPositions(linePoints);
     }
     /// Drawing gizmos related to the overlapcircles
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(new Vector2(feet.position.x, feet.position.y), .2f);
-    }
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(new Vector2(feet.position.x, feet.position.y), .2f);
+    //}
    
 }
