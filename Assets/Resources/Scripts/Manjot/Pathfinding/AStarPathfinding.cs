@@ -87,7 +87,6 @@ public class AStarPathfinding
                     Nodes[x, y].parent = relativeTo;
                 }
             }
-
         }
         return toRet;
     }

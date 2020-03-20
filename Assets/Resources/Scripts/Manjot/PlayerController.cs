@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     float horizontal;
     int flipX = 0;
+
+    Animator anim;
     SpriteRenderer sprite;
     Rigidbody2D rb;
 
@@ -23,11 +25,13 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
         horizontal = Input.GetAxis("Horizontal");
         if (horizontal > 0) flipX = 1;
         else if (horizontal < 0) flipX = -1;
@@ -41,7 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.deltaTime), ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime) , ForceMode2D.Impulse);
                 jumpCount--;
             }
             if (jumpCount < 1)
@@ -51,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpCount > 0 && Input.GetKeyDown(KeyCode.Space))
             {
-                rb.AddForce(new Vector2(rb.velocity.x, jumpForce / 1.4f * Time.deltaTime), ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(rb.velocity.x, jumpForce / 1.4f * Time.fixedDeltaTime) , ForceMode2D.Impulse);
                 jumpCount--;
             }
         }
@@ -59,12 +63,12 @@ public class PlayerController : MonoBehaviour
 
     public bool Grounded()
     {
-        return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.2f, LayerMask.GetMask("Ground", "IObject"));
+        return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Ground", "IObject"));
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(feet.position, .2f);
+        Gizmos.DrawSphere(feet.position, .1f);
     }
 }

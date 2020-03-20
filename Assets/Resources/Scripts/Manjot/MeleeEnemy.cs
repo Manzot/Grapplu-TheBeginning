@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class MeleeEnemy : EnemyUnit
 {
+    const float STOPPING_DISTANCE = 0.4f;
+    const int ASTAR_PATH_OFFSET = 0;
+
     bool moveRight = true;
     bool targetFound;
     bool isJumping = false;
+    bool canAttack = false;
    
 
     Collider2D groundCheckColi;
+    LayerMask gLayer;
 
     float jumpTime = 0.5f;
 
@@ -18,10 +23,11 @@ public class MeleeEnemy : EnemyUnit
     public Transform feet;
 
     Transform target;
+    Vector3 targetLastPos;
 
     AStarPathfinding aStar;
-    SetupWalkableArea walkable;
     List<Node> aStarPath;
+    SetupWalkableArea walkable;
     LineRenderer line;
     
     public override void Initialize()
@@ -32,6 +38,7 @@ public class MeleeEnemy : EnemyUnit
     }
     public override void PostInitialize()
     {
+        gLayer = LayerMask.NameToLayer("Ground");
         base.PostInitialize();
         walkable = FindObjectOfType<SetupWalkableArea>();
         //aStar = new AStarPathfinding(walkable.walkAbleArea);
@@ -39,6 +46,7 @@ public class MeleeEnemy : EnemyUnit
 
     public override void Refresh()
     {
+        anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
         moveTimeCounter -= Time.deltaTime;
         jumpTime -= Time.deltaTime;
 
@@ -48,7 +56,7 @@ public class MeleeEnemy : EnemyUnit
         }
 
         DirectionFacing();
-        PlatformCheck();
+        CheckRayDraws();
 
         if (!targetFound) // Searching for target
         {
@@ -57,17 +65,26 @@ public class MeleeEnemy : EnemyUnit
         }
         else // When target is found
         {
-            if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) > .5f)
+            if (!canAttack && !isJumping)
             {
-                if (!isJumping)
+                if (target.position.y > transform.position.y + 1f)
                 {
                     FollowWithAstar();
                 }
+                else
+                {
+                    FollowPlayer();
+                }
             }
-            else
+
+            if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) < STOPPING_DISTANCE &&
+                Vector2.SqrMagnitude(new Vector2(transform.position.y - target.position.y, 0)) < STOPPING_DISTANCE)
             {
+                canAttack = true;
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
+            else
+                canAttack = false;
         }
 
     }
@@ -89,20 +106,22 @@ public class MeleeEnemy : EnemyUnit
             moveRight = !moveRight;
             moveTimeCounter = moveTime;
         }
-        if (moveRight) rb.velocity = new Vector2(1 * speed * Time.deltaTime, rb.velocity.y); // Move Right
-        else rb.velocity = new Vector2(-1 * speed * Time.deltaTime, rb.velocity.y); // Move Left
+        if (moveRight) rb.velocity = new Vector2(1 * speed * Time.fixedDeltaTime, rb.velocity.y); // Move Right
+        else rb.velocity = new Vector2(-1 * speed * Time.fixedDeltaTime, rb.velocity.y); // Move Left
     }
     /// Check to see if the target is in range of enemy or not
     bool TargetFound()
     {
-        Debug.DrawRay(transform.position, transform.right * 5, Color.red);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 5f);
         if (hit.collider)
         {
-            Debug.Log(hit.collider.name);
             if (hit.collider.gameObject.CompareTag("Player"))
             {
                 targetFound = true;
+                targetLastPos = target.position;
+                aStar = new AStarPathfinding(walkable.walkAbleArea);
+                aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + ASTAR_PATH_OFFSET, (int)transform.position.y + ASTAR_PATH_OFFSET),
+                    new Vector2Int((int)target.position.x + ASTAR_PATH_OFFSET, (int)target.position.y + ASTAR_PATH_OFFSET));
                 return true;
             }
         }
@@ -111,58 +130,61 @@ public class MeleeEnemy : EnemyUnit
     /// Following target 
     void FollowPlayer()
     {
-        rb.velocity = new Vector2((target.position.x - transform.position.x), 0).normalized * speed * Time.deltaTime + new Vector2(0, rb.velocity.y);
+        if(target.position.y < transform.position.y - .5f)
+        {
+            rb.velocity = (new Vector2(transform.right.x * speed * Time.deltaTime, rb.velocity.y));
+        }
+        else
+            rb.velocity = new Vector2((target.position.x - transform.position.x), 0).normalized * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
+        
     }
     void FollowWithAstar()
     {
-        Debug.Log("AStar On Work");
-        aStar = new AStarPathfinding(walkable.walkAbleArea);
-        aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + 1, (int)transform.position.y + 1), new Vector2Int((int)target.position.x + 1, (int)target.position.y + 1));
-        DrawLine(aStarPath);
+            aStar = new AStarPathfinding(walkable.walkAbleArea);
+            aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + ASTAR_PATH_OFFSET, (int)transform.position.y + ASTAR_PATH_OFFSET),
+                new Vector2Int((int)target.position.x + ASTAR_PATH_OFFSET, (int)target.position.y + ASTAR_PATH_OFFSET));
+       
+        //DrawLine(aStarPath);
+
         if (aStarPath.Count > 0)
         {
-            Vector2 newPath = new Vector2(aStarPath[1].position.x - transform.position.x, 0).normalized;
-            rb.velocity = newPath * speed * Time.deltaTime + new Vector2(0, rb.velocity.y);
-            if (aStarPath[1].position.y > transform.position.y + 1f)
-            {
-                if (Grounded() && jumpTime < 0)
-                {
-                    Jump();
-                    isJumping = true;
-                }
-            }
+            Vector2 newPath = new Vector2(aStarPath[1].position.x - aStarPath[0].position.x, 0).normalized;
+            rb.velocity = newPath * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
+
+            if (aStarPath[1].position.y > aStarPath[0].position.y)
+                Jump();
         }
-        else
-            FollowPlayer();
-
-       
-
     }
     /// Jumping function
     void Jump()
     {
-        rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.deltaTime), ForceMode2D.Impulse);
-        jumpTime = 0.5f;
+        if (Physics2D.Raycast(transform.position, transform.up, 1.3f, LayerMask.GetMask("Ground"))
+               || Physics2D.Raycast(transform.position, transform.right, 1.3f, LayerMask.GetMask("Ground")))
+        {
+            if (Grounded() && jumpTime < 0)
+            {
+                rb.AddForce(new Vector2(rb.velocity.x , jumpForce) * Time.fixedDeltaTime, ForceMode2D.Impulse);
+                jumpTime = .7f;
+                isJumping = true;
+            }
+        }
+        
     }
     /// To check if the enemy is on the ground or not
     bool Grounded()
     {
-        return groundCheckColi = Physics2D.OverlapCircle(new Vector2(feet.position.x, feet.position.y), .2f, LayerMask.GetMask("Ground", "IObject"));
+        return groundCheckColi = Physics2D.OverlapCircle(new Vector2(feet.position.x, feet.position.y), .2f, LayerMask.GetMask("Ground"));
     }
     /// Check if there is any platform to jump
-    void PlatformCheck()
+    void CheckRayDraws()
     {
         if (targetFound)
         {
-            Debug.DrawRay(transform.position, transform.up * 1.2f, Color.red);
-            Debug.DrawRay(transform.position, transform.right * 1.2f, Color.red);
-            //RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 1.2f, LayerMask.GetMask("Ground"));
-            //RaycastHit2D hit2 = Physics2D.Raycast(transform.position, transform.right, 1.2f, LayerMask.GetMask("Ground"));
-            //if (hit.collider || hit2.collider)
-            //    canJump = true;
-            //else
-            //    canJump = false;
+            Debug.DrawRay(transform.position, transform.up * 1.3f, Color.red);
+            Debug.DrawRay(transform.position, transform.right * 1.3f, Color.red);
         }
+        else
+            Debug.DrawRay(transform.position, transform.right * 5, Color.red);
     }
     /// Drawing Line that shows walking path
     void DrawLine(List<Node> path)
