@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyTypes { Melee, Ranged, Flying, Underground }
 public class EnemyManager : IManageables
 {
-    List<MeleeEnemy> meleeEnemies;
+    List<EnemyUnit> enemies;
+    Transform parent;
     #region Singleton
 
     private static EnemyManager instance = null;
@@ -26,32 +28,39 @@ public class EnemyManager : IManageables
     #endregion
     public void Initialize()
     {
-        meleeEnemies = new List<MeleeEnemy>();
-        meleeEnemies.AddRange(GameObject.FindObjectsOfType<MeleeEnemy>());
-        foreach (var meleeE in meleeEnemies)
+        parent = new GameObject("EnemiesParent").transform;
+        enemies = new List<EnemyUnit>();
+        enemies.AddRange(GameObject.FindObjectsOfType<MeleeEnemy>());
+        foreach (var enemy in enemies)
         {
-            meleeE.Initialize();
+            enemy.Initialize();
+            enemy.transform.SetParent(parent);
         }
     }
     public void PostInitialize()
     {
-        foreach (var meleeE in meleeEnemies)
+        foreach (var enemy in enemies)
         {
-            meleeE.PostInitialize();
+            enemy.PostInitialize();
         }
     }
     public void Refresh()
     {
-        foreach (var meleeE in meleeEnemies)
+        foreach (var enemy in enemies)
         {
-            meleeE.Refresh();
+            enemy.Refresh();
         }
     }
     public void PhysicsRefresh()
     {
-        foreach (var meleeE in meleeEnemies)
+        foreach (var enemy in enemies)
         {
-            meleeE.PhysicsRefresh();
+            enemy.PhysicsRefresh();
         }
+    }
+
+    public void Died(EnemyUnit e)
+    {
+        enemies.Remove(e);
     }
 }

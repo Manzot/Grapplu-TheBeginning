@@ -4,59 +4,51 @@ using UnityEngine;
 
 public class MeleeEnemy : EnemyUnit
 {
-    const float STOPPING_DISTANCE = 0.4f;
+    const float STOPPING_DISTANCE = 0.3f;
     const int ASTAR_PATH_OFFSET = 0;
 
     bool moveRight = true;
     bool targetFound;
-    bool isJumping = false;
-    bool canAttack = false;
-   
-
-    Collider2D groundCheckColi;
-    LayerMask gLayer;
+    bool isJumping;
+    bool canAttack;
 
     float jumpTime = 0.5f;
-
-    public float moveTime;
     float moveTimeCounter;
-    public Transform feet;
+    public float moveTime;
 
+    EnemyTypes eType;
+    Collider2D groundCheckColi;
     Transform target;
-    Vector3 targetLastPos;
+    public Transform feet;
 
     AStarPathfinding aStar;
     List<Node> aStarPath;
     SetupWalkableArea walkable;
-    LineRenderer line;
-    
+   // LineRenderer line;
+
+    //// Awake Function
     public override void Initialize()
     {
         base.Initialize();
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
     }
+    //// Start Function
     public override void PostInitialize()
     {
-        gLayer = LayerMask.NameToLayer("Ground");
         base.PostInitialize();
+        eType = EnemyTypes.Melee;
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+      //  line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
         walkable = FindObjectOfType<SetupWalkableArea>();
         //aStar = new AStarPathfinding(walkable.walkAbleArea);
     }
 
+    /// Update Function
     public override void Refresh()
     {
-        anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
-        moveTimeCounter -= Time.deltaTime;
-        jumpTime -= Time.deltaTime;
-
-        if(jumpTime < 0)
-        {
-            isJumping = false;
-        }
-
-        DirectionFacing();
-        CheckRayDraws();
+        Timers();
+        DirectionFacingWhenMoving();
+        AnimationsCaller();
+        //DrawRaysInScene();
 
         if (!targetFound) // Searching for target
         {
@@ -82,21 +74,28 @@ public class MeleeEnemy : EnemyUnit
             {
                 canAttack = true;
                 rb.velocity = new Vector2(0, rb.velocity.y);
+                DirectionFacingAtCloseDistance();
             }
-            else
-                canAttack = false;
         }
 
     }
     //// Functions////////////////
-    
+
     /// To check which direction the enemy is facing
-    void DirectionFacing()
+    void DirectionFacingWhenMoving()
     {
         if (rb.velocity.x > 0)
             transform.rotation = Quaternion.Euler(new Vector2(0, 0));
         else if (rb.velocity.x < 0)
             transform.rotation = Quaternion.Euler(new Vector2(0, 180));
+    }
+    void DirectionFacingAtCloseDistance()
+    {
+        if (target.position.x < transform.position.x)
+            transform.rotation = Quaternion.Euler(new Vector2(0, 180));
+        else
+            transform.rotation = Quaternion.Euler(new Vector2(0, 0));
+
     }
     /// Random movement of enemies to find player
     void RandomMove()
@@ -118,7 +117,6 @@ public class MeleeEnemy : EnemyUnit
             if (hit.collider.gameObject.CompareTag("Player"))
             {
                 targetFound = true;
-                targetLastPos = target.position;
                 aStar = new AStarPathfinding(walkable.walkAbleArea);
                 aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + ASTAR_PATH_OFFSET, (int)transform.position.y + ASTAR_PATH_OFFSET),
                     new Vector2Int((int)target.position.x + ASTAR_PATH_OFFSET, (int)target.position.y + ASTAR_PATH_OFFSET));
@@ -130,20 +128,20 @@ public class MeleeEnemy : EnemyUnit
     /// Following target 
     void FollowPlayer()
     {
-        if(target.position.y < transform.position.y - .5f)
+        if (target.position.y < transform.position.y - .5f)
         {
             rb.velocity = (new Vector2(transform.right.x * speed * Time.deltaTime, rb.velocity.y));
         }
         else
             rb.velocity = new Vector2((target.position.x - transform.position.x), 0).normalized * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
-        
+
     }
     void FollowWithAstar()
     {
-            aStar = new AStarPathfinding(walkable.walkAbleArea);
-            aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + ASTAR_PATH_OFFSET, (int)transform.position.y + ASTAR_PATH_OFFSET),
+        aStar = new AStarPathfinding(walkable.walkAbleArea);
+        aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + ASTAR_PATH_OFFSET, (int)transform.position.y + ASTAR_PATH_OFFSET),
                 new Vector2Int((int)target.position.x + ASTAR_PATH_OFFSET, (int)target.position.y + ASTAR_PATH_OFFSET));
-       
+
         //DrawLine(aStarPath);
 
         if (aStarPath.Count > 0)
@@ -163,20 +161,64 @@ public class MeleeEnemy : EnemyUnit
         {
             if (Grounded() && jumpTime < 0)
             {
-                rb.AddForce(new Vector2(rb.velocity.x , jumpForce) * Time.fixedDeltaTime, ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(rb.velocity.x, jumpForce) * Time.fixedDeltaTime, ForceMode2D.Impulse);
                 jumpTime = .7f;
                 isJumping = true;
             }
         }
-        
+
     }
     /// To check if the enemy is on the ground or not
     bool Grounded()
     {
         return groundCheckColi = Physics2D.OverlapCircle(new Vector2(feet.position.x, feet.position.y), .2f, LayerMask.GetMask("Ground"));
     }
+
+    /// Atttacking player
+    void AnimationsCaller()
+    {
+        anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
+
+        if (canAttack)
+            anim.SetBool("isAttacking", true);
+        else
+            anim.SetBool("isAttacking", false);
+    }
+    // All the Timers
+    void Timers()
+    {
+
+        moveTimeCounter -= Time.deltaTime;
+        jumpTime -= Time.deltaTime;
+
+        if (jumpTime < 0)
+        {
+            isJumping = false;
+        }
+    }
+
+    /// Animation Functions
+    public void DisableAttack()
+    {
+        canAttack = false;
+    }
+
+    public void Death()
+    {
+        if(hitPoints <= 0)
+        {
+            GameObject.Destroy(gameObject, 2f);
+            anim.SetTrigger("isDead");
+            //EnemyManager.Instance.Died(this);
+        }
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Drawing gizmos
     /// Check if there is any platform to jump
-    void CheckRayDraws()
+    void DrawRaysInScene()
     {
         if (targetFound)
         {
@@ -186,23 +228,23 @@ public class MeleeEnemy : EnemyUnit
         else
             Debug.DrawRay(transform.position, transform.right * 5, Color.red);
     }
-    /// Drawing Line that shows walking path
-    void DrawLine(List<Node> path)
-    {
-        line.positionCount = path.Count;
 
-        Vector3[] linePoints = new Vector3[path.Count];
-        for (int i = 0; i < path.Count; i++)
-        {
-            linePoints[i] = new Vector3(path[i].position.x, path[i].position.y, 0);
-        }
-        line.SetPositions(linePoints);
-    }
-    /// Drawing gizmos related to the overlapcircles
+    /// Drawing Line that shows walking path
+    //void DrawLine(List<Node> path)
+    //{
+    //    line.positionCount = path.Count;
+
+    //    Vector3[] linePoints = new Vector3[path.Count];
+    //    for (int i = 0; i < path.Count; i++)
+    //    {
+    //        linePoints[i] = new Vector3(path[i].position.x, path[i].position.y, 0);
+    //    }
+    //    line.SetPositions(linePoints);
+    //}
     //void OnDrawGizmos()
     //{
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawSphere(new Vector2(feet.position.x, feet.position.y), .2f);
     //}
-   
+
 }
