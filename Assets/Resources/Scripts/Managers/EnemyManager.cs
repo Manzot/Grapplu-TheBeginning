@@ -30,32 +30,33 @@ public class EnemyManager : IManageables
     {
         parent = new GameObject("EnemiesParent").transform;
         enemies = new List<EnemyUnit>();
-        enemies.AddRange(GameObject.FindObjectsOfType<MeleeEnemy>());
-        foreach (var enemy in enemies)
+        enemies.AddRange(GameObject.FindObjectsOfType<EnemyUnit>());
+        for (int i = 0; i < enemies.Count; i++)
         {
-            enemy.Initialize();
-            enemy.transform.SetParent(parent);
+            enemies[i].Initialize();
+            enemies[i].transform.SetParent(parent);
         }
     }
     public void PostInitialize()
     {
-        foreach (var enemy in enemies)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            enemy.PostInitialize();
+            enemies[i].PostInitialize();
         }
     }
     public void Refresh()
     {
-        foreach (var enemy in enemies)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            enemy.Refresh();
+            enemies[i].Refresh();
         }
     }
     public void PhysicsRefresh()
     {
-        foreach (var enemy in enemies)
+        
+        for (int i = 0; i < enemies.Count; i++)
         {
-            enemy.PhysicsRefresh();
+            enemies[i].PhysicsRefresh();
         }
     }
 

@@ -45,36 +45,40 @@ public class MeleeEnemy : EnemyUnit
     /// Update Function
     public override void Refresh()
     {
-        Timers();
-        DirectionFacingWhenMoving();
-        AnimationsCaller();
-        //DrawRaysInScene();
 
-        if (!targetFound) // Searching for target
+        if (!Death())
         {
-            RandomMove();
-            TargetFound();
-        }
-        else // When target is found
-        {
-            if (!canAttack && !isJumping)
+            Timers();
+            DirectionFacingWhenMoving();
+            AnimationsCaller();
+            //DrawRaysInScene();
+
+            if (!targetFound) // Searching for target
             {
-                if (target.position.y > transform.position.y + 1f)
-                {
-                    FollowWithAstar();
-                }
-                else
-                {
-                    FollowPlayer();
-                }
+                RandomMove();
+                TargetFound();
             }
-
-            if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) < STOPPING_DISTANCE &&
-                Vector2.SqrMagnitude(new Vector2(transform.position.y - target.position.y, 0)) < STOPPING_DISTANCE)
+            else // When target is found
             {
-                canAttack = true;
-                rb.velocity = new Vector2(0, rb.velocity.y);
-                DirectionFacingAtCloseDistance();
+                if (!canAttack && !isJumping)
+                {
+                    if (target.position.y > transform.position.y + 1f)
+                    {
+                        FollowWithAstar();
+                    }
+                    else
+                    {
+                        FollowPlayer();
+                    }
+                }
+
+                if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) < STOPPING_DISTANCE &&
+                    Vector2.SqrMagnitude(new Vector2(transform.position.y - target.position.y, 0)) < STOPPING_DISTANCE)
+                {
+                    canAttack = true;
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    DirectionFacingAtCloseDistance();
+                }
             }
         }
 
@@ -203,14 +207,17 @@ public class MeleeEnemy : EnemyUnit
         canAttack = false;
     }
 
-    public void Death()
+    bool Death()
     {
         if(hitPoints <= 0)
         {
-            GameObject.Destroy(gameObject, 2f);
-            anim.SetTrigger("isDead");
-            //EnemyManager.Instance.Died(this);
+            rb.velocity = Vector2.zero;
+            EnemyManager.Instance.Died(this.gameObject.GetComponent<EnemyUnit>());
+            GameObject.Destroy(gameObject, 2.8f);
+            anim.SetTrigger("death");
+            return true;
         }
+        return false;
     }
 
 
