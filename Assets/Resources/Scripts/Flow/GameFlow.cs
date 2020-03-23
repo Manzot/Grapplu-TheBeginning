@@ -30,11 +30,13 @@ public class GameFlow: IManageables
     }
     public void PostInitialize()
     {
+        TimerDelg.Instance.PostInitialize();
         EnemyManager.Instance.PostInitialize();
        // PlayerManager.Instance.PostInitialize();
     }
     public void Refresh()
     {
+        TimerDelg.Instance.Refresh();
         EnemyManager.Instance.Refresh();
         //PlayerManager.Instance.Refresh();
     }

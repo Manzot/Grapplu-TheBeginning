@@ -6,11 +6,14 @@ public class MeleeEnemy : EnemyUnit
 {
     const float STOPPING_DISTANCE = 0.3f;
     const int ASTAR_PATH_OFFSET = 0;
+    const float STUN_TIME = 0.4f;
 
     bool moveRight = true;
     bool targetFound;
     bool isJumping;
     bool canAttack;
+    public bool isHurt;
+    public bool isStunned;
 
     float jumpTime = 0.5f;
     float moveTimeCounter;
@@ -26,7 +29,7 @@ public class MeleeEnemy : EnemyUnit
     SetupWalkableArea walkable;
    // LineRenderer line;
 
-    //// Awake Function
+    /// Awake Function
     public override void Initialize()
     {
         base.Initialize();
@@ -37,52 +40,56 @@ public class MeleeEnemy : EnemyUnit
         base.PostInitialize();
         eType = EnemyTypes.Melee;
         target = GameObject.FindGameObjectWithTag("Player").transform;
-      //  line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
+      //line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
         walkable = FindObjectOfType<SetupWalkableArea>();
-        //aStar = new AStarPathfinding(walkable.walkAbleArea);
+      //aStar = new AStarPathfinding(walkable.walkAbleArea);
     }
-
     /// Update Function
     public override void Refresh()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+            isHurt = true;
 
         if (!Death())
         {
+            Hurt();
             Timers();
-            DirectionFacingWhenMoving();
             AnimationsCaller();
-            //DrawRaysInScene();
 
-            if (!targetFound) // Searching for target
+            if (!isHurt && !isStunned)
             {
-                RandomMove();
-                TargetFound();
-            }
-            else // When target is found
-            {
-                if (!canAttack && !isJumping)
+                DirectionFacingWhenMoving();
+                if (!targetFound) // Searching for target
                 {
-                    if (target.position.y > transform.position.y + 1f)
-                    {
-                        FollowWithAstar();
-                    }
-                    else
-                    {
-                        FollowPlayer();
-                    }
+                    RandomMove();
+                    FindTarget();
                 }
-
-                if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) < STOPPING_DISTANCE &&
-                    Vector2.SqrMagnitude(new Vector2(transform.position.y - target.position.y, 0)) < STOPPING_DISTANCE)
+                else // When target is found
                 {
-                    canAttack = true;
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-                    DirectionFacingAtCloseDistance();
+                    if (!canAttack && !isJumping)
+                    {
+                        if (target.position.y > transform.position.y + 1f)
+                        {
+                            FollowWithAstar();
+                        }
+                        else
+                        {
+                            FollowPlayer();
+                        }
+                    }
+
+                    if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) < STOPPING_DISTANCE &&
+                        Vector2.SqrMagnitude(new Vector2(transform.position.y - target.position.y, 0)) < STOPPING_DISTANCE)
+                    {
+                        canAttack = true;
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                        DirectionFacingAtCloseDistance();
+                    }
                 }
             }
         }
-
     }
+
     //// Functions////////////////
 
     /// To check which direction the enemy is facing
@@ -113,7 +120,7 @@ public class MeleeEnemy : EnemyUnit
         else rb.velocity = new Vector2(-1 * speed * Time.fixedDeltaTime, rb.velocity.y); // Move Left
     }
     /// Check to see if the target is in range of enemy or not
-    bool TargetFound()
+    bool FindTarget()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 5f);
         if (hit.collider)
@@ -187,6 +194,7 @@ public class MeleeEnemy : EnemyUnit
             anim.SetBool("isAttacking", true);
         else
             anim.SetBool("isAttacking", false);
+        
     }
     // All the Timers
     void Timers()
@@ -201,10 +209,26 @@ public class MeleeEnemy : EnemyUnit
         }
     }
 
-    /// Animation Functions
-    public void DisableAttack()
+    void Hurt()
     {
-        canAttack = false;
+        if (isHurt)
+        {
+            canAttack = false;
+            Vector2 knockBckVector = (target.position - transform.position).normalized;
+            rb.velocity = Vector2.zero;
+            rb.AddForce(knockBckVector * -160 * Time.deltaTime , ForceMode2D.Impulse);
+            anim.SetBool("isHurt", true);
+        }
+        else
+        {
+            anim.SetBool("isHurt", false);
+        }
+    }
+    public void Stunned()
+    {
+        isStunned = true;
+        rb.velocity = Vector2.zero;
+        TimerDelg.Instance.Add(() => { isStunned = false; }, STUN_TIME);
     }
 
     bool Death()
@@ -219,9 +243,21 @@ public class MeleeEnemy : EnemyUnit
         }
         return false;
     }
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Animation Functions
+    public void DisableBools(string boolName)
+    {
+        switch (boolName)
+        {
+            case "hurt":
+                isHurt = false;// _boolean == "true";
+                break;
+            case "attack":
+                canAttack = false;// _boolean == "true";
+                break;
+        }
+            
+    }
+    
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Drawing gizmos
     /// Check if there is any platform to jump
