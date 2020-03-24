@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class RangedEnemy : EnemyUnit
 {
+    const float ATTACK_TIMER = 3f;
+
     GameObject fireball;
+    float throwAttackTimer = 6f; 
+    Transform throwPoint;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -14,6 +19,7 @@ public class RangedEnemy : EnemyUnit
     {
         base.PostInitialize();
         fireball = Resources.Load<GameObject>("Prefabs/Manjot/FireBall");
+        throwPoint = transform.GetChild(1);
     }
 
     public override void Refresh()
@@ -29,7 +35,15 @@ public class RangedEnemy : EnemyUnit
         }
         else
         {
-            canAttack = true;
+            if (throwAttackTimer <= 0)
+            {
+                canAttack = true;
+                CreateThrowable();
+                throwAttackTimer = ATTACK_TIMER;
+            }
+            else
+                canAttack = false;
+
             rb.velocity = Vector2.zero;
             LookingAtTarget();
         }
@@ -43,6 +57,7 @@ public class RangedEnemy : EnemyUnit
     void Timers()
     {
         moveTimeCounter -= Time.deltaTime;
+        throwAttackTimer -= Time.deltaTime;
     }
 
     void AnimationCaller()
@@ -58,6 +73,6 @@ public class RangedEnemy : EnemyUnit
     }
     void CreateThrowable()
     {
-        GameObject.Instantiate(fireball, new Vector2(transform.position.x + 0.4f, transform.position.y), Quaternion.identity);
+        GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint);
     }
 }

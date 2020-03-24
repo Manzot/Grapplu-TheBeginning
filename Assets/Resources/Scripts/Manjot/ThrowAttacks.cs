@@ -24,6 +24,7 @@ public class ThrowAttacks : MonoBehaviour
     {
         anim.SetTrigger("throw");
         fireBallFX.gameObject.SetActive(true);
+        transform.parent = null;
         Vector2 dir2 = (target.position - transform.position).normalized;
         var angle2 = Mathf.Atan2(dir2.y, dir2.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle2, transform.forward);
