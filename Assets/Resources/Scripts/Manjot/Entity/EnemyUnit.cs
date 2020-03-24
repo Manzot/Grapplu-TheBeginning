@@ -81,7 +81,7 @@ public class EnemyUnit : MonoBehaviour
         else if (rb.velocity.x < 0)
             transform.rotation = Quaternion.Euler(new Vector2(0, 180));
     }
-    public void DirectionFacingAtCloseDistance()
+    public void LookingAtTarget()
     {
         if (target.position.x < transform.position.x)
             transform.rotation = Quaternion.Euler(new Vector2(0, 180));

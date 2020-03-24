@@ -57,7 +57,7 @@ public class MeleeEnemy : EnemyUnit
                     {
                         canAttack = true;
                         rb.velocity = new Vector2(0, rb.velocity.y);
-                        DirectionFacingAtCloseDistance();
+                        LookingAtTarget();
                     }
                 }
             }
