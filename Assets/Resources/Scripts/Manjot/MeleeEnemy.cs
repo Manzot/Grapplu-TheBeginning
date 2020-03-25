@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class MeleeEnemy : EnemyUnit
 {
-    const float STOPPING_DISTANCE = 0.3f;
+    const float ATTACKING_DISTANCE = 0.3f;
+    const float STOPPING_DISTANCE = 5f;
+    const float ATTACK_MOVE_TIME = 1f;
+
+    float attackMoveTimer;
+    bool attackMoveLR;
    // LineRenderer line;
 
     /// Awake Function
     public override void Initialize()
     {
         base.Initialize();
+        attackCooldown = Random.Range(2f, 4f);
     }
     //// Start Function
     public override void PostInitialize()
@@ -23,8 +29,9 @@ public class MeleeEnemy : EnemyUnit
     {
         if (!Death())
         {
+
+            AnimationCaller();
             Timers();
-            AnimationsCaller();
             Hurt();
 
             if (!isHurt && !isStunned)
@@ -37,30 +44,28 @@ public class MeleeEnemy : EnemyUnit
                 }
                 else // When target is found
                 {
-                    if (!canAttack && !isJumping)
-                    {
-                        if (target.position.y > transform.position.y + 1f)
-                        {
-                            FollowWithAstar();
-                        }
-                        else
-                        {
-                            FollowPlayer();
-                        }
-                    }
-
-                    if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) < STOPPING_DISTANCE &&
-                        Vector2.SqrMagnitude(new Vector2(transform.position.y - target.position.y, 0)) < STOPPING_DISTANCE)
-                    {
-                        LookingAtTarget();
-                        canAttack = true;
-                        rb.velocity = new Vector2(0, rb.velocity.y);
-                    }
+                    TargetFollowFunctionFull();
+                    AtackMove();
                 }
             }
         }
     }
-
+    //FollowTarget FInal Complete Version
+    void TargetFollowFunctionFull()
+    {
+        if (!canAttack && !isJumping)
+        {
+            if (target.position.y > transform.position.y + 1f)
+            {
+                FollowWithAstar();
+            }
+            else
+            {
+                FollowPlayer();
+            }
+        }
+           
+    }
     /// Following target 
     void FollowPlayer()
     {
@@ -72,6 +77,7 @@ public class MeleeEnemy : EnemyUnit
             rb.velocity = new Vector2((target.position.x - transform.position.x), 0).normalized * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
 
     }
+    // Follow Target with AStar
     void FollowWithAstar()
     {
         aStar = new AStarPathfinding(walkable.walkAbleArea);
@@ -89,10 +95,88 @@ public class MeleeEnemy : EnemyUnit
                 Jump(new Vector2(rb.velocity.x, jumpForce) * Time.fixedDeltaTime);
         }
     }
-   
-    /// Atttacking player and Walking Animations
-    void AnimationsCaller()
+    //Movement while in Attack Mode
+    void AtackMove()
     {
+        float distanceToPlayerX = Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0));
+        float distanceToPlayerY = Vector2.SqrMagnitude(new Vector2(transform.position.y - target.position.y, 0));
+
+        if (distanceToPlayerX < ATTACKING_DISTANCE && distanceToPlayerY < ATTACKING_DISTANCE)
+        {
+            LookingAtTarget();
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            if(attackCooldownTimer <= 0)
+            {
+                canAttack = true;
+                attackCooldownTimer = attackCooldown;
+                AnimationCaller();
+            }
+            else
+            {
+                if (!canAttack)
+                {
+                    attackMoveLR = true;
+                }
+            }
+        }
+
+        if(distanceToPlayerX < STOPPING_DISTANCE && distanceToPlayerY < STOPPING_DISTANCE)
+        {
+            LookingAtTarget();
+            if (attackMoveLR)
+            {
+                MoveLeftRight();
+            }
+        }
+        else
+        {
+            TargetFollowFunctionFull();
+        }
+    }
+    // Simple Moving left Right Function
+    void MoveLeftRight()
+    {
+        int rnd = Random.Range(0, 2);
+        if (attackMoveTimer <= 0)
+        {
+            if (rnd == 0)
+                moveRight = true;
+            else
+                moveRight = false;
+
+            attackMoveTimer = ATTACK_MOVE_TIME;
+        }
+        if (moveRight)
+        {
+            RaycastHit2D hitR = Physics2D.Raycast(transform.position, new Vector2(transform.up.x + 1.2f, -transform.up.y).normalized, 1f);
+            if (hitR.collider)
+            {
+                if (hitR.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                    moveRight = true;
+            }
+            else
+                moveRight = false;
+        }
+        else
+        {
+            RaycastHit2D hitL = Physics2D.Raycast(transform.position, new Vector2(transform.up.x - 1.2f, -transform.up.y).normalized, 1f);
+            if (hitL.collider)
+            {
+                if (hitL.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                    moveRight = false;
+            }
+            else
+                moveRight = true;
+        }
+        if (moveRight)
+            rb.velocity = new Vector2(1 * (speed / 3f) * Time.fixedDeltaTime, rb.velocity.y); // Move Right
+        else
+            rb.velocity = new Vector2(-1 * (speed / 3f) * Time.fixedDeltaTime, rb.velocity.y); // Move Left
+    }
+    /// Atttacking player and Walking Animations
+    void AnimationCaller()
+    {
+
         anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
 
         if (canAttack)
@@ -107,13 +191,18 @@ public class MeleeEnemy : EnemyUnit
 
         moveTimeCounter -= Time.deltaTime;
         jumpTime -= Time.deltaTime;
+        attackMoveTimer -= Time.deltaTime;
+        attackCooldownTimer -= Time.deltaTime;
 
         if (jumpTime < 0)
         {
             isJumping = false;
         }
+        if(attackCooldownTimer <= 0)
+        {
+            attackMoveLR = false;
+        }
     }
-
     /// Animation Function for disabling bools
     public void DisableBools(string boolName)
     {
@@ -128,7 +217,6 @@ public class MeleeEnemy : EnemyUnit
         }
             
     }
-    
     /// Drawing gizmos and Rays and Stuff
     void DrawRaysInScene()
     {
@@ -140,10 +228,9 @@ public class MeleeEnemy : EnemyUnit
         else
             Debug.DrawRay(transform.position, transform.right * 5, Color.red);
     }
-
     /// Drawing Line that shows walking path
-    //void DrawLine(List<Node> path)
-    //{
+    void DrawLine(List<Node> path)
+    {
     //    line.positionCount = path.Count;
 
     //    Vector3[] linePoints = new Vector3[path.Count];
@@ -157,6 +244,6 @@ public class MeleeEnemy : EnemyUnit
     //{
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawSphere(new Vector2(feet.position.x, feet.position.y), .2f);
-    //}
+    }
 
 }

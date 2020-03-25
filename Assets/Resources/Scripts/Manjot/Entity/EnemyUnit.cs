@@ -34,7 +34,9 @@ public class EnemyUnit : MonoBehaviour
 
     [HideInInspector]
     public float jumpTime = 0.5f,
-                 moveTimeCounter;
+                 attackCooldownTimer = .5f,
+                 moveTimeCounter,
+                 attackCooldown;
 
     public float moveTime;
     
@@ -145,7 +147,7 @@ public class EnemyUnit : MonoBehaviour
         if (Grounded() && jumpTime < 0)
         {
             rb.AddForce(dir, ForceMode2D.Impulse);
-            jumpTime = .7f;
+            jumpTime = 1f;
             isJumping = true;
         }
     }

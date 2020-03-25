@@ -10,26 +10,24 @@ using UnityEngine;
 
 public class RangedEnemy : EnemyUnit
 {
-    const float ATTACK_TIMER = 5f;
     const float ATTACK_MOVE_TIMER = 2f;
     const float RUNAWAY_DISTANCE = 2f;
     const float STOPPING_DISTANCE = 6f;
     const float SAME_Y_AS_PLAYER = 0.5f;
     const float PLATFROM_COLI_CHECK_DISTANCE = 1.2f;
 
-
     Vector2 dirOppToPlayer;
     GameObject fireball;
     Transform throwPoint;
 
     bool isRuuningFromPlayer;
-
-    float throwAttackTimer = 0.5f;
+    
     float attackMoveTimer = 1f;
 
     public override void Initialize()
     {
         base.Initialize();
+        attackCooldown = Random.Range(3f, 5f);
     }
 
     public override void PostInitialize()
@@ -41,7 +39,7 @@ public class RangedEnemy : EnemyUnit
 
     public override void Refresh()
     {
-        DrawRays();
+        //DrawRays();
         if (!Death())
         {
             Timers();
@@ -55,16 +53,7 @@ public class RangedEnemy : EnemyUnit
             }
             else
             {
-                if (!isRuuningFromPlayer && !isJumping)
-                {
-                    if (throwAttackTimer <= 0)
-                    {
-                        canAttack = true;
-                        rb.velocity = Vector2.zero;
-                        throwAttackTimer = ATTACK_TIMER;
-                    }
-                    LookingAtTarget();
-                }
+                AttackMove();
             }
         }
     }
@@ -73,12 +62,11 @@ public class RangedEnemy : EnemyUnit
     {
         base.PhysicsRefresh();
     }
-
     void Timers()
     {
         moveTimeCounter -= Time.deltaTime;
         attackMoveTimer -= Time.deltaTime;
-        throwAttackTimer -= Time.deltaTime;
+        attackCooldownTimer -= Time.deltaTime;
         jumpTime -= Time.deltaTime;
 
         if (jumpTime < 0)
@@ -86,7 +74,6 @@ public class RangedEnemy : EnemyUnit
             isJumping = false;
         }
     }
-
     void AnimationCaller()
     {
         anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
@@ -100,12 +87,24 @@ public class RangedEnemy : EnemyUnit
             {
                 anim.SetBool("isAttacking", false);
                 if(!isJumping)
-                    AttackMove();
+                    AttackFunction();
             }
         }
     }
-
     void AttackMove()
+    {
+        if (!isRuuningFromPlayer && !isJumping)
+        {
+            if (attackCooldownTimer <= 0 && Grounded())
+            {
+                canAttack = true;
+                rb.velocity = Vector2.zero;
+                attackCooldownTimer = attackCooldown;
+            }
+            LookingAtTarget();
+        }
+    }
+    void AttackFunction()
     {
         float distanceToPlayerX = new Vector2(transform.position.x - target.position.x, 0).sqrMagnitude;
         float distanceToPlayerY = new Vector2(0, transform.position.y - target.position.y).sqrMagnitude;
@@ -139,7 +138,6 @@ public class RangedEnemy : EnemyUnit
 
 
     }
-
     void MoveLeftRight()
     {
         if (attackMoveTimer <= 0)
