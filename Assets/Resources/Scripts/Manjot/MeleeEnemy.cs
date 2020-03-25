@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeEnemy : EnemyUnit
 {
-   
+    const float STOPPING_DISTANCE = 0.3f;
    // LineRenderer line;
 
     /// Awake Function
@@ -21,9 +21,6 @@ public class MeleeEnemy : EnemyUnit
     /// Update Function
     public override void Refresh()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-            isHurt = true;
-
         if (!Death())
         {
             Timers();
@@ -55,9 +52,9 @@ public class MeleeEnemy : EnemyUnit
                     if (Vector2.SqrMagnitude(new Vector2(transform.position.x - target.position.x, 0)) < STOPPING_DISTANCE &&
                         Vector2.SqrMagnitude(new Vector2(transform.position.y - target.position.y, 0)) < STOPPING_DISTANCE)
                     {
+                        LookingAtTarget();
                         canAttack = true;
                         rb.velocity = new Vector2(0, rb.velocity.y);
-                        LookingAtTarget();
                     }
                 }
             }
@@ -89,7 +86,7 @@ public class MeleeEnemy : EnemyUnit
             rb.velocity = newPath * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
 
             if (aStarPath[1].position.y > aStarPath[0].position.y)
-                Jump();
+                Jump(new Vector2(rb.velocity.x, jumpForce) * Time.fixedDeltaTime);
         }
     }
    

@@ -25,9 +25,14 @@ public class ThrowAttacks : MonoBehaviour
         anim.SetTrigger("throw");
         fireBallFX.gameObject.SetActive(true);
         transform.parent = null;
-        Vector2 dir2 = (target.position - transform.position).normalized;
-        var angle2 = Mathf.Atan2(dir2.y, dir2.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle2, transform.forward);
-        rb.AddForce(dir2 * throwSpeed, ForceMode2D.Impulse);
+        Vector2 dir = (target.position - transform.position).normalized;
+        var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
+        rb.AddForce(transform.right * throwSpeed, ForceMode2D.Impulse);
+
+        //if (fireBall.hit)
+        //{
+        //    fireBall.blast();
+        //}
     }
 }

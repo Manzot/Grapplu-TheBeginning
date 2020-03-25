@@ -21,12 +21,11 @@ public class EnemyUnit : MonoBehaviour
     public bool isStunned;
 
     [HideInInspector]
-    public const float STOPPING_DISTANCE = 0.3f,
-                       STUN_TIME = 0.4f;
+    public const float STUN_TIME = 0.4f;
     [HideInInspector]
     public const int ASTAR_PATH_OFFSET = 0;
 
-    [HideInInspector]
+   // [HideInInspector]
     public bool moveRight = true,
                 isJumping,
                 canAttack;
@@ -127,19 +126,28 @@ public class EnemyUnit : MonoBehaviour
     }
 
     /// Jumping function
-    public void Jump()
+    public void Jump(Vector2 dir)
     {
         if (Physics2D.Raycast(transform.position, transform.up, 1.3f, LayerMask.GetMask("Ground"))
-               || Physics2D.Raycast(transform.position, transform.right, 1.3f, LayerMask.GetMask("Ground")))
+        || Physics2D.Raycast(transform.position, transform.right, 1.3f, LayerMask.GetMask("Ground")))
         {
             if (Grounded() && jumpTime < 0)
             {
-                rb.AddForce(new Vector2(rb.velocity.x, jumpForce) * Time.fixedDeltaTime, ForceMode2D.Impulse);
+                rb.AddForce(dir, ForceMode2D.Impulse);
                 jumpTime = .7f;
                 isJumping = true;
             }
         }
 
+    }
+    public void Jump2(Vector2 dir)
+    {
+        if (Grounded() && jumpTime < 0)
+        {
+            rb.AddForce(dir, ForceMode2D.Impulse);
+            jumpTime = .7f;
+            isJumping = true;
+        }
     }
 
     public void TakeDamage(int damage)
