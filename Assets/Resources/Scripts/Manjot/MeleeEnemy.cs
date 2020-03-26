@@ -74,7 +74,7 @@ public class MeleeEnemy : EnemyUnit
             rb.velocity = (new Vector2(transform.right.x * speed * Time.deltaTime, rb.velocity.y));
         }
         else
-            rb.velocity = new Vector2((target.position.x - transform.position.x), 0).normalized * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
+            rb.velocity = new Vector2((target.position.x - transform.position.x), 0).normalized * speed * Time.deltaTime + new Vector2(0, rb.velocity.y);
 
     }
     // Follow Target with AStar
@@ -89,10 +89,10 @@ public class MeleeEnemy : EnemyUnit
         if (aStarPath.Count > 0)
         {
             Vector2 newPath = new Vector2(aStarPath[1].position.x - aStarPath[0].position.x, 0).normalized;
-            rb.velocity = newPath * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
+            rb.velocity = newPath * speed * Time.deltaTime + new Vector2(0, rb.velocity.y);
 
             if (aStarPath[1].position.y > aStarPath[0].position.y)
-                Jump(new Vector2(rb.velocity.x, jumpForce) * Time.fixedDeltaTime);
+                Jump(new Vector2(rb.velocity.x, jumpForce) * Time.deltaTime);
         }
     }
     //Movement while in Attack Mode
@@ -169,9 +169,9 @@ public class MeleeEnemy : EnemyUnit
                 moveRight = true;
         }
         if (moveRight)
-            rb.velocity = new Vector2(1 * (speed / 3f) * Time.fixedDeltaTime, rb.velocity.y); // Move Right
+            rb.velocity = new Vector2(1 * (speed / 3f) * Time.deltaTime, rb.velocity.y); // Move Right
         else
-            rb.velocity = new Vector2(-1 * (speed / 3f) * Time.fixedDeltaTime, rb.velocity.y); // Move Left
+            rb.velocity = new Vector2(-1 * (speed / 3f) * Time.deltaTime, rb.velocity.y); // Move Left
     }
     /// Atttacking player and Walking Animations
     void AnimationCaller()

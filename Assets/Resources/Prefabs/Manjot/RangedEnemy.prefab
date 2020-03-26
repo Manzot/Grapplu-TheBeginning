@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   anim: {fileID: 0}
-  speed: 80
+  speed: 100
   jumpForce: 900
   hitPoints: 20
   damage: 0
@@ -167,8 +167,10 @@ MonoBehaviour:
   isJumping: 0
   canAttack: 0
   jumpTime: 0.5
+  attackCooldownTimer: 0.5
   moveTimeCounter: 0
-  moveTime: 1
+  attackCooldown: 0
+  moveTime: 3
   target: {fileID: 0}
   feet: {fileID: 2161454972402169674}
   walkable: {fileID: 0}
