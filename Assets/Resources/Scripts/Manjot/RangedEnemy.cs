@@ -49,7 +49,7 @@ public class RangedEnemy : EnemyUnit
 
             if (!targetFound)
             {
-                RandomMove();
+                MoveLeftRight();
             }
             else
             {
@@ -127,7 +127,7 @@ public class RangedEnemy : EnemyUnit
                 if (distanceToPlayerX > STOPPING_DISTANCE + 4) {
                     MoveLeftRight();
                 } else {
-                    rb.velocity = new Vector2(dirOppToPlayer.x, rb.velocity.y) * (speed / 1.5f) * Time.fixedDeltaTime;
+                    rb.velocity = new Vector2(dirOppToPlayer.x, rb.velocity.y) * (speed / 1.5f) * Time.deltaTime;
                 }                   
             }
         }
@@ -147,35 +147,41 @@ public class RangedEnemy : EnemyUnit
         }
         if (moveRight)
         {
-            RaycastHit2D hitR = Physics2D.Raycast(transform.position, new Vector2(transform.up.x + 1.2f, -transform.up.y).normalized, 1f);
+            RaycastHit2D hitR = Physics2D.Raycast(transform.position, new Vector2(transform.up.x + 1.5f, -transform.up.y).normalized, 1f);
             if (hitR.collider)
             {
                 if (hitR.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                     moveRight = true;
             }
             else
+            {
                 moveRight = false;
+                attackMoveTimer = ATTACK_MOVE_TIMER;
+            }
         }
         else
         {
-            RaycastHit2D hitL = Physics2D.Raycast(transform.position, new Vector2(transform.up.x - 1.2f, -transform.up.y).normalized, 1f);
+            RaycastHit2D hitL = Physics2D.Raycast(transform.position, new Vector2(transform.up.x - 1.5f, -transform.up.y).normalized, 1f);
             if (hitL.collider)
             {
                 if (hitL.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                     moveRight = false;
             }
             else
+            {
                 moveRight = true;
+                attackMoveTimer = ATTACK_MOVE_TIMER;
+            }
         }
 
         if (moveRight)
-            rb.velocity = new Vector2(1 * (speed / 1.5f) * Time.fixedDeltaTime, rb.velocity.y); // Move Right
+            rb.velocity = new Vector2(1 * (speed / 1.5f) * Time.deltaTime, rb.velocity.y); // Move Right
         else
-            rb.velocity = new Vector2(-1 * (speed / 1.5f) * Time.fixedDeltaTime, rb.velocity.y); // Move Left
+            rb.velocity = new Vector2(-1 * (speed / 1.5f) * Time.deltaTime, rb.velocity.y); // Move Left
     }
     void RunAwayFromTarget()
     {
-        rb.velocity = new Vector2(dirOppToPlayer.x * speed * Time.fixedDeltaTime, rb.velocity.y);
+        rb.velocity = new Vector2(dirOppToPlayer.x * speed * Time.deltaTime, rb.velocity.y);
 
         RaycastHit2D hit = Physics2D.Raycast(Vector2.zero, Vector2.zero);
         RaycastHit2D hit2 = Physics2D.Raycast(transform.position, transform.up, 1.5f);

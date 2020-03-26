@@ -32,6 +32,15 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
+        MovementAndDoubleJump();  
+    }
+
+    public bool Grounded()
+    {
+        return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Ground", "IObject"));
+    }
+    public void MovementAndDoubleJump()
+    {
         horizontal = Input.GetAxis("Horizontal");
         if (horizontal > 0) flipX = 1;
         else if (horizontal < 0) flipX = -1;
@@ -45,7 +54,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime) , ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.deltaTime), ForceMode2D.Impulse);
                 jumpCount--;
             }
             if (jumpCount < 1)
@@ -55,15 +64,10 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpCount > 0 && Input.GetKeyDown(KeyCode.Space))
             {
-                rb.AddForce(new Vector2(rb.velocity.x, jumpForce / 1.4f * Time.fixedDeltaTime) , ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(rb.velocity.x, jumpForce / 1.4f * Time.deltaTime), ForceMode2D.Impulse);
                 jumpCount--;
             }
         }
-    }
-
-    public bool Grounded()
-    {
-        return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Ground", "IObject"));
     }
 
     void OnDrawGizmos()
