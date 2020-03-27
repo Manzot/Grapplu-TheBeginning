@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeleeEnemy : EnemyUnit
 {
     const float ATTACKING_DISTANCE = 0.3f;
-    const float STOPPING_DISTANCE = 5f;
+    const float STOPPING_DISTANCE = 7f;
     const float ATTACK_MOVE_TIME = 1f;
 
     float attackMoveTimer;
@@ -16,7 +16,6 @@ public class MeleeEnemy : EnemyUnit
     public override void Initialize()
     {
         base.Initialize();
-        attackCooldown = Random.Range(2f, 4f);
     }
     //// Start Function
     public override void PostInitialize()
@@ -27,19 +26,23 @@ public class MeleeEnemy : EnemyUnit
     /// Update Function
     public override void Refresh()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if ((transform.position - target.position).sqrMagnitude < 0.5f)
+                TakeDamage(10);
+        }
+
         if (!Death())
         {
-
             AnimationCaller();
             Timers();
-            Hurt();
 
             if (!isHurt && !isStunned)
             {
                 DirectionFacingWhenMoving();
                 if (!targetFound) // Searching for target
                 {
-                    RandomMove();
+                    MoveLeftRight();
                     FindTarget();
                 }
                 else // When target is found
@@ -47,6 +50,10 @@ public class MeleeEnemy : EnemyUnit
                     TargetFollowFunctionFull();
                     AtackMove();
                 }
+            }
+            else if (isHurt)
+            {
+                Hurt();
             }
         }
     }
@@ -125,7 +132,7 @@ public class MeleeEnemy : EnemyUnit
             LookingAtTarget();
             if (attackMoveLR)
             {
-                MoveLeftRight();
+                MoveLeftRight(2f);
             }
         }
         else
@@ -169,21 +176,63 @@ public class MeleeEnemy : EnemyUnit
                 moveRight = true;
         }
         if (moveRight)
-            rb.velocity = new Vector2(1 * (speed / 3f) * Time.deltaTime, rb.velocity.y); // Move Right
+            rb.velocity = new Vector2(1 * (speed) * Time.deltaTime, rb.velocity.y); // Move Right
         else
-            rb.velocity = new Vector2(-1 * (speed / 3f) * Time.deltaTime, rb.velocity.y); // Move Left
+            rb.velocity = new Vector2(-1 * (speed) * Time.deltaTime, rb.velocity.y); // Move Left
+    }
+    void MoveLeftRight(float speedDivision)
+    {
+        int rnd = Random.Range(0, 2);
+        if (attackMoveTimer <= 0)
+        {
+            if (rnd == 0)
+                moveRight = true;
+            else
+                moveRight = false;
+
+            attackMoveTimer = ATTACK_MOVE_TIME;
+        }
+        if (moveRight)
+        {
+            RaycastHit2D hitR = Physics2D.Raycast(transform.position, new Vector2(transform.up.x + 1.2f, -transform.up.y).normalized, 1f);
+            if (hitR.collider)
+            {
+                if (hitR.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                    moveRight = true;
+            }
+            else
+                moveRight = false;
+        }
+        else
+        {
+            RaycastHit2D hitL = Physics2D.Raycast(transform.position, new Vector2(transform.up.x - 1.2f, -transform.up.y).normalized, 1f);
+            if (hitL.collider)
+            {
+                if (hitL.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                    moveRight = false;
+            }
+            else
+                moveRight = true;
+        }
+        if (moveRight)
+            rb.velocity = new Vector2(1 * (speed / speedDivision) * Time.deltaTime, rb.velocity.y); // Move Right
+        else
+            rb.velocity = new Vector2(-1 * (speed / speedDivision) * Time.deltaTime, rb.velocity.y); // Move Left
     }
     /// Atttacking player and Walking Animations
     void AnimationCaller()
     {
-
         anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
 
         if (canAttack)
             anim.SetBool("isAttacking", true);
         else
             anim.SetBool("isAttacking", false);
-        
+
+        if (isHurt)
+            anim.SetBool("isHurt", true);
+        else
+            anim.SetBool("isHurt", false);
     }
     // All the Timers
     void Timers()
@@ -192,7 +241,9 @@ public class MeleeEnemy : EnemyUnit
         moveTimeCounter -= Time.deltaTime;
         jumpTime -= Time.deltaTime;
         attackMoveTimer -= Time.deltaTime;
-        attackCooldownTimer -= Time.deltaTime;
+
+        if (targetFound)
+            attackCooldownTimer -= Time.deltaTime;
 
         if (jumpTime < 0)
         {
@@ -202,20 +253,6 @@ public class MeleeEnemy : EnemyUnit
         {
             attackMoveLR = false;
         }
-    }
-    /// Animation Function for disabling bools
-    public void DisableBools(string boolName)
-    {
-        switch (boolName)
-        {
-            case "hurt":
-                isHurt = false;// _boolean == "true";
-                break;
-            case "attack":
-                canAttack = false;// _boolean == "true";
-                break;
-        }
-            
     }
     /// Drawing gizmos and Rays and Stuff
     void DrawRaysInScene()

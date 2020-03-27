@@ -27,7 +27,6 @@ public class RangedEnemy : EnemyUnit
     public override void Initialize()
     {
         base.Initialize();
-        attackCooldown = Random.Range(3f, 5f);
     }
 
     public override void PostInitialize()
@@ -39,6 +38,11 @@ public class RangedEnemy : EnemyUnit
 
     public override void Refresh()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if((transform.position - target.position).sqrMagnitude < 0.5f)
+                TakeDamage(10);
+        }
         //DrawRays();
         if (!Death())
         {
@@ -47,13 +51,20 @@ public class RangedEnemy : EnemyUnit
             FindTarget();
             AnimationCaller();
 
-            if (!targetFound)
+            if (!isHurt && !isStunned)
             {
-                MoveLeftRight();
+                if (!targetFound)
+                {
+                    MoveLeftRight();
+                }
+                else
+                {
+                    AttackMove();
+                }
             }
-            else
+            else if (isHurt)
             {
-                AttackMove();
+                Hurt();
             }
         }
     }
@@ -66,8 +77,10 @@ public class RangedEnemy : EnemyUnit
     {
         moveTimeCounter -= Time.deltaTime;
         attackMoveTimer -= Time.deltaTime;
-        attackCooldownTimer -= Time.deltaTime;
         jumpTime -= Time.deltaTime;
+
+        if(targetFound)
+            attackCooldownTimer -= Time.deltaTime;
 
         if (jumpTime < 0)
         {
@@ -90,6 +103,11 @@ public class RangedEnemy : EnemyUnit
                     AttackFunction();
             }
         }
+
+        if (isHurt)
+            anim.SetBool("isHurt", true);
+        else
+            anim.SetBool("isHurt", false);
     }
     void AttackMove()
     {
@@ -221,10 +239,6 @@ public class RangedEnemy : EnemyUnit
     void CreateThrowable()
     {
         GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint);
-    }
-    void BoolDisabler()
-    {
-        canAttack = false;
     }
     void DrawRays()
     {

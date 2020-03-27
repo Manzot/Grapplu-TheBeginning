@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyUnit : MonoBehaviour
 {
+    const float KNOCKAMOUNT = 220;
+
     [HideInInspector]
     public Rigidbody2D rb;
     [HideInInspector]
@@ -11,6 +13,7 @@ public class EnemyUnit : MonoBehaviour
 
     public float speed;
     public float jumpForce;
+    public float attackCooldown;
 
     public int hitPoints;
     public int damage;
@@ -21,7 +24,7 @@ public class EnemyUnit : MonoBehaviour
     public bool isStunned;
 
     [HideInInspector]
-    public const float STUN_TIME = 0.4f;
+    public const float STUN_TIME = 0.5f;
     [HideInInspector]
     public const int ASTAR_PATH_OFFSET = 0;
 
@@ -34,9 +37,8 @@ public class EnemyUnit : MonoBehaviour
 
     [HideInInspector]
     public float jumpTime = 0.5f,
-                 attackCooldownTimer = .5f,
-                 moveTimeCounter,
-                 attackCooldown;
+                 attackCooldownTimer,
+                 moveTimeCounter;
 
     public float moveTime;
     
@@ -62,6 +64,7 @@ public class EnemyUnit : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         walkable = FindObjectOfType<SetupWalkableArea>();
+        attackCooldownTimer = Random.Range(attackCooldown - 1f, attackCooldown + 2f);
         //line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
         //aStar = new AStarPathfinding(walkable.walkAbleArea);
     }
@@ -73,7 +76,6 @@ public class EnemyUnit : MonoBehaviour
     {
 
     }
-
     /// To check which direction the enemy is facing
     public void DirectionFacingWhenMoving()
     {
@@ -90,7 +92,6 @@ public class EnemyUnit : MonoBehaviour
             transform.rotation = Quaternion.Euler(new Vector2(0, 0));
 
     }
-
     /// Random movement of enemies to find player
     public void RandomMove()
     {
@@ -102,7 +103,6 @@ public class EnemyUnit : MonoBehaviour
         if (moveRight) rb.velocity = new Vector2(1 * speed * Time.fixedDeltaTime, rb.velocity.y); // Move Right
         else rb.velocity = new Vector2(-1 * speed * Time.fixedDeltaTime, rb.velocity.y); // Move Left
     }
-
     /// Check to see if the target is in range of enemy or not
     public bool FindTarget()
     {
@@ -120,13 +120,11 @@ public class EnemyUnit : MonoBehaviour
         }
         return false;
     }
-
     /// To check if the enemy is on the ground or not
     public bool Grounded()
     {
         return groundCheckColi = Physics2D.OverlapCircle(new Vector2(feet.position.x, feet.position.y), .2f, LayerMask.GetMask("Ground"));
     }
-
     /// Jumping function
     public void Jump(Vector2 dir)
     {
@@ -142,6 +140,7 @@ public class EnemyUnit : MonoBehaviour
         }
 
     }
+    // jUMP FUNCTION WITH DIRECTION
     public void Jump2(Vector2 dir)
     {
         if (Grounded() && jumpTime < 0)
@@ -151,45 +150,56 @@ public class EnemyUnit : MonoBehaviour
             isJumping = true;
         }
     }
-
+    // Damage Taking Function
     public void TakeDamage(int damage)
     {
-        hitPoints -= damage;
-        isHurt = true;
+        if(!isHurt && !isStunned)
+        {
+            hitPoints -= damage;
+            isHurt = true;
+        }
     }
+    // Enemy Hurt Function
     public void Hurt()
     {
-        if (isHurt)
-        {
-            canAttack = false;
-            Vector2 knockBckVector = (target.position - transform.position).normalized;
-            rb.velocity = Vector2.zero;
-            rb.AddForce(knockBckVector * -160 * Time.deltaTime, ForceMode2D.Impulse);
-            anim.SetBool("isHurt", true);
-        }
-        else
-        {
-            anim.SetBool("isHurt", false);
-        }
+        canAttack = false;
+        Vector2 knockBckVector = (target.position - transform.position).normalized;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(knockBckVector * -KNOCKAMOUNT * Time.deltaTime, ForceMode2D.Impulse);
     }
+    //Enemy Stunned Function
     public void Stunned()
     {
         isStunned = true;
         rb.velocity = Vector2.zero;
         TimerDelg.Instance.Add(() => { isStunned = false; }, STUN_TIME);
     }
-
+    //Enemy Death
     public bool Death()
     {
         if (hitPoints <= 0)
         {
-            rb.velocity = Vector2.zero;
             EnemyManager.Instance.Died(this.gameObject.GetComponent<EnemyUnit>());
             GameObject.Destroy(gameObject, 2.8f);
             anim.SetTrigger("death");
+            rb.velocity = Vector2.zero;
             return true;
         }
         return false;
+    }
+    /// Animation Function for disabling bools
+    public void DisableBools(string boolName)
+    {
+        switch (boolName)
+        {
+            case "hurt":
+                isHurt = false;// _boolean == "true";
+                break;
+            case "attack":
+                canAttack = false;// _boolean == "true";
+                break;
+        }
+
     }
 
 }

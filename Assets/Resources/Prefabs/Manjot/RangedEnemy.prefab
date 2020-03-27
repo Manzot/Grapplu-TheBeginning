@@ -159,6 +159,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   speed: 100
   jumpForce: 900
+  attackCooldown: 5
   hitPoints: 20
   damage: 0
   isHurt: 0
@@ -169,7 +170,6 @@ MonoBehaviour:
   jumpTime: 0.5
   attackCooldownTimer: 0.5
   moveTimeCounter: 0
-  attackCooldown: 0
   moveTime: 3
   target: {fileID: 0}
   feet: {fileID: 2161454972402169674}

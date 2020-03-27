@@ -135,8 +135,8 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.1833333
-    functionName: BoolDisabler
-    data: 
+    functionName: DisableBools
+    data: attack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
