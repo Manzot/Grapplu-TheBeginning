@@ -34,7 +34,10 @@ public class EnemyManager : IManageables
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].Initialize();
-            enemies[i].transform.SetParent(parent);
+            if (enemies[i].transform.parent == null)
+                enemies[i].transform.SetParent(parent);
+            else
+                enemies[i].transform.parent.SetParent(parent);
         }
     }
     public void PostInitialize()

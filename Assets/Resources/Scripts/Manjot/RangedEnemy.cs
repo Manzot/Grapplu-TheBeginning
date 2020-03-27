@@ -48,13 +48,13 @@ public class RangedEnemy : EnemyUnit
         {
             Timers();
             DirectionFacingWhenMoving();
-            FindTarget();
             AnimationCaller();
 
             if (!isHurt && !isStunned)
             {
                 if (!targetFound)
                 {
+                    FindTarget();
                     MoveLeftRight();
                 }
                 else
@@ -238,7 +238,8 @@ public class RangedEnemy : EnemyUnit
     }
     void CreateThrowable()
     {
-        GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint);
+        if(!isJumping && !isHurt)
+            GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint);
     }
     void DrawRays()
     {

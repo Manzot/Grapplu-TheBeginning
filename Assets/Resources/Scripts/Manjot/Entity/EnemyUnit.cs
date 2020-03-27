@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyUnit : MonoBehaviour
 {
-    const float KNOCKAMOUNT = 220;
+    const float KNOCKAMOUNT = 300;
 
     [HideInInspector]
     public Rigidbody2D rb;
@@ -92,21 +92,27 @@ public class EnemyUnit : MonoBehaviour
             transform.rotation = Quaternion.Euler(new Vector2(0, 0));
 
     }
-    /// Random movement of enemies to find player
-    public void RandomMove()
-    {
-        if (moveTimeCounter <= 0)
-        {
-            moveRight = !moveRight;
-            moveTimeCounter = moveTime;
-        }
-        if (moveRight) rb.velocity = new Vector2(1 * speed * Time.fixedDeltaTime, rb.velocity.y); // Move Right
-        else rb.velocity = new Vector2(-1 * speed * Time.fixedDeltaTime, rb.velocity.y); // Move Left
-    }
     /// Check to see if the target is in range of enemy or not
     public bool FindTarget()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 5f);
+        if (hit.collider)
+        {
+            if (hit.collider.gameObject.CompareTag("Player"))
+            {
+                targetFound = true;
+                aStar = new AStarPathfinding(walkable.walkAbleArea);
+                aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + ASTAR_PATH_OFFSET, (int)transform.position.y + ASTAR_PATH_OFFSET),
+                    new Vector2Int((int)target.position.x + ASTAR_PATH_OFFSET, (int)target.position.y + ASTAR_PATH_OFFSET));
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool FindTarget(Vector3 lookDirection, float range)
+    {
+      //  Debug.DrawRay(transform.position, new Vector3(transform.right.x, -1f, 0) * 6f, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, lookDirection, range);
         if (hit.collider)
         {
             if (hit.collider.gameObject.CompareTag("Player"))
@@ -181,6 +187,8 @@ public class EnemyUnit : MonoBehaviour
         {
             EnemyManager.Instance.Died(this.gameObject.GetComponent<EnemyUnit>());
             GameObject.Destroy(gameObject, 2.8f);
+            anim.SetBool("isHurt", true);
+
             anim.SetTrigger("death");
             rb.velocity = Vector2.zero;
             return true;

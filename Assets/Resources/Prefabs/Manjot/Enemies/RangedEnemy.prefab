@@ -157,10 +157,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   anim: {fileID: 0}
-  speed: 100
+  speed: 80
   jumpForce: 900
   attackCooldown: 5
-  hitPoints: 20
+  hitPoints: 30
   damage: 0
   isHurt: 0
   isStunned: 0
