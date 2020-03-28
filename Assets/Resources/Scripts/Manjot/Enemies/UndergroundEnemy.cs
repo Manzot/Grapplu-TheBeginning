@@ -2,17 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UndergroundEnemy : MonoBehaviour
+public class UndergroundEnemy : EnemyUnit
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Initialize()
     {
-        
+        base.Initialize();
+    }
+    public override void PostInitialize()
+    {
+        base.PostInitialize();
+    }
+    public override void Refresh()
+    {
+        base.Refresh();
+    }
+    public override void PhysicsRefresh()
+    {
+        base.PhysicsRefresh();
     }
 
-    // Update is called once per frame
-    void Update()
+    void DiggingUP()
     {
-        
+
     }
+
 }
