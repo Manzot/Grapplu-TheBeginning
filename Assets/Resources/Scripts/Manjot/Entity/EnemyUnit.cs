@@ -65,6 +65,7 @@ public class EnemyUnit : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         walkable = FindObjectOfType<SetupWalkableArea>();
         attackCooldownTimer = Random.Range(attackCooldown - 1f, attackCooldown + 2f);
+        speed = Random.Range(speed - 30f, speed + 35f);
         //line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
         //aStar = new AStarPathfinding(walkable.walkAbleArea);
     }
