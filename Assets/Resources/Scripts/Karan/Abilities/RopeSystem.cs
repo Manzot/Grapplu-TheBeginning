@@ -52,6 +52,7 @@ public class RopeSystem : MonoBehaviour
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Grappleable"))
                 {
                     hook.hookRb.velocity = Vector2.zero;
+                    //hook.transform.position = hit.collider.gameObject.transform.position + new Vector3(0, .5f, 0);
                     hook.hookRb.isKinematic = true;
                     isRopeAttached = true;
                 }
@@ -103,7 +104,6 @@ public class RopeSystem : MonoBehaviour
     {
         if (Input.GetAxis("Vertical") >= 1f && isRopeAttached)
         {
-
             joint.distance -= Time.deltaTime * climbSpeed;
         }
         else if (Input.GetAxis("Vertical") < 0f && isRopeAttached)
