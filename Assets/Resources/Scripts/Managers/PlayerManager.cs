@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : IManageables
 {
+    PlayerController player;
+    private float spawnTime = 5f;
     #region Singleton
 
     private static PlayerManager instance = null;
@@ -25,18 +27,48 @@ public class PlayerManager : IManageables
     #endregion
     public void Initialize()
     {
-        throw new System.NotImplementedException();
+        GameObject playerPrefab = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Karan/Player"));
+        player = GameObject.FindObjectOfType<PlayerController>();
+        player.transform.position = new Vector2(10, 13);
+        player.isAlive = true;
+        player.Initialize();
     }
     public void PhysicsRefresh()
     {
-        throw new System.NotImplementedException();
+        if(player.isAlive)
+        player.PhysicsRefresh();
     }
     public void PostInitialize()
     {
-        throw new System.NotImplementedException();
+        player.PostInitialize();
     }
     public void Refresh()
     {
-        throw new System.NotImplementedException();
+        if (player.isAlive) 
+            player.Refresh();
+        IsDead();
+
+    }
+    public void PlayerSpawn()
+    {
+        player.gameObject.SetActive(true);
+        player.Initialize();
+        
+    }
+    public void IsDead()
+    {
+
+        if (!player.isAlive)
+        {
+            Vector3 deathLoc = player.deathLoc;
+            spawnTime -= Time.deltaTime;
+            if (spawnTime <= 0)
+            {
+                PlayerSpawn();
+                player.transform.position = deathLoc;
+                player.transform.rotation = Quaternion.Euler(Vector3.zero);
+                spawnTime = 5f;
+            }
+        }
     }
 }
