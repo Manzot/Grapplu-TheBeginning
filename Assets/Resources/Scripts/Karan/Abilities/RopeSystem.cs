@@ -39,15 +39,15 @@ public class RopeSystem : MonoBehaviour
         hook = GameObject.Instantiate<GameObject>(hookPrefab, hookShootPos.transform.position, Quaternion.identity).GetComponent<Hook>();
         ropeLine = GameObject.Instantiate<GameObject>(ropeLinePrefab, hookShootPos.transform.position, Quaternion.identity).GetComponent<LineRenderer>();
         hook.Initialise();
-       // hook.transform.SetParent(player.transform);
-       // ropeLine.transform.SetParent(player.transform);
+        //hook.transform.SetParent(player.transform);
+        //ropeLine.transform.SetParent(player.transform);
         hook.gameObject.SetActive(false);
         ropeLine.gameObject.SetActive(false);
     }
     void Update()
     {        
         HandleInput(player.angleDirection);
-        HandleRopeLength();
+       // HandleRopeLength();
         JointAttached();
 
         if (hook.gameObject.activeSelf)
@@ -123,10 +123,5 @@ public class RopeSystem : MonoBehaviour
             joint.distance += Time.deltaTime * climbSpeed;
         }
     }
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawSphere(new Vector2(hook.transform.position.x, hook.transform.position.y - .3f), -.1f);
-    //}
 }
 
