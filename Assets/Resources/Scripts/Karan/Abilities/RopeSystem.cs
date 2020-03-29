@@ -14,13 +14,15 @@ public class RopeSystem : MonoBehaviour
     private Vector2 playerPosition;
 
     private List<Vector2> ropePositions = new List<Vector2>();
-    public GameObject hookShoot;
 
-
+    Transform hookShootPos;
     GameObject hookPrefab;
+    [HideInInspector]
     public Hook hook;
+    GameObject ropeLinePrefab;
+    LineRenderer ropeLine;
 
-    private float climbSpeed = 5f;
+    float climbSpeed = 5f;
 
     private void Awake()
     {
@@ -28,40 +30,31 @@ public class RopeSystem : MonoBehaviour
         joint = GetComponent<SpringJoint2D>();
         joint.enabled = false;
         playerPosition = transform.position;
-
     }
     public void Start()
     {
-        hookShoot = GameObject.Find("Shoot");
+        hookShootPos = transform.Find("Shoot").transform;
         hookPrefab = Resources.Load<GameObject>("Prefabs/Karan/RopeHook");
-        hook = GameObject.Instantiate<GameObject>(hookPrefab, hookShoot.transform.position, Quaternion.identity).GetComponent<Hook>();
+        ropeLinePrefab = Resources.Load<GameObject>("Prefabs/RopeLine");
+        hook = GameObject.Instantiate<GameObject>(hookPrefab, hookShootPos.transform.position, Quaternion.identity).GetComponent<Hook>();
+        ropeLine = GameObject.Instantiate<GameObject>(ropeLinePrefab, hookShootPos.transform.position, Quaternion.identity).GetComponent<LineRenderer>();
         hook.Initialise();
+       // hook.transform.SetParent(player.transform);
+       // ropeLine.transform.SetParent(player.transform);
         hook.gameObject.SetActive(false);
+        ropeLine.gameObject.SetActive(false);
     }
     void Update()
-    {
+    {        
         HandleInput(player.angleDirection);
         HandleRopeLength();
         JointAttached();
 
         if (hook.gameObject.activeSelf)
         {
-            RaycastHit2D hit = Physics2D.Raycast(hook.transform.position, player.angleDirection, 0.2f);
-            if (hit)
-            {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Grappleable"))
-                {
-                    hook.hookRb.velocity = Vector2.zero;
-                    //hook.transform.position = hit.collider.gameObject.transform.position + new Vector3(0, .5f, 0);
-                    hook.hookRb.isKinematic = true;
-                    isRopeAttached = true;
-                }
-            }
-            if ((hook.transform.position - player.transform.position).sqrMagnitude >= 80)
-            {
-                hook.gameObject.SetActive(false);
-                isRopeAttached = false;
-            }
+            GrappleCollisionCheck();
+            ropeLine.SetPosition(0, hookShootPos.transform.position);
+            ropeLine.SetPosition(1, hook.transform.position);
         }
     }
 
@@ -69,14 +62,33 @@ public class RopeSystem : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !isRopeAttached)
         {
-            hook.transform.position = hookShoot.transform.position;
+            hook.transform.position = hookShootPos.transform.position;
             hook.gameObject.SetActive(true);
+            ropeLine.gameObject.SetActive(true);
             hook.ThrowHook(player.angleDirection);
         }
         else if (Input.GetMouseButtonUp(0))
         {
             hook.gameObject.SetActive(false);
+            ropeLine.gameObject.SetActive(false);
             hook.hookRb.isKinematic = false;
+            isRopeAttached = false;
+        }
+    }
+
+    void GrappleCollisionCheck()
+    {
+        var grappleCheck = Physics2D.OverlapCircle(new Vector2(hook.transform.position.x, hook.transform.position.y - .5f), .2f, LayerMask.GetMask("Grappleable"));
+        if (grappleCheck)
+        {
+            hook.hookRb.velocity = Vector2.zero;
+            hook.hookRb.isKinematic = true;
+            isRopeAttached = true;
+        }
+        if ((hook.transform.position - player.transform.position).sqrMagnitude >= 80)
+        {
+            hook.gameObject.SetActive(false);
+            ropeLine.gameObject.SetActive(false);
             isRopeAttached = false;
         }
     }
@@ -111,5 +123,10 @@ public class RopeSystem : MonoBehaviour
             joint.distance += Time.deltaTime * climbSpeed;
         }
     }
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(new Vector2(hook.transform.position.x, hook.transform.position.y - .3f), -.1f);
+    //}
 }
 

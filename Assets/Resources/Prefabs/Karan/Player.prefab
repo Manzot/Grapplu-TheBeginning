@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834549508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8408564739618083746}
@@ -296,7 +296,6 @@ MonoBehaviour:
   joint: {fileID: 3449669798920881393}
   player: {fileID: 8408564739618083750}
   isRopeAttached: 0
-  hookShoot: {fileID: 1834549508}
   hook: {fileID: 0}
 --- !u!231 &3449669798920881393
 SpringJoint2D:

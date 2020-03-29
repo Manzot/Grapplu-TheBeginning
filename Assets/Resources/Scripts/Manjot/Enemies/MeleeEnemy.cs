@@ -10,7 +10,7 @@ public class MeleeEnemy : EnemyUnit
 
     float attackMoveTimer;
     bool attackMoveLR;
-   // LineRenderer line;
+    // LineRenderer line;
 
     /// Awake Function
     public override void Initialize()
@@ -21,7 +21,7 @@ public class MeleeEnemy : EnemyUnit
     public override void PostInitialize()
     {
         base.PostInitialize();
-       
+
     }
     /// Update Function
     public override void Refresh()
@@ -71,7 +71,7 @@ public class MeleeEnemy : EnemyUnit
                 FollowPlayer();
             }
         }
-           
+
     }
     /// Following target 
     void FollowPlayer()
@@ -112,7 +112,7 @@ public class MeleeEnemy : EnemyUnit
         {
             LookingAtTarget();
             rb.velocity = new Vector2(0, rb.velocity.y);
-            if(attackCooldownTimer <= 0)
+            if (attackCooldownTimer <= 0)
             {
                 canAttack = true;
                 attackCooldownTimer = attackCooldown;
@@ -127,7 +127,7 @@ public class MeleeEnemy : EnemyUnit
             }
         }
 
-        if(distanceToPlayerX < STOPPING_DISTANCE && distanceToPlayerY < STOPPING_DISTANCE)
+        if (distanceToPlayerX < STOPPING_DISTANCE && distanceToPlayerY < STOPPING_DISTANCE)
         {
             LookingAtTarget();
             if (attackMoveLR)
@@ -249,7 +249,7 @@ public class MeleeEnemy : EnemyUnit
         {
             isJumping = false;
         }
-        if(attackCooldownTimer <= 0)
+        if (attackCooldownTimer <= 0)
         {
             attackMoveLR = false;
         }
@@ -268,19 +268,19 @@ public class MeleeEnemy : EnemyUnit
     /// Drawing Line that shows walking path
     void DrawLine(List<Node> path)
     {
-    //    line.positionCount = path.Count;
+        //    line.positionCount = path.Count;
 
-    //    Vector3[] linePoints = new Vector3[path.Count];
-    //    for (int i = 0; i < path.Count; i++)
-    //    {
-    //        linePoints[i] = new Vector3(path[i].position.x, path[i].position.y, 0);
-    //    }
-    //    line.SetPositions(linePoints);
-    //}
+        //    Vector3[] linePoints = new Vector3[path.Count];
+        //    for (int i = 0; i < path.Count; i++)
+        //    {
+        //        linePoints[i] = new Vector3(path[i].position.x, path[i].position.y, 0);
+        //    }
+        //    line.SetPositions(linePoints);
+        //}
+    }
     //void OnDrawGizmos()
     //{
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawSphere(new Vector2(feet.position.x, feet.position.y), .2f);
-    }
-
+    //}
 }
