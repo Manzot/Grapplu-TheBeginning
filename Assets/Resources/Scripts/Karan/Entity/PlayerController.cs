@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public GameObject crosshair;
     TimeSlowMo timeSlowMo;
     
-    Hook hook;
+    //Hook hook;
 
     public float health = 100f;
     private const float MAX_HEALTH = 100;
@@ -65,14 +65,11 @@ public class PlayerController : MonoBehaviour, IDamage
     public void PostInitialize()
     {
         pointsInTime = new List<PointInTime>();
-
         rb = GetComponent<Rigidbody2D>();
-        hook = FindObjectOfType<Hook>();
-        
+       // hook = FindObjectOfType<Hook>();
     }
     public void Refresh()
     {
-        
         MovementAndDoubleJump();
         SetCrosshairPoint(CrossairDirection());
 
@@ -88,11 +85,9 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetKeyDown(KeyCode.Return))
         {
             StartRewind();
-
         }
         if (Input.GetKeyUp(KeyCode.Return))
         {
-
             StopRewind();
         }
     }
@@ -132,7 +127,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Bullet"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Throwable"))
         {
             if (timeSlow && isAttacking)
             {
@@ -149,14 +144,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void DeflectBullet(Collider2D collision)
     {
-
-        //if (timeSlow == true)
-        //{
-        //    bullet.rb.gravityScale = 0;
-        //    bullet.moveSpeed = bullet.moveSpeed / 1.7f;
-        //    bullet.dir = -1 * bullet.dir;
-        //}
-
+        Rigidbody2D rbGO = collision.gameObject.GetComponent<Rigidbody2D>();
+        rbGO.velocity = -1 * rbGO.velocity;
     }
 
     /*Get a normalized direction vector from the player to the hook point 
@@ -200,11 +189,12 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Grounded())
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             {
                 animator.SetBool("isJumping", true);
                 rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.deltaTime), ForceMode2D.Impulse);
-
+                isJumping = true;
+                TimerDelg.Instance.Add(() => { isJumping = false; }, .5f);
                 // jumpCount--;
             }
             else
@@ -323,10 +313,8 @@ public class PlayerController : MonoBehaviour, IDamage
         else
         {
             pointsInTime.Insert(0, new PointInTime(transform.position, transform.rotation));
-
         }
     }
-
     private void Rewind()
     {
         if (pointsInTime.Count > 0)

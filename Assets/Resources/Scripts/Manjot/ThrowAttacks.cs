@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowAttacks : MonoBehaviour
+public class ThrowAttacks : ThrowAbles
 {
-    Transform target;
-    Rigidbody2D rb;
-    Animator anim;
-    public float throwSpeed;
-    public float angle2;
     GameObject fireBallFX;
     // Start is called before the first frame update
     void Start()

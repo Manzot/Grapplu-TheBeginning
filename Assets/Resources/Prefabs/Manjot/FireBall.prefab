@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 616084847}
   - component: {fileID: 616084849}
   - component: {fileID: 616084848}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4767,7 +4767,7 @@ GameObject:
   - component: {fileID: 7127288789783154940}
   - component: {fileID: 1012983803618763784}
   - component: {fileID: 2959681789375370040}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: FireBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4870,8 +4870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f032bdc8c6a0d4296edd224dd06aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  rb: {fileID: 0}
+  anim: {fileID: 0}
   throwSpeed: 4
-  angle2: 270
 --- !u!58 &1012983803618763784
 CircleCollider2D:
   m_ObjectHideFlags: 0
