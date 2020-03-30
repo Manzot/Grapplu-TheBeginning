@@ -28,7 +28,7 @@ public class FlyingEnemy : EnemyUnit
 
     public override void Refresh()
     {
-       
+        base.Refresh();
         if (Input.GetKeyDown(KeyCode.K))
         {
             if ((transform.position - target.position).sqrMagnitude < 0.5f)
@@ -111,24 +111,24 @@ public class FlyingEnemy : EnemyUnit
         {
             if (distanceToPlayer.sqrMagnitude > NEAR_TARGET && distanceToPlayer.sqrMagnitude < ATTACK_DISTANCE && attackCooldownTimer <= 0)
             {
-                rb.velocity = distanceToPlayer.normalized * speed * ATTACK_SPEED_MULTIPLIER * Time.deltaTime;
+                rb.velocity = distanceToPlayer.normalized * speed * ATTACK_SPEED_MULTIPLIER * Time.fixedDeltaTime;
             }
             else if (distanceToPlayer.sqrMagnitude < NEAR_TARGET)
             {
-                rb.velocity = -distanceToPlayer.normalized * speed * ATTACK_SPEED_MULTIPLIER * Time.deltaTime;
+                rb.velocity = -distanceToPlayer.normalized * speed * ATTACK_SPEED_MULTIPLIER * Time.fixedDeltaTime;
                 canAttack = false;
                 attackCooldownTimer = attackCooldown;
             }
             else
             {
-                rb.velocity = distanceToPlayer.normalized * speed * Time.deltaTime;
+                rb.velocity = distanceToPlayer.normalized * speed * Time.fixedDeltaTime;
             }
         }
         else
         {
             if(transform.position.y < target.position.y - NEAR_TARGET)
             {
-                CorrectingDirection(new Vector2(0, 1) * speed * Time.deltaTime);
+                CorrectingDirection(new Vector2(0, 1) * speed * Time.fixedDeltaTime);
             }
             else
                 RandomMove();

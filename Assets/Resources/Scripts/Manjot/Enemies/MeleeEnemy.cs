@@ -26,6 +26,7 @@ public class MeleeEnemy : EnemyUnit
     /// Update Function
     public override void Refresh()
     {
+        base.Refresh();
         if (Input.GetKeyDown(KeyCode.K))
         {
             if ((transform.position - target.position).sqrMagnitude < 0.5f)
@@ -78,10 +79,10 @@ public class MeleeEnemy : EnemyUnit
     {
         if (target.position.y < transform.position.y - .5f)
         {
-            rb.velocity = (new Vector2(transform.right.x * speed * Time.deltaTime, rb.velocity.y));
+            rb.velocity = (new Vector2(transform.right.x * speed * Time.fixedDeltaTime, rb.velocity.y));
         }
         else
-            rb.velocity = new Vector2((target.position.x - transform.position.x), 0).normalized * speed * Time.deltaTime + new Vector2(0, rb.velocity.y);
+            rb.velocity = new Vector2((target.position.x - transform.position.x), 0).normalized * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
 
     }
     // Follow Target with AStar
@@ -96,10 +97,10 @@ public class MeleeEnemy : EnemyUnit
         if (aStarPath.Count > 0)
         {
             Vector2 newPath = new Vector2(aStarPath[1].position.x - aStarPath[0].position.x, 0).normalized;
-            rb.velocity = newPath * speed * Time.deltaTime + new Vector2(0, rb.velocity.y);
+            rb.velocity = newPath * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
 
             if (aStarPath[1].position.y > aStarPath[0].position.y)
-                Jump(new Vector2(rb.velocity.x, jumpForce) * Time.deltaTime);
+                Jump(new Vector2(rb.velocity.x, jumpForce) * Time.fixedDeltaTime);
         }
     }
     //Movement while in Attack Mode
@@ -176,9 +177,9 @@ public class MeleeEnemy : EnemyUnit
                 moveRight = true;
         }
         if (moveRight)
-            rb.velocity = new Vector2(1 * (speed) * Time.deltaTime, rb.velocity.y); // Move Right
+            rb.velocity = new Vector2(1 * (speed) * Time.fixedDeltaTime, rb.velocity.y); // Move Right
         else
-            rb.velocity = new Vector2(-1 * (speed) * Time.deltaTime, rb.velocity.y); // Move Left
+            rb.velocity = new Vector2(-1 * (speed) * Time.fixedDeltaTime, rb.velocity.y); // Move Left
     }
     void MoveLeftRight(float speedDivision)
     {
@@ -215,9 +216,9 @@ public class MeleeEnemy : EnemyUnit
                 moveRight = true;
         }
         if (moveRight)
-            rb.velocity = new Vector2(1 * (speed / speedDivision) * Time.deltaTime, rb.velocity.y); // Move Right
+            rb.velocity = new Vector2(1 * (speed / speedDivision) * Time.fixedDeltaTime, rb.velocity.y); // Move Right
         else
-            rb.velocity = new Vector2(-1 * (speed / speedDivision) * Time.deltaTime, rb.velocity.y); // Move Left
+            rb.velocity = new Vector2(-1 * (speed / speedDivision) * Time.fixedDeltaTime, rb.velocity.y); // Move Left
     }
     /// Atttacking player and Walking Animations
     void AnimationCaller()

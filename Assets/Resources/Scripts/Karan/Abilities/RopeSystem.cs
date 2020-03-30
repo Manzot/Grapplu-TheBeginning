@@ -78,7 +78,7 @@ public class RopeSystem : MonoBehaviour
 
     void GrappleCollisionCheck()
     {
-        var grappleCheck = Physics2D.OverlapCircle(new Vector2(hook.transform.position.x, hook.transform.position.y - .5f), .2f, LayerMask.GetMask("Grappleable"));
+        var grappleCheck = Physics2D.OverlapCircle(new Vector2(hook.transform.position.x - .1f, hook.transform.position.y - .1f), .05f, LayerMask.GetMask("Grappleable"));
         if (grappleCheck)
         {
             hook.hookRb.velocity = Vector2.zero;
@@ -122,6 +122,11 @@ public class RopeSystem : MonoBehaviour
         {
             joint.distance += Time.deltaTime * climbSpeed;
         }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(new Vector2(hook.transform.position.x - hookShootPos.transform.position.x - .5f, hook.transform.position.y - hookShootPos.transform.position.y - .5f), .05f);
     }
 }
 
