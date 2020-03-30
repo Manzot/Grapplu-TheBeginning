@@ -7,18 +7,21 @@ public class TimeSlowMo {
     // public float slowdownLength = 3f;
 
     public bool timeSlow;
+  
 
     public float TimeReset(float _slowdownLength)
     {
         
             Time.timeScale += (1f / _slowdownLength) * Time.unscaledDeltaTime;
+           
             Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
             if (Time.timeScale == 1.0f)
             {
                 Time.fixedDeltaTime = Time.deltaTime;
                 timeSlow = false;
-            }
-            return Time.timeScale;
+            /*pc.jumpForce = pc.oldJumpForce*Time.unscaledDeltaTime;*/
+        }
+        return Time.timeScale;
     }
 
     public void SlowMotion(float _slowdownFactor)

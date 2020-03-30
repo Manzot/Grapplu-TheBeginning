@@ -249,8 +249,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ropeHook: {x: 0, y: 0}
   speed: 200
-  swingForce: 4
+  swingForce: 2
   jumpForce: 800
+  oldJumpForce: 0
   horizontal: 0
   aimAngle: 0
   groundCheck: 0

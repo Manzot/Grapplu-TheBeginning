@@ -12,8 +12,9 @@ public class PlayerController : MonoBehaviour, IDamage
     public Vector2 ropeHook;
     Collider2D groundCheckColi;
     public float speed;
-    public float swingForce = 4f;
-    public float jumpForce = 3f;
+    public float swingForce;
+    public float jumpForce;
+    public float oldJumpForce;
     private float jumpInput;
     public float horizontal;
     public float aimAngle;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public bool groundCheck;
     public bool isSwinging;
     public bool isAlive;
+    
 
     public Transform feet;
     public Rigidbody2D rb;
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         isAlive = true;
+       
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -75,11 +78,16 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            TimeSlowAbility();
+            if (!timeSlow)
+            {
+                TimeSlowAbility();
+
+            }
         }
         TimeSlowReset();
         if (Input.GetKeyDown(KeyCode.K))
         {
+            isAttacking = true;
             Attack();
         }
         if (Input.GetKeyDown(KeyCode.Return))
@@ -93,8 +101,9 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     public void PhysicsRefresh()
     {
-
+        if(isSwinging)
         SwingDirectionForce();
+
         if (isRewinding)
         {
             Rewind();
@@ -110,8 +119,12 @@ public class PlayerController : MonoBehaviour, IDamage
         if (!timeSlow)
         {
             timeSlowMo.SlowMotion(SLOMO_FACTOR);
+         
             timeSlow = true;
+            
         }
+        
+        
     }
 
     private void TimeSlowReset()
@@ -146,6 +159,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         Rigidbody2D rbGO = collision.gameObject.GetComponent<Rigidbody2D>();
         rbGO.velocity = -1 * rbGO.velocity;
+        
     }
 
     /*Get a normalized direction vector from the player to the hook point 
@@ -157,7 +171,7 @@ public class PlayerController : MonoBehaviour, IDamage
         var playerToHookDirection = (ropeHook - (Vector2)transform.position).normalized;
         Debug.DrawLine(transform.position, playerToHookDirection, Color.red, 0f);
 
-        if (horizontal > 0)
+        if (horizontal<0)
         {
             perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
             var leftPerpPos = (Vector2)transform.position + perpendicularDirection * -2f;
@@ -192,7 +206,7 @@ public class PlayerController : MonoBehaviour, IDamage
             if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             {
                 animator.SetBool("isJumping", true);
-                rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.deltaTime), ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.unscaledDeltaTime), ForceMode2D.Impulse);
                 isJumping = true;
                 TimerDelg.Instance.Add(() => { isJumping = false; }, .5f);
                 // jumpCount--;
@@ -263,11 +277,16 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void Attack()
     {
-        if (!isAttacking)
+        if (isAttacking)
         {
             animator.SetTrigger("Attack");
-            isAttacking = true;
+        
         }
+        else
+        {
+            isAttacking = false;
+        }
+        
     }
 
     public void DisableBools()

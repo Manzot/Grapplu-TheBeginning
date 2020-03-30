@@ -13,8 +13,6 @@ public class RopeSystem : MonoBehaviour
     public bool isRopeAttached = false;
     private Vector2 playerPosition;
 
-    private List<Vector2> ropePositions = new List<Vector2>();
-
     Transform hookShootPos;
     GameObject hookPrefab;
     [HideInInspector]
@@ -22,7 +20,7 @@ public class RopeSystem : MonoBehaviour
     GameObject ropeLinePrefab;
     LineRenderer ropeLine;
 
-    float climbSpeed = 5f;
+    float climbSpeed = 2f;
 
     private void Awake()
     {
@@ -47,7 +45,10 @@ public class RopeSystem : MonoBehaviour
     void Update()
     {        
         HandleInput(player.angleDirection);
-       // HandleRopeLength();
+
+        if(isRopeAttached)
+        HandleRopeLength();
+
         JointAttached();
 
         if (hook.gameObject.activeSelf)
@@ -103,6 +104,8 @@ public class RopeSystem : MonoBehaviour
             joint.autoConfigureConnectedAnchor = false;
             joint.connectedAnchor = hook.transform.position;
             joint.distance = Vector2.Distance(player.transform.position, hook.transform.position);
+/*            Debug.Log(joint.distance);*/
+            
         }
         else
         {
@@ -114,11 +117,11 @@ public class RopeSystem : MonoBehaviour
     }
     private void HandleRopeLength()
     {
-        if (Input.GetAxis("Vertical") >= 1f && isRopeAttached)
+        if (Input.GetAxis("Vertical") >= 1f/* && isRopeAttached*/)
         {
             joint.distance -= Time.deltaTime * climbSpeed;
         }
-        else if (Input.GetAxis("Vertical") < 0f && isRopeAttached)
+        else if (Input.GetAxis("Vertical") < 0f/* && isRopeAttached*/)
         {
             joint.distance += Time.deltaTime * climbSpeed;
         }

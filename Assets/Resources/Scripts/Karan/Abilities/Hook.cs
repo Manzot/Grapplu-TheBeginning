@@ -14,6 +14,6 @@ public class Hook : MonoBehaviour
     }
     public void ThrowHook(Vector2 dir)
     {
-       hookRb.AddForce(dir * moveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
+       hookRb.AddForce(dir * moveSpeed * Time.fixedUnscaledDeltaTime, ForceMode2D.Impulse);
     }
 }
