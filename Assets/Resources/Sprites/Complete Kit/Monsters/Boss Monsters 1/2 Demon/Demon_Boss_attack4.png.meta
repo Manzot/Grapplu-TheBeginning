@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: 382a036784f224743b70daf2a0df8575
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -5443647358233704335
+    second: Demon_Boss_attack4_0
+  - first:
+      213: 710308746069885490
+    second: Demon_Boss_attack4_1
+  - first:
+      213: -7372808756566124014
+    second: Demon_Boss_attack4_2
+  - first:
+      213: 5915135204824220092
+    second: Demon_Boss_attack4_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +52,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,9 +82,117 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Demon_Boss_attack4_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 61
+        height: 45
+      alignment: 9
+      pivot: {x: 0.6472534, y: 0.5436647}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 618caeb7cc5593640b871e61b7a7a4b3
+      internalID: -5443647358233704335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Demon_Boss_attack4_1
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 0
+        width: 46
+        height: 47
+      alignment: 9
+      pivot: {x: 0.57932913, y: 0.54180664}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b924b87ebc58624791ea493ec9ef657
+      internalID: 710308746069885490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Demon_Boss_attack4_2
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 0
+        width: 78
+        height: 52
+      alignment: 9
+      pivot: {x: 0.7591095, y: 0.4676113}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc31764f5ef5dea4a9807358b7fc73fd
+      internalID: -7372808756566124014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Demon_Boss_attack4_3
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 0
+        width: 70
+        height: 73
+      alignment: 9
+      pivot: {x: 0.68045133, y: 0.33465514}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b963263f6ac00547b1cfeba1d0618df
+      internalID: 5915135204824220092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
