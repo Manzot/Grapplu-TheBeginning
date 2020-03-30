@@ -126,10 +126,10 @@ public class RopeSystem : MonoBehaviour
             joint.distance += Time.deltaTime * climbSpeed;
         }
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(new Vector2(hook.transform.position.x - hookShootPos.transform.position.x - .5f, hook.transform.position.y - hookShootPos.transform.position.y - .5f), .05f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(new Vector2(hook.transform.position.x - hookShootPos.transform.position.x - .5f, hook.transform.position.y - hookShootPos.transform.position.y - .5f), .05f);
+    //}
 }
 

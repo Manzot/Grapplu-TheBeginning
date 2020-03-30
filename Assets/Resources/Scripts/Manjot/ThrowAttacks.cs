@@ -12,6 +12,9 @@ public class ThrowAttacks : ThrowAbles
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         fireBallFX = transform.GetChild(0).gameObject;
+        Vector2 dir = (target.position - transform.position).normalized;
+        var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
         Destroy(gameObject, 5f);
     }
 
@@ -20,9 +23,7 @@ public class ThrowAttacks : ThrowAbles
         anim.SetTrigger("throw");
         fireBallFX.gameObject.SetActive(true);
         transform.parent = null;
-        Vector2 dir = (target.position - transform.position).normalized;
-        var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
+       
         rb.AddForce(transform.right * throwSpeed, ForceMode2D.Impulse);
 
         //if (fireBall.hit)

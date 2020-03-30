@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     public void Refresh()
     {
-        MovementAndDoubleJump();
+        MovementAndJump();
         SetCrosshairPoint(CrossairDirection());
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -85,10 +85,10 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
         TimeSlowReset();
+        Attack();
         if (Input.GetKeyDown(KeyCode.K))
         {
             isAttacking = true;
-            Attack();
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -123,8 +123,6 @@ public class PlayerController : MonoBehaviour, IDamage
             timeSlow = true;
             
         }
-        
-        
     }
 
     private void TimeSlowReset()
@@ -159,7 +157,9 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         Rigidbody2D rbGO = collision.gameObject.GetComponent<Rigidbody2D>();
         rbGO.velocity = -1 * rbGO.velocity;
-        
+        Vector2 dir = (collision.gameObject.transform.position - transform.position).normalized;
+        var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        collision.gameObject.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
     }
 
     /*Get a normalized direction vector from the player to the hook point 
@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
     /*Movement and jump of the player*/
-    public void MovementAndDoubleJump()
+    public void MovementAndJump()
     {
         horizontal = Input.GetAxis("Horizontal");
         if (rb.velocity.x > 0)
@@ -198,33 +198,25 @@ public class PlayerController : MonoBehaviour, IDamage
             transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
 
 
-        rb.velocity = new Vector2(horizontal * speed * Time.deltaTime, rb.velocity.y);
-        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
 
         if (Grounded())
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             {
-                animator.SetBool("isJumping", true);
-                rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.unscaledDeltaTime), ForceMode2D.Impulse);
+                if(!timeSlow)
+                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime), ForceMode2D.Impulse);
+                else
+                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.unscaledDeltaTime), ForceMode2D.Impulse);
                 isJumping = true;
                 TimerDelg.Instance.Add(() => { isJumping = false; }, .5f);
-                // jumpCount--;
             }
-            else
-            {
-                animator.SetBool("isJumping", false);
-            }
-            /* if (jumpCount < 1)
-             jumpCount = 1;
-            }
-            else
-            {
-                if (jumpCount > 0 && Input.GetKeyDown(KeyCode.Space))
-                {
-                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce / 1.4f * Time.deltaTime), ForceMode2D.Impulse);
-                    jumpCount--;
-                }*/
+            animator.SetBool("isJumping", false);
+        }
+        else
+        {
+            animator.SetBool("isJumping", true);
         }
     }
 
@@ -262,14 +254,12 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (rb.velocity.x < 0f || rb.velocity.x > 0f)
         {
-
             if (isSwinging)
             {
-
                 Vector2 perpendicularDirection = CalculatePerpendicularDirection();
                 /* rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);*/
                 var force = perpendicularDirection * swingForce;
-                rb.AddForce(force, ForceMode2D.Impulse);
+                rb.AddForce(force * Time.fixedDeltaTime, ForceMode2D.Impulse);
             }
 
         }
@@ -279,12 +269,12 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (isAttacking)
         {
-            animator.SetTrigger("Attack");
-        
+            // animator.SetTrigger("Attack");
+            animator.SetBool("isAttacking", true);
         }
         else
         {
-            isAttacking = false;
+            animator.SetBool("isAttacking", false);
         }
         
     }

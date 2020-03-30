@@ -48,6 +48,8 @@ public class MeleeEnemy : EnemyUnit
                 else // When target is found
                 {
                     LookingAtTarget();
+                    TargetFollowFunctionFull();
+                   // AtackMove();
                 }
             }
         }
@@ -67,8 +69,8 @@ public class MeleeEnemy : EnemyUnit
                 }
                 else // When target is found
                 {
-                    TargetFollowFunctionFull();
-                    AtackMove();
+                   // TargetFollowFunctionFull();
+                    //AtackMove();
                 }
             }
             else if (isHurt)
@@ -83,7 +85,7 @@ public class MeleeEnemy : EnemyUnit
     {
         if (!canAttack && !isJumping)
         {
-            if (target.position.y > transform.position.y + 1f)
+            if (target.position.y > transform.position.y + .5f)
             {
                 FollowWithAstar();
             }
@@ -97,7 +99,7 @@ public class MeleeEnemy : EnemyUnit
     /// Following target 
     void FollowPlayer()
     {
-        if (target.position.y < transform.position.y - .5f)
+        if (target.position.y < transform.position.y - .2f)
         {
             rb.velocity = (new Vector2(transform.right.x * speed * Time.fixedDeltaTime, rb.velocity.y));
         }
