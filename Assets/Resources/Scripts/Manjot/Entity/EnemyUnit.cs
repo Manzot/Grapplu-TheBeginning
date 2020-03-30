@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyUnit : MonoBehaviour
 {
@@ -11,12 +12,17 @@ public class EnemyUnit : MonoBehaviour
     [HideInInspector]
     public Animator anim;
 
+
     public float speed;
     public float jumpForce;
     public float attackCooldown;
 
-    public int hitPoints;
     public int damage;
+    public int hitPoints;
+    int currentHealth;
+    public Image healthBar;
+    GameObject healthBarParent;
+    Quaternion defaultHbRotation;
 
     [HideInInspector]
     public bool isHurt;
@@ -28,7 +34,7 @@ public class EnemyUnit : MonoBehaviour
     [HideInInspector]
     public const int ASTAR_PATH_OFFSET = 0;
 
-   // [HideInInspector]
+   [HideInInspector]
     public bool moveRight = true,
                 isJumping,
                 canAttack;
@@ -66,12 +72,20 @@ public class EnemyUnit : MonoBehaviour
         walkable = FindObjectOfType<SetupWalkableArea>();
         attackCooldownTimer = Random.Range(attackCooldown - 1f, attackCooldown + 2f);
         speed = Random.Range(speed - 30f, speed + 35f);
+        currentHealth = hitPoints;
+        healthBar.fillAmount = currentHealth/hitPoints; 
+        healthBarParent = healthBar.transform.parent.gameObject;
+        defaultHbRotation = healthBarParent.transform.rotation;
+        healthBarParent.SetActive(false);
         //line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
         //aStar = new AStarPathfinding(walkable.walkAbleArea);
     }
     public virtual void Refresh()
     {
-
+        if (healthBarParent.activeSelf)
+        {
+            healthBar.transform.rotation = defaultHbRotation;
+        }
     }
     public virtual void PhysicsRefresh()
     {
@@ -160,11 +174,16 @@ public class EnemyUnit : MonoBehaviour
     // Damage Taking Function
     public void TakeDamage(int damage)
     {
-        if(!isHurt && !isStunned)
+        if (!healthBarParent.activeSelf)
         {
-            hitPoints -= damage;
+            healthBarParent.SetActive(true);
+        }
+        if (!isHurt && !isStunned)
+        {
+            currentHealth -= damage;
             isHurt = true;
         }
+        healthBar.fillAmount = (currentHealth) / (float)hitPoints; // Mathf.Lerp(currentHealth / (float)hitPoints, currentHealth - damage / (float)hitPoints, Time.deltaTime);//
     }
     // Enemy Hurt Function
     public void Hurt()
@@ -172,7 +191,7 @@ public class EnemyUnit : MonoBehaviour
         canAttack = false;
         Vector2 knockBckVector = (target.position - transform.position).normalized;
         rb.velocity = Vector2.zero;
-        rb.AddForce(knockBckVector * -KNOCKAMOUNT * Time.deltaTime, ForceMode2D.Impulse);
+        rb.AddForce(knockBckVector * -KNOCKAMOUNT * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
     //Enemy Stunned Function
     public void Stunned()
@@ -184,7 +203,7 @@ public class EnemyUnit : MonoBehaviour
     //Enemy Death
     public bool Death()
     {
-        if (hitPoints <= 0)
+        if (currentHealth <= 0)
         {
             EnemyManager.Instance.Died(this.gameObject.GetComponent<EnemyUnit>());
             GameObject.Destroy(gameObject, 2.8f);

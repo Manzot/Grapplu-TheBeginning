@@ -38,6 +38,7 @@ public class RangedEnemy : EnemyUnit
 
     public override void Refresh()
     {
+        base.Refresh();
         if (Input.GetKeyDown(KeyCode.K))
         {
             if((transform.position - target.position).sqrMagnitude < 0.5f)
@@ -55,16 +56,11 @@ public class RangedEnemy : EnemyUnit
                 if (!targetFound)
                 {
                     FindTarget();
-                    MoveLeftRight();
                 }
                 else
                 {
                     AttackMove();
                 }
-            }
-            else if (isHurt)
-            {
-                Hurt();
             }
         }
     }
@@ -72,6 +68,22 @@ public class RangedEnemy : EnemyUnit
     public override void PhysicsRefresh()
     {
         base.PhysicsRefresh();
+
+        if (!Death())
+        {
+
+            if (!isHurt && !isStunned)
+            {
+                if (!targetFound)
+                {
+                    MoveLeftRight();
+                }
+            }
+            else if (isHurt)
+            {
+                Hurt();
+            }
+        }
     }
     void Timers()
     {
@@ -145,7 +157,7 @@ public class RangedEnemy : EnemyUnit
                 if (distanceToPlayerX > STOPPING_DISTANCE + 4) {
                     MoveLeftRight();
                 } else {
-                    rb.velocity = new Vector2(dirOppToPlayer.x, rb.velocity.y) * (speed / 1.5f) * Time.deltaTime;
+                    rb.velocity = new Vector2(dirOppToPlayer.x, rb.velocity.y) * (speed / 1.5f) * Time.fixedDeltaTime;
                 }                   
             }
         }
@@ -193,13 +205,13 @@ public class RangedEnemy : EnemyUnit
         }
 
         if (moveRight)
-            rb.velocity = new Vector2(1 * (speed / 1.5f) * Time.deltaTime, rb.velocity.y); // Move Right
+            rb.velocity = new Vector2(1 * (speed / 1.5f) * Time.fixedDeltaTime, rb.velocity.y); // Move Right
         else
-            rb.velocity = new Vector2(-1 * (speed / 1.5f) * Time.deltaTime, rb.velocity.y); // Move Left
+            rb.velocity = new Vector2(-1 * (speed / 1.5f) * Time.fixedDeltaTime, rb.velocity.y); // Move Left
     }
     void RunAwayFromTarget()
     {
-        rb.velocity = new Vector2(dirOppToPlayer.x * speed * Time.deltaTime, rb.velocity.y);
+        rb.velocity = new Vector2(dirOppToPlayer.x * speed * Time.fixedDeltaTime, rb.velocity.y);
 
         RaycastHit2D hit = Physics2D.Raycast(Vector2.zero, Vector2.zero);
         RaycastHit2D hit2 = Physics2D.Raycast(transform.position, transform.up, 1.5f);
@@ -220,19 +232,19 @@ public class RangedEnemy : EnemyUnit
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                Jump2(new Vector2(dirOppToPlayer.x * 60f, jumpForce) * Time.deltaTime);
+                Jump2(new Vector2(dirOppToPlayer.x * 60f, jumpForce) * Time.fixedDeltaTime);
             }
         }
         if (hit2.collider)
         {
             if (hit2.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                Jump2(new Vector2(dirOppToPlayer.x * 10f, jumpForce) * Time.deltaTime);
+                Jump2(new Vector2(dirOppToPlayer.x * 10f, jumpForce) * Time.fixedDeltaTime);
             }
         }
         if (hit3.collider == null)
         {
-            Jump2(new Vector2(dirOppToPlayer.x * 60f, jumpForce) * Time.deltaTime);
+            Jump2(new Vector2(dirOppToPlayer.x * 60f, jumpForce) * Time.fixedDeltaTime);
         }
 
     }
