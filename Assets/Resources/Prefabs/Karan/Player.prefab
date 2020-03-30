@@ -213,7 +213,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -250,7 +250,7 @@ MonoBehaviour:
   ropeHook: {x: 0, y: 0}
   speed: 200
   swingForce: 2
-  jumpForce: 800
+  jumpForce: 600
   oldJumpForce: 0
   horizontal: 0
   aimAngle: 0
