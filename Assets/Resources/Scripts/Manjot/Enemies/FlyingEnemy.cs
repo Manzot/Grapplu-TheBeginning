@@ -46,18 +46,12 @@ public class FlyingEnemy : EnemyUnit
                 {
                     FindTarget();
                     FindTarget(new Vector3(transform.right.x, -1f, 0), 6f);
-                    RandomMove();
                     DirectionFacingWhenMoving();
                 }
                 else
                 {
-                    AttackMove();
                     LookingAtTarget();
                 }
-            }
-            else if (isHurt)
-            {
-                Hurt();
             }
         }
         else
@@ -70,6 +64,25 @@ public class FlyingEnemy : EnemyUnit
     public override void PhysicsRefresh()
     {
         base.PhysicsRefresh();
+
+        if (!Death())
+        {
+            if (!isHurt && !isStunned)
+            {
+                if (!targetFound)
+                {
+                    RandomMove();
+                }
+                else
+                {
+                    AttackMove();
+                }
+            }
+            else if (isHurt)
+            {
+                Hurt();
+            }
+        }
     }
 
     void Timers()

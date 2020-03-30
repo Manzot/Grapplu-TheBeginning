@@ -56,16 +56,11 @@ public class RangedEnemy : EnemyUnit
                 if (!targetFound)
                 {
                     FindTarget();
-                    MoveLeftRight();
                 }
                 else
                 {
                     AttackMove();
                 }
-            }
-            else if (isHurt)
-            {
-                Hurt();
             }
         }
     }
@@ -73,6 +68,22 @@ public class RangedEnemy : EnemyUnit
     public override void PhysicsRefresh()
     {
         base.PhysicsRefresh();
+
+        if (!Death())
+        {
+
+            if (!isHurt && !isStunned)
+            {
+                if (!targetFound)
+                {
+                    MoveLeftRight();
+                }
+            }
+            else if (isHurt)
+            {
+                Hurt();
+            }
+        }
     }
     void Timers()
     {

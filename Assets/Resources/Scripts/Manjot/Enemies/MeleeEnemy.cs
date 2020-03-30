@@ -40,11 +40,30 @@ public class MeleeEnemy : EnemyUnit
 
             if (!isHurt && !isStunned)
             {
-                DirectionFacingWhenMoving();
+                if (!targetFound) // Searching for target
+                {
+                    DirectionFacingWhenMoving();
+                    FindTarget();
+                }
+                else // When target is found
+                {
+                    LookingAtTarget();
+                }
+            }
+        }
+    }
+
+    public override void PhysicsRefresh()
+    {
+        base.PhysicsRefresh();
+
+        if (!Death())
+        {
+            if (!isHurt && !isStunned)
+            {
                 if (!targetFound) // Searching for target
                 {
                     MoveLeftRight();
-                    FindTarget();
                 }
                 else // When target is found
                 {
@@ -57,6 +76,7 @@ public class MeleeEnemy : EnemyUnit
                 Hurt();
             }
         }
+
     }
     //FollowTarget FInal Complete Version
     void TargetFollowFunctionFull()
@@ -111,7 +131,7 @@ public class MeleeEnemy : EnemyUnit
 
         if (distanceToPlayerX < ATTACKING_DISTANCE && distanceToPlayerY < ATTACKING_DISTANCE)
         {
-            LookingAtTarget();
+            //LookingAtTarget();
             rb.velocity = new Vector2(0, rb.velocity.y);
             if (attackCooldownTimer <= 0)
             {
@@ -130,7 +150,7 @@ public class MeleeEnemy : EnemyUnit
 
         if (distanceToPlayerX < STOPPING_DISTANCE && distanceToPlayerY < STOPPING_DISTANCE)
         {
-            LookingAtTarget();
+           // LookingAtTarget();
             if (attackMoveLR)
             {
                 MoveLeftRight(2f);

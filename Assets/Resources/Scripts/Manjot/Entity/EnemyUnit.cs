@@ -191,7 +191,7 @@ public class EnemyUnit : MonoBehaviour
         canAttack = false;
         Vector2 knockBckVector = (target.position - transform.position).normalized;
         rb.velocity = Vector2.zero;
-        rb.AddForce(knockBckVector * -KNOCKAMOUNT * Time.deltaTime, ForceMode2D.Impulse);
+        rb.AddForce(knockBckVector * -KNOCKAMOUNT * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
     //Enemy Stunned Function
     public void Stunned()
