@@ -149,7 +149,7 @@ public class EnemyUnit : MonoBehaviour
     /// Jumping function
     public void Jump(Vector2 dir)
     {
-        if (Physics2D.Raycast(transform.position, transform.up, 1.3f, LayerMask.GetMask("Ground"))
+        if (Physics2D.Raycast(new Vector2(transform.position.x , transform.position.y), transform.up, 1.3f, LayerMask.GetMask("Ground"))
         || Physics2D.Raycast(transform.position, transform.right, 1.3f, LayerMask.GetMask("Ground")))
         {
             if (Grounded() && jumpTime < 0)

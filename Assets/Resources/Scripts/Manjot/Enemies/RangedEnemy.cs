@@ -44,7 +44,7 @@ public class RangedEnemy : EnemyUnit
             if((transform.position - target.position).sqrMagnitude < 0.5f)
                 TakeDamage(10);
         }
-        //DrawRays();
+
         if (!Death())
         {
             Timers();

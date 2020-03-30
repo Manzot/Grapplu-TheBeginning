@@ -45,12 +45,6 @@ public class MeleeEnemy : EnemyUnit
                     DirectionFacingWhenMoving();
                     FindTarget();
                 }
-                else // When target is found
-                {
-                    LookingAtTarget();
-                    TargetFollowFunctionFull();
-                   // AtackMove();
-                }
             }
         }
     }
@@ -63,14 +57,14 @@ public class MeleeEnemy : EnemyUnit
         {
             if (!isHurt && !isStunned)
             {
-                if (!targetFound) // Searching for target
+                if (!targetFound) 
                 {
                     MoveLeftRight();
                 }
                 else // When target is found
                 {
-                   // TargetFollowFunctionFull();
-                    //AtackMove();
+                    TargetFollowFunctionFull();
+                    AtackMove();
                 }
             }
             else if (isHurt)
@@ -83,9 +77,10 @@ public class MeleeEnemy : EnemyUnit
     //FollowTarget FInal Complete Version
     void TargetFollowFunctionFull()
     {
+        DirectionFacingWhenMoving();
         if (!canAttack && !isJumping)
         {
-            if (target.position.y > transform.position.y + .5f)
+            if (target.position.y > transform.position.y + 1f)
             {
                 FollowWithAstar();
             }
@@ -99,7 +94,8 @@ public class MeleeEnemy : EnemyUnit
     /// Following target 
     void FollowPlayer()
     {
-        if (target.position.y < transform.position.y - .2f)
+        DirectionFacingWhenMoving();
+        if (target.position.y < transform.position.y - .5f)
         {
             rb.velocity = (new Vector2(transform.right.x * speed * Time.fixedDeltaTime, rb.velocity.y));
         }
@@ -122,7 +118,11 @@ public class MeleeEnemy : EnemyUnit
             rb.velocity = newPath * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
 
             if (aStarPath[1].position.y > aStarPath[0].position.y)
-                Jump(new Vector2(rb.velocity.x, jumpForce) * Time.fixedDeltaTime);
+                Jump(new Vector2(rb.velocity.x * 10f, jumpForce) * Time.fixedDeltaTime);
+        }
+        else
+        {
+            FollowPlayer();
         }
     }
     //Movement while in Attack Mode
@@ -133,7 +133,7 @@ public class MeleeEnemy : EnemyUnit
 
         if (distanceToPlayerX < ATTACKING_DISTANCE && distanceToPlayerY < ATTACKING_DISTANCE)
         {
-            //LookingAtTarget();
+            LookingAtTarget();
             rb.velocity = new Vector2(0, rb.velocity.y);
             if (attackCooldownTimer <= 0)
             {
@@ -152,7 +152,7 @@ public class MeleeEnemy : EnemyUnit
 
         if (distanceToPlayerX < STOPPING_DISTANCE && distanceToPlayerY < STOPPING_DISTANCE)
         {
-           // LookingAtTarget();
+            LookingAtTarget();
             if (attackMoveLR)
             {
                 MoveLeftRight(2f);
@@ -205,6 +205,7 @@ public class MeleeEnemy : EnemyUnit
     }
     void MoveLeftRight(float speedDivision)
     {
+        LookingAtTarget();
         int rnd = Random.Range(0, 2);
         if (attackMoveTimer <= 0)
         {
@@ -260,7 +261,6 @@ public class MeleeEnemy : EnemyUnit
     // All the Timers
     void Timers()
     {
-
         moveTimeCounter -= Time.deltaTime;
         jumpTime -= Time.deltaTime;
         attackMoveTimer -= Time.deltaTime;
@@ -282,7 +282,7 @@ public class MeleeEnemy : EnemyUnit
     {
         if (targetFound)
         {
-            Debug.DrawRay(transform.position, transform.up * 1.3f, Color.red);
+            Debug.DrawRay(new Vector2(feet.transform.position.x - .5f, transform.position.y), transform.up * 1.3f, Color.red);
             Debug.DrawRay(transform.position, transform.right * 1.3f, Color.red);
         }
         else
