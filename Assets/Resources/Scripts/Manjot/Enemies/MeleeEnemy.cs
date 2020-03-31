@@ -16,6 +16,7 @@ public class MeleeEnemy : EnemyUnit
     public override void Initialize()
     {
         base.Initialize();
+        eType = EnemyType.Melee;
     }
     //// Start Function
     public override void PostInitialize()
@@ -117,7 +118,7 @@ public class MeleeEnemy : EnemyUnit
             Vector2 newPath = new Vector2(aStarPath[1].position.x - aStarPath[0].position.x, 0).normalized;
             rb.velocity = newPath * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
 
-            if (aStarPath[1].position.y > aStarPath[0].position.y)
+            if (aStarPath[1].position.y > aStarPath[0].position.y) { }
                 Jump(new Vector2(rb.velocity.x * 10f, jumpForce) * Time.fixedDeltaTime);
         }
         else

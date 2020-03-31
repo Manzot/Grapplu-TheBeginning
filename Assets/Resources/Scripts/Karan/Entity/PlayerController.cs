@@ -8,6 +8,7 @@ public enum Abilities { Grappler, Rewind, SlowMotion }
 public class PlayerController : MonoBehaviour, IDamage
 {
     const float SLOMO_FACTOR = 0.3f;
+    const float maxGravity = -12f;
 
     public Vector2 ropeHook;
     Collider2D groundCheckColi;
@@ -106,6 +107,13 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     public void PhysicsRefresh()
     {
+        if (!Grounded())
+        {
+            if(rb.velocity.y < maxGravity)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, maxGravity);
+            }
+        }
         if(isSwinging)
         SwingDirectionForce();
 

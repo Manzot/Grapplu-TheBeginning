@@ -103,7 +103,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -484893581
-  m_SortingLayer: 6
+  m_SortingLayer: 5
   m_SortingOrder: 6
   m_Sprite: {fileID: 6286595657586805340, guid: cebe0194919e1b34fa5216a53ba42448,
     type: 3}
@@ -186,6 +186,7 @@ MonoBehaviour:
   target: {fileID: 0}
   feet: {fileID: 7909186482538835572}
   walkable: {fileID: 0}
+  jumpDust: {fileID: 0}
 --- !u!95 &1539609709
 Animator:
   serializedVersion: 3

@@ -45,15 +45,15 @@ public class RopeSystem : MonoBehaviour
     void Update()
     {        
         HandleInput(player.angleDirection);
-
-        if(isRopeAttached)
-        HandleRopeLength();
-
+        
         JointAttached();
 
         if (hook.gameObject.activeSelf)
         {
             GrappleCollisionCheck();
+            if (isRopeAttached)
+                HandleRopeLength();
+
             ropeLine.SetPosition(0, hookShootPos.transform.position);
             ropeLine.SetPosition(1, hook.transform.position);
         }
@@ -98,14 +98,14 @@ public class RopeSystem : MonoBehaviour
     {
         if (isRopeAttached && hook)
         {
-            player.isSwinging = true;
-            player.ropeHook = hook.gameObject.transform.position;
-            joint.enabled = true;
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = hook.transform.position;
-            joint.distance = Vector2.Distance(player.transform.position, hook.transform.position);
-/*            Debug.Log(joint.distance);*/
-            
+            if (!joint.gameObject.activeSelf)
+                player.isSwinging = true;
+                player.ropeHook = hook.gameObject.transform.position;
+            {
+                joint.enabled = true;
+                joint.autoConfigureConnectedAnchor = false;
+                joint.connectedAnchor = hook.transform.position;
+            }
         }
         else
         {
@@ -117,13 +117,14 @@ public class RopeSystem : MonoBehaviour
     }
     private void HandleRopeLength()
     {
-        if (Input.GetAxis("Vertical") >= 1f/* && isRopeAttached*/)
+        if (Input.GetAxis("Vertical") > 0f/* && isRopeAttached*/)
         {
             joint.distance -= Time.deltaTime * climbSpeed;
         }
         else if (Input.GetAxis("Vertical") < 0f/* && isRopeAttached*/)
         {
-            joint.distance += Time.deltaTime * climbSpeed;
+            if(!player.Grounded())
+                joint.distance += Time.deltaTime * climbSpeed;
         }
     }
     //private void OnDrawGizmos()

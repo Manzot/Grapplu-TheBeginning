@@ -27,6 +27,7 @@ public class RangedEnemy : EnemyUnit
     public override void Initialize()
     {
         base.Initialize();
+        eType = EnemyType.Ranged;
     }
 
     public override void PostInitialize()

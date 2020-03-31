@@ -17,6 +17,7 @@ public class FlyingEnemy : EnemyUnit
     public override void Initialize()
     {
         base.Initialize();
+        eType = EnemyType.Flying;
     }
 
     public override void PostInitialize()

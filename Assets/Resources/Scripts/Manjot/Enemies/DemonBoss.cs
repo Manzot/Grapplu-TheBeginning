@@ -24,8 +24,19 @@ public class DemonBoss : BossUnit
         base.Refresh();
         if (!Dead())
         {
+            if (!isSpawning)
+                MoveToPlayer();
+            else
+            {
+                if (rb.velocity.y < -10f)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, -10f);
+                }
+            }
+
             anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
             LookingAtTarget();
+
         }
     }
 
@@ -33,21 +44,13 @@ public class DemonBoss : BossUnit
     {
         base.PhysicsRefresh();
 
-        if(!isSpawning)
-            MoveToPlayer();
-        else
-        {
-            if (rb.velocity.y < -10f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, -10f);
-            }
-        }
+        
     }
 
     public void MoveToPlayer()
     {
         dirTowardsTarget = (target.position - transform.position).normalized;
-        rb.velocity = new Vector2(dirTowardsTarget.x, rb.velocity.y) * speed * Time.fixedDeltaTime;
+        rb.velocity = new Vector2(dirTowardsTarget.x, 0) * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
     }
 
     public void LookingAtTarget()

@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum EnemyType { Melee, Ranged, Flying};
 public class EnemyUnit : MonoBehaviour
 {
     const float KNOCKAMOUNT = 300;
+    const float maxGravity = -12f;
+
+    public EnemyType eType;
 
     [HideInInspector]
     public Rigidbody2D rb;
@@ -89,7 +93,16 @@ public class EnemyUnit : MonoBehaviour
     }
     public virtual void PhysicsRefresh()
     {
-
+        if(eType != EnemyType.Flying)
+        {
+            if (!Grounded())
+            {
+                if (rb.velocity.y < maxGravity)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, maxGravity);
+                }
+            }
+        }
     }
     /// To check which direction the enemy is facing
     public void DirectionFacingWhenMoving()
