@@ -25,25 +25,29 @@ public class GameFlow: IManageables
 
     public void Initialize()
     {
-        EnemyManager.Instance.Initialize();
         PlayerManager.Instance.Initialize();
+        EnemyManager.Instance.Initialize();
+        BossManager.Instance.Initialize();
     }
     public void PostInitialize()
     {
-        TimerDelg.Instance.PostInitialize();
-        EnemyManager.Instance.PostInitialize();
         PlayerManager.Instance.PostInitialize();
+        EnemyManager.Instance.PostInitialize();
+        BossManager.Instance.PostInitialize();
+        TimerDelg.Instance.PostInitialize();
     }
     public void Refresh()
     {
-        TimerDelg.Instance.Refresh();
-        EnemyManager.Instance.Refresh();
         PlayerManager.Instance.Refresh();
+        EnemyManager.Instance.Refresh();
+        BossManager.Instance.Refresh();
+        TimerDelg.Instance.Refresh();
     }
     public void PhysicsRefresh()
     {
-        EnemyManager.Instance.PhysicsRefresh();
         PlayerManager.Instance.PhysicsRefresh();
+        EnemyManager.Instance.PhysicsRefresh();
+        BossManager.Instance.PhysicsRefresh();
     }
 
 }

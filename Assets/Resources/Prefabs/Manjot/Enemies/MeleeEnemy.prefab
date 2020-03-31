@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7909186482538835572}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7909186483129055155}
   - component: {fileID: 7909186483129055156}
   - component: {fileID: 1539609709}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: MeleeEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -226,6 +226,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2744146331297708266, guid: ba9d5e652e9237a429182f53c28b81f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3303645732610523364, guid: ba9d5e652e9237a429182f53c28b81f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978391202145588484, guid: ba9d5e652e9237a429182f53c28b81f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4153125283294895300, guid: ba9d5e652e9237a429182f53c28b81f9,
         type: 3}

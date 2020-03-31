@@ -57,7 +57,6 @@ public class PlayerManager : IManageables
     }
     public void IsDead()
     {
-
         if (!player.isAlive)
         {
             Vector3 deathLoc = player.deathLoc;

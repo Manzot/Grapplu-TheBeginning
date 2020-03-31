@@ -73,6 +73,11 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     public void Refresh()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            BossManager.Instance.SpawnBoss(BossManager.Instance.demonBoss);
+        }
+
         MovementAndJump();
         SetCrosshairPoint(CrossairDirection());
 

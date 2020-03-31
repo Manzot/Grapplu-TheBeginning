@@ -16,8 +16,8 @@ TagManager:
   - 
   - Ground
   - 
-  - Player
   - Enemy
+  - Player
   - Hook
   - Grappleable
   - Triggers
@@ -54,11 +54,11 @@ TagManager:
   - name: Objects
     uniqueID: 2369251481
     locked: 0
-  - name: Player
-    uniqueID: 3613005317
-    locked: 0
   - name: Enemy
     uniqueID: 3810073715
+    locked: 0
+  - name: Player
+    uniqueID: 3613005317
     locked: 0
   - name: Throwables
     uniqueID: 2203462511
