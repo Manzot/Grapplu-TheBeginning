@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class DemonBoss : BossUnit
 {
+    const float maxGravity = -12f;
     Vector2 dirTowardsTarget;
     bool isSpawning = true;
+    float attackCooldownTimer;
+    bool isAttacking;
 
     public override void Initialize()
     {
@@ -16,6 +19,7 @@ public class DemonBoss : BossUnit
     public override void PostInitialize()
     {
         base.PostInitialize();
+        attackCooldownTimer = attackCooldown;
         TimerDelg.Instance.Add(() => { isSpawning = false; }, 3f);
     }
 
@@ -24,13 +28,15 @@ public class DemonBoss : BossUnit
         base.Refresh();
         if (!Dead())
         {
+            Timers();
+
             if (!isSpawning)
-                MoveToPlayer();
+                AttackMove();
             else
             {
-                if (rb.velocity.y < -10f)
+                if (rb.velocity.y < maxGravity)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, -10f);
+                    rb.velocity = new Vector2(rb.velocity.x, maxGravity);
                 }
             }
 
@@ -43,7 +49,6 @@ public class DemonBoss : BossUnit
     public override void PhysicsRefresh()
     {
         base.PhysicsRefresh();
-
         
     }
 
@@ -51,6 +56,32 @@ public class DemonBoss : BossUnit
     {
         dirTowardsTarget = (target.position - transform.position).normalized;
         rb.velocity = new Vector2(dirTowardsTarget.x, 0) * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
+    }
+
+    void AttackMove()
+    {
+        int rndAttack = Random.Range(0, 4);
+
+        switch (rndAttack)
+        {
+            case 0:
+                SlashAttack1();
+                break;
+            case 1:
+                SlashAttack2();
+                break;
+            case 2:
+                Kick();
+                break;
+            case 3:
+                JumpAttack();
+                break;
+        }
+
+        if (!isAttacking)
+        {
+            MoveToPlayer();
+        }
     }
 
     public void LookingAtTarget()
@@ -61,28 +92,37 @@ public class DemonBoss : BossUnit
             transform.rotation = Quaternion.Euler(new Vector2(0, 0));
     }
 
-
     public void SlashAttack1()
     {
+        rb.velocity = new Vector2(0, rb.velocity.y);
         anim.SetBool("isAttacking", true);
         anim.SetTrigger("slash_1");
     }
     public void SlashAttack2()
     {
+        rb.velocity = new Vector2(0, rb.velocity.y);
         anim.SetBool("isAttacking", true);
         anim.SetTrigger("slash_2");
     }
     public void Kick()
     {
+        rb.velocity = new Vector2(0, rb.velocity.y);
         anim.SetBool("isAttacking", true);
         anim.SetTrigger("kick_1");
     }
     public void JumpAttack()
     {
+        //rb.velocity = new Vector2(0, rb.velocity.y);
         anim.SetBool("isAttacking", true);
         anim.SetTrigger("jump_attack");
     }
-    public void BoolDisabler(string boolName)
+    public void BoolDisabler()
     {
+        isAttacking = false;
+    }
+
+    void Timers()
+    {
+        attackCooldownTimer -= Time.deltaTime;
     }
 }
