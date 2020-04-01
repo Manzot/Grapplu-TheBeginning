@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 8665725439518083283}
   - component: {fileID: 8665725439518083282}
   m_Layer: 10
-  m_Name: Demon_Boss 1
+  m_Name: Demon_Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
   speed: 100
   jumpForce: 0
   hitPoints: 100
-  attackCooldown: 0
+  attackCooldown: 4
   enraged: 0
   isHurt: 0
   groundCheckColi: {fileID: 0}
