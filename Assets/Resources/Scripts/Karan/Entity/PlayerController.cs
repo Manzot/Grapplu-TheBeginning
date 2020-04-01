@@ -307,8 +307,9 @@ public class PlayerController : MonoBehaviour, IDamage
             animator.SetTrigger("isDead");
 
             isAlive = false;
+            rb.velocity = Vector2.zero;
             deathLoc = this.transform.position;
-            this.gameObject.SetActive(false);
+            TimerDelg.Instance.Add(() => this.gameObject.SetActive(false), 2);
             PlayerManager.Instance.IsDead();
         }
     }
