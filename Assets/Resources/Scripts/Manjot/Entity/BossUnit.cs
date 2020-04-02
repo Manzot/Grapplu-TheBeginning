@@ -10,6 +10,10 @@ public class BossUnit : MonoBehaviour
     public float attackCooldown;
     public bool enraged;
     public bool isHurt;
+    public bool isAttacking;
+
+
+    const float maxGravity = -12;
 
     [HideInInspector]
     public Collider2D groundCheckColi;
@@ -21,6 +25,9 @@ public class BossUnit : MonoBehaviour
     //[HideInInspector]
     public float currentHealth;
 
+    SpriteRenderer sprite;
+    Color defaultColor;
+
     [HideInInspector]
     public Rigidbody2D rb;
     [HideInInspector]
@@ -30,20 +37,38 @@ public class BossUnit : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
         target = FindObjectOfType<PlayerController>().transform;
     }
     public virtual void PostInitialize()
     {
+        defaultColor = sprite.material.color;
         currentHealth = hitPoints;
     }
 
     public virtual void Refresh()
     {
+        if (currentHealth < hitPoints / 2)
+        {
+            enraged = true;
+            anim.SetBool("enraged", true);
+        }
 
+        if (isHurt)
+        {
+            sprite.material.color = Color.red;
+        }
+        else
+        {
+            sprite.material.color = defaultColor;
+        }
     }
     public virtual void PhysicsRefresh()
     {
-       
+        if (rb.velocity.y < maxGravity)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, maxGravity);
+        }
     }
     public bool Grounded()
     {
@@ -54,8 +79,11 @@ public class BossUnit : MonoBehaviour
     {
         if (!isHurt)
         {
+            isHurt = true;
             currentHealth -= damage;
-            //anim.SetBool("isHurt", true);
+           // anim.SetTrigger("is_hurt");
+            rb.velocity = Vector2.zero;
+            TimerDelg.Instance.Add(()=> { isHurt = false; }, .2f);
         }
     }
 
@@ -63,8 +91,6 @@ public class BossUnit : MonoBehaviour
     {
         if(currentHealth <= 0)
         {
-            //anim.SetBool("isHurt", true);
-            //anim.SetTrigger("is_hurt");
             anim.SetTrigger("death");
             Destroy(gameObject, 2f);
             BossManager.Instance.Died(this);

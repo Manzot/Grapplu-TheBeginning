@@ -8,11 +8,13 @@ public enum Abilities { Grappler, Rewind, SlowMotion }
 public class PlayerController : MonoBehaviour, IDamage
 {
     const float SLOMO_FACTOR = 0.3f;
+    const float ATTACK_RANGE = 0.3f;
     const float maxGravity = -12f;
 
     public Vector2 ropeHook;
     Collider2D groundCheckColi;
     public float speed;
+    public int damage = 10;
     public float swingForce;
     public float jumpForce;
     public float oldJumpForce;
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public bool groundCheck;
     public bool isSwinging;
     public bool isAlive;
+    bool isHurt;
     
 
     public Transform feet;
@@ -46,6 +49,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public GameObject crosshair;
     TimeSlowMo timeSlowMo;
+
+    Transform punchesPos;
     
     //Hook hook;
 
@@ -69,62 +74,67 @@ public class PlayerController : MonoBehaviour, IDamage
     public void PostInitialize()
     {
         pointsInTime = new List<PointInTime>();
-        rb = GetComponent<Rigidbody2D>();
-       // hook = FindObjectOfType<Hook>();
+        punchesPos = transform.Find("Punches").transform;
     }
     public void Refresh()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        Debug.Log(health);
+        if (!Dead())
         {
-            BossManager.Instance.SpawnBoss(BossManager.Instance.demonBoss);
-        }
-
-        MovementAndJump();
-        SetCrosshairPoint(CrossairDirection());
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (!timeSlow)
+            Jump();
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                TimeSlowAbility();
+                BossManager.Instance.SpawnBoss(BossManager.Instance.demonBoss);
+            }
 
+            SetCrosshairPoint(CrossairDirection());
+
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                if (!timeSlow)
+                {
+                    TimeSlowAbility();
+                }
+            }
+
+            TimeSlowReset();
+            Attack();
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                isAttacking = true;
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                StartRewind();
+            }
+            if (Input.GetKeyUp(KeyCode.Return))
+            {
+                StopRewind();
             }
         }
-        TimeSlowReset();
-        Attack();
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            isAttacking = true;
-        }
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            StartRewind();
-        }
-        if (Input.GetKeyUp(KeyCode.Return))
-        {
-            StopRewind();
-        }
+      
     }
     public void PhysicsRefresh()
     {
-        if (!Grounded())
+        if (!Dead())
         {
-            if(rb.velocity.y < maxGravity)
+            Movement();
+            GravityCheck();
+           
+            if (isSwinging)
+                SwingDirectionForce();
+
+            if (isRewinding)
             {
-                rb.velocity = new Vector2(rb.velocity.x, maxGravity);
+                Rewind();
+            }
+            else
+            {
+                Record();
             }
         }
-        if(isSwinging)
-        SwingDirectionForce();
-
-        if (isRewinding)
-        {
-            Rewind();
-        }
-        else
-        {
-            Record();
-        }
+        
     }
 
     private void TimeSlowAbility()
@@ -149,30 +159,13 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void DeflectBullet(GameObject go)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Throwable"))
-        {
-            if (timeSlow && isAttacking)
-            {
-                DeflectBullet(collision);
-            }
-            else
-            {
-                TakeDamage(5);
-                collision.gameObject.SetActive(false);
-
-            }
-        }
-    }
-
-    private void DeflectBullet(Collider2D collision)
-    {
-        Rigidbody2D rbGO = collision.gameObject.GetComponent<Rigidbody2D>();
+        Rigidbody2D rbGO = go.GetComponent<Rigidbody2D>();
         rbGO.velocity = -1 * rbGO.velocity;
-        Vector2 dir = (collision.gameObject.transform.position - transform.position).normalized;
+        Vector2 dir = (go.transform.position - transform.position).normalized;
         var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        collision.gameObject.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
+        go.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
     }
 
     /*Get a normalized direction vector from the player to the hook point 
@@ -202,7 +195,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
     /*Movement and jump of the player*/
-    public void MovementAndJump()
+    public void Movement()
     {
         horizontal = Input.GetAxis("Horizontal");
         if (rb.velocity.x > 0)
@@ -210,15 +203,19 @@ public class PlayerController : MonoBehaviour, IDamage
         else if (rb.velocity.x < 0)
             transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
 
-
         rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
 
+       
+    }
+
+    public void Jump()
+    {
         if (Grounded())
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             {
-                if(!timeSlow)
+                if (!timeSlow)
                     rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime), ForceMode2D.Impulse);
                 else
                     rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.unscaledDeltaTime), ForceMode2D.Impulse);
@@ -282,7 +279,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (isAttacking)
         {
-            // animator.SetTrigger("Attack");
+            DamageEnemies(damage);
             animator.SetBool("isAttacking", true);
         }
         else
@@ -297,20 +294,40 @@ public class PlayerController : MonoBehaviour, IDamage
         isAttacking = false;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
-        health -= damage;
-        animator.SetTrigger("isHurt");
-        Debug.Log(health);
+        if (!isHurt)
+        {
+            isHurt = true;
+            health -= damage;
+            animator.SetTrigger("isHurt");
+            TimerDelg.Instance.Add(() => { isHurt = false; }, 1f);
+        }
+    }
+
+    public bool Dead()
+    {
         if (health <= 0)
         {
-            animator.SetTrigger("isDead");
-
-            isAlive = false;
             rb.velocity = Vector2.zero;
+            animator.SetTrigger("isDead");
+            isAlive = false;
             deathLoc = this.transform.position;
             TimerDelg.Instance.Add(() => this.gameObject.SetActive(false), 2);
             PlayerManager.Instance.IsDead();
+            return true;
+        }
+        return false;
+    }
+
+    void GravityCheck()
+    {
+        if (!Grounded())
+        {
+            if (rb.velocity.y < maxGravity)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, maxGravity);
+            }
         }
     }
 
@@ -352,6 +369,29 @@ public class PlayerController : MonoBehaviour, IDamage
         else
         {
             StopRewind();
+        }
+    }
+
+    public void DamageEnemies(int  _damage)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(punchesPos.position, transform.right, ATTACK_RANGE);
+
+        if (hit.collider)
+        {
+            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                Debug.Log("hurt");
+                hit.collider.gameObject.GetComponent<EnemyUnit>().TakeDamage(_damage);
+            }
+            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Boss"))
+            {
+                hit.collider.gameObject.GetComponent<BossUnit>().TakeDamage(_damage);
+            }
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Throwable"))
+            {
+                if (timeSlow)
+                    DeflectBullet(hit.collider.gameObject);
+            }
         }
     }
 }

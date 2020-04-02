@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeEnemy : EnemyUnit
 {
-    const float ATTACKING_DISTANCE = 0.3f;
+    const float ATTACKING_DISTANCE = 0.4f;
     const float STOPPING_DISTANCE = 7f;
     const float ATTACK_MOVE_TIME = 1f;
 
@@ -28,11 +28,6 @@ public class MeleeEnemy : EnemyUnit
     public override void Refresh()
     {
         base.Refresh();
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if ((transform.position - target.position).sqrMagnitude < 0.5f)
-                TakeDamage(10);
-        }
 
         if (!Death())
         {
@@ -67,10 +62,6 @@ public class MeleeEnemy : EnemyUnit
                     TargetFollowFunctionFull();
                     AtackMove();
                 }
-            }
-            else if (isHurt)
-            {
-                Hurt();
             }
         }
 
@@ -244,13 +235,17 @@ public class MeleeEnemy : EnemyUnit
         else
             rb.velocity = new Vector2(-1 * (speed / speedDivision) * Time.fixedDeltaTime, rb.velocity.y); // Move Left
     }
+   
     /// Atttacking player and Walking Animations
     void AnimationCaller()
     {
         anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
 
         if (canAttack)
+        {
             anim.SetBool("isAttacking", true);
+            DamageTarget(0.4f, damage);
+        }
         else
             anim.SetBool("isAttacking", false);
 

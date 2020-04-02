@@ -30,11 +30,7 @@ public class FlyingEnemy : EnemyUnit
     public override void Refresh()
     {
         base.Refresh();
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if ((transform.position - target.position).sqrMagnitude < 0.5f)
-                TakeDamage(10);
-        }
+
         if (!Death())
         {
             Timers();
@@ -81,7 +77,7 @@ public class FlyingEnemy : EnemyUnit
             }
             else if (isHurt)
             {
-                Hurt();
+                KnockBack();
             }
         }
     }
@@ -104,6 +100,7 @@ public class FlyingEnemy : EnemyUnit
         if (canAttack)
         {
             anim.SetBool("isAttacking", true);
+            DamageTarget(0.2f, damage);
         }
         else
             anim.SetBool("isAttacking", false);

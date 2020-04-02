@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
- * this is going to be fking great game
- * maybe :)
- * muhahahahahaha
- */
-
 public class RangedEnemy : EnemyUnit
 {
     const float ATTACK_MOVE_TIMER = 2f;
@@ -40,11 +34,6 @@ public class RangedEnemy : EnemyUnit
     public override void Refresh()
     {
         base.Refresh();
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if((transform.position - target.position).sqrMagnitude < 0.5f)
-                TakeDamage(10);
-        }
 
         if (!Death())
         {
@@ -82,7 +71,7 @@ public class RangedEnemy : EnemyUnit
             }
             else if (isHurt)
             {
-                Hurt();
+                KnockBack();
             }
         }
     }
@@ -252,7 +241,7 @@ public class RangedEnemy : EnemyUnit
     void CreateThrowable()
     {
         if(!isJumping && !isHurt)
-            GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint);
+            GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint).GetComponent<ThrowAttacks>().damage = this.damage;
     }
     void DrawRays()
     {

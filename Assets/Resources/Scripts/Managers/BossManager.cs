@@ -64,7 +64,7 @@ public class BossManager : IManageables
 
     public BossUnit SpawnBoss(BossUnit boss)
     {
-        boss = GameObject.Instantiate(demonBoss, new Vector2(20, 25), Quaternion.identity, parent);
+        boss = GameObject.Instantiate(demonBoss, new Vector2(30, 25), Quaternion.identity, parent);
         bosses.Add(boss);
         boss.Initialize();
         boss.PostInitialize();

@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum EnemyType { Melee, Ranged, Flying};
-public class EnemyUnit : MonoBehaviour
+public class EnemyUnit : MonoBehaviour, IDamage
 {
-    const float KNOCKAMOUNT = 300;
+    const float KNOCKAMOUNT = 60;
     const float maxGravity = -12f;
 
     public EnemyType eType;
@@ -34,7 +34,7 @@ public class EnemyUnit : MonoBehaviour
     public bool isStunned;
 
     [HideInInspector]
-    public const float STUN_TIME = 0.5f;
+    public const float STUN_TIME = .5f;
     [HideInInspector]
     public const int ASTAR_PATH_OFFSET = 0;
 
@@ -65,6 +65,8 @@ public class EnemyUnit : MonoBehaviour
     [HideInInspector]
     public SetupWalkableArea walkable;
 
+    Transform attackPosition;
+
     public virtual void Initialize()
     {
         anim = GetComponent<Animator>();
@@ -72,7 +74,13 @@ public class EnemyUnit : MonoBehaviour
     }
     public virtual void PostInitialize()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        target = FindObjectOfType<PlayerController>().transform;
+
+        if(eType != EnemyType.Ranged)
+        {
+            attackPosition = transform.Find("AttackPos").transform;
+        }
+
         walkable = FindObjectOfType<SetupWalkableArea>();
         attackCooldownTimer = Random.Range(attackCooldown - 1f, attackCooldown + 2f);
         speed = Random.Range(speed - 30f, speed + 35f);
@@ -81,6 +89,7 @@ public class EnemyUnit : MonoBehaviour
         healthBarParent = healthBar.transform.parent.gameObject;
         defaultHbRotation = healthBarParent.transform.rotation;
         healthBarParent.SetActive(false);
+
         //line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
         //aStar = new AStarPathfinding(walkable.walkAbleArea);
     }
@@ -89,6 +98,15 @@ public class EnemyUnit : MonoBehaviour
         if (healthBarParent.activeSelf)
         {
             healthBar.transform.rotation = defaultHbRotation;
+        }
+        Debug.Log(currentHealth);
+        if (isStunned)
+        {
+            Stunned();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            TakeDamage(10);
         }
     }
     public virtual void PhysicsRefresh()
@@ -184,35 +202,6 @@ public class EnemyUnit : MonoBehaviour
             isJumping = true;
         }
     }
-    // Damage Taking Function
-    public void TakeDamage(int damage)
-    {
-        if (!healthBarParent.activeSelf)
-        {
-            healthBarParent.SetActive(true);
-        }
-        if (!isHurt && !isStunned)
-        {
-            currentHealth -= damage;
-            isHurt = true;
-        }
-        healthBar.fillAmount = (currentHealth) / (float)hitPoints; // Mathf.Lerp(currentHealth / (float)hitPoints, currentHealth - damage / (float)hitPoints, Time.deltaTime);//
-    }
-    // Enemy Hurt Function
-    public void Hurt()
-    {
-        canAttack = false;
-        Vector2 knockBckVector = (target.position - transform.position).normalized;
-        rb.velocity = Vector2.zero;
-        rb.AddForce(knockBckVector * -KNOCKAMOUNT * Time.fixedDeltaTime, ForceMode2D.Impulse);
-    }
-    //Enemy Stunned Function
-    public void Stunned()
-    {
-        isStunned = true;
-        rb.velocity = Vector2.zero;
-        TimerDelg.Instance.Add(() => { isStunned = false; }, STUN_TIME);
-    }
     //Enemy Death
     public bool Death()
     {
@@ -243,4 +232,45 @@ public class EnemyUnit : MonoBehaviour
 
     }
 
+    public void TakeDamage(int damage)
+    {
+        if (!healthBarParent.activeSelf)
+        {
+            healthBarParent.SetActive(true);
+        }
+        if (!isHurt && !isStunned)
+        {
+            isHurt = true;
+            currentHealth -= damage;
+            KnockBack();
+        }
+        healthBar.fillAmount = (currentHealth) / (float)hitPoints; // Mathf.Lerp(currentHealth / (float)hitPoints, currentHealth - damage / (float)hitPoints, Time.deltaTime);//
+    }
+    // Enemy Hurt Function
+    public void KnockBack()
+    {
+        rb.velocity = Vector2.zero;
+        canAttack = false;
+        Vector2 knockBckVector = (target.position - transform.position).normalized;
+        rb.AddForce(knockBckVector * -KNOCKAMOUNT * Time.fixedDeltaTime, ForceMode2D.Impulse);
+    }
+    //Enemy Stunned Function
+    public void Stunned()
+    {
+        isStunned = true;
+        rb.velocity = Vector2.zero;
+        TimerDelg.Instance.Add(() => { isStunned = false; isHurt = false; }, STUN_TIME);
+    }
+    public void DamageTarget(float attackRange, int _damage)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(attackPosition.position, transform.right, attackRange);
+
+        if (hit.collider)
+        {
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                hit.collider.gameObject.GetComponent<PlayerController>().TakeDamage(_damage);
+            }
+        }
+    }
 }
