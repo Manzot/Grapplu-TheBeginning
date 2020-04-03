@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 343845649170136246}
   - component: {fileID: 343845649170136245}
   - component: {fileID: 343845649170136241}
-  - component: {fileID: 343845649170136242}
+  - component: {fileID: 6581498322067735043}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
@@ -145,7 +145,7 @@ MonoBehaviour:
   speed: 120
   jumpForce: 0
   attackCooldown: 5
-  damage: 0
+  damage: 10
   hitPoints: 20
   healthBar: {fileID: 6471949397613427483}
   isHurt: 0
@@ -161,8 +161,8 @@ MonoBehaviour:
   target: {fileID: 0}
   feet: {fileID: 0}
   walkable: {fileID: 0}
---- !u!70 &343845649170136242
-CapsuleCollider2D:
+--- !u!61 &6581498322067735043
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -174,9 +174,19 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.018392213, y: 0.045880083}
-  m_Size: {x: 1.0300622, y: 0.8015673}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.96875, y: 0.6875}
+    newSize: {x: 0.96875, y: 0.6875}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.96875, y: 0.6875}
+  m_EdgeRadius: 0
 --- !u!1 &7670828621706462586
 GameObject:
   m_ObjectHideFlags: 0

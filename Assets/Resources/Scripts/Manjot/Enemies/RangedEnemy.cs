@@ -61,7 +61,6 @@ public class RangedEnemy : EnemyUnit
 
         if (!Death())
         {
-
             if (!isHurt)
             {
                 if (!targetFound)

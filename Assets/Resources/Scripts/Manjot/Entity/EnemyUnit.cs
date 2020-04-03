@@ -205,11 +205,10 @@ public class EnemyUnit : MonoBehaviour, IDamage
         if (currentHealth <= 0)
         {
             EnemyManager.Instance.Died(this.gameObject.GetComponent<EnemyUnit>());
-            GameObject.Destroy(gameObject, 2.8f);
-            anim.SetBool("isHurt", true);
-
-            anim.SetTrigger("death");
             rb.velocity = Vector2.zero;
+            anim.SetBool("isHurt", true);
+            anim.SetTrigger("death");
+            GameObject.Destroy(gameObject, 2.8f);
             return true;
         }
         return false;
