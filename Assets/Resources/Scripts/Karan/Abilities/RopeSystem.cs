@@ -19,6 +19,7 @@ public class RopeSystem : MonoBehaviour
     public Hook hook;
     GameObject ropeLinePrefab;
     LineRenderer ropeLine;
+    Rigidbody2D rb;
 
     float climbSpeed = 2f;
 
@@ -26,16 +27,16 @@ public class RopeSystem : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         joint = GetComponent<SpringJoint2D>();
+        rb = GetComponent<Rigidbody2D>();
         joint.enabled = false;
         playerPosition = transform.position;
     }
     public void Start()
     {
         hookShootPos = transform.Find("Shoot").transform;
-        hookPrefab = Resources.Load<GameObject>("Prefabs/Karan/RopeHook");
-        ropeLinePrefab = Resources.Load<GameObject>("Prefabs/RopeLine");
-        hook = GameObject.Instantiate<GameObject>(hookPrefab, hookShootPos.transform.position, Quaternion.identity).GetComponent<Hook>();
-        ropeLine = GameObject.Instantiate<GameObject>(ropeLinePrefab, hookShootPos.transform.position, Quaternion.identity).GetComponent<LineRenderer>();
+      
+        hook = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Karan/RopeHook"), hookShootPos.transform.position, Quaternion.identity).GetComponent<Hook>();
+        ropeLine = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Karan/RopeLine"), hookShootPos.transform.position, Quaternion.identity).GetComponent<LineRenderer>();
         hook.Initialise();
         //hook.transform.SetParent(player.transform);
         //ropeLine.transform.SetParent(player.transform);
@@ -73,7 +74,11 @@ public class RopeSystem : MonoBehaviour
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);
             hook.hookRb.isKinematic = false;
+            if(isRopeAttached)
+                rb.AddForce(new Vector2(1f, 2f) * 5f, ForceMode2D.Impulse);
+
             isRopeAttached = false;
+            
         }
     }
 
@@ -98,18 +103,19 @@ public class RopeSystem : MonoBehaviour
     {
         if (isRopeAttached && hook)
         {
-            if (!joint.gameObject.activeSelf)
+            if (joint.gameObject.activeSelf)
+            { 
                 player.isSwinging = true;
                 player.ropeHook = hook.gameObject.transform.position;
-            {
                 joint.enabled = true;
+               
                 joint.autoConfigureConnectedAnchor = false;
                 joint.connectedAnchor = hook.transform.position;
             }
         }
         else
         {
-            player.SetCrosshairPoint(player.aimAngle);
+            player.SetCrossairPoint(player.aimAngle);
             player.isSwinging = false;
             joint.enabled = false;
         }
@@ -117,6 +123,7 @@ public class RopeSystem : MonoBehaviour
     }
     private void HandleRopeLength()
     {
+       
         if (Input.GetAxis("Vertical") > 0f/* && isRopeAttached*/)
         {
             joint.distance -= Time.deltaTime * climbSpeed;
