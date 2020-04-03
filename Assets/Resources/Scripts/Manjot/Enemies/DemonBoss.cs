@@ -19,6 +19,8 @@ public class DemonBoss : BossUnit
     float slashCooldownTimer;
     float jumpCooldownTimer;
 
+    public Transform slashPos;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -101,6 +103,10 @@ public class DemonBoss : BossUnit
                     MoveToPlayer();
             }
         }
+        else if (!isAttacking && Grounded())
+        {
+            MoveToPlayer();
+        }
     }
 
     public void LookingAtTarget()
@@ -120,6 +126,12 @@ public class DemonBoss : BossUnit
         rb.velocity = new Vector2(0, rb.velocity.y);
         anim.SetBool("isAttacking", true);
         anim.SetTrigger("slash_1");
+
+        Collider2D coli = Physics2D.OverlapCircle(slashPos.position, 0.4f, LayerMask.GetMask("Player"));
+        if (coli)
+        {
+            target.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+        }
       //  slashCooldownTimer = slashCooldown;
     }
     public void SlashAttack2()
@@ -136,7 +148,12 @@ public class DemonBoss : BossUnit
         rb.velocity = new Vector2(0, rb.velocity.y);
         anim.SetBool("isAttacking", true);
         anim.SetTrigger("kick_1");
-       // kickCooldownTimer = kickCooldown;
+        Collider2D coli = Physics2D.OverlapCircle(slashPos.position, 0.4f, LayerMask.GetMask("Player"));
+        if (coli)
+        {
+            target.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+        }
+        // kickCooldownTimer = kickCooldown;
     }
     public void JumpAttack()
     {
@@ -146,7 +163,13 @@ public class DemonBoss : BossUnit
         Vector2 towardsPlayer = (target.position - transform.position).normalized;
         rb.AddForce(new Vector2(towardsPlayer.x * 1000f, jumpForce) * Time.fixedDeltaTime, ForceMode2D.Impulse);
         anim.SetBool("isAttacking", true);
-        anim.SetTrigger("jump_attack");
+        anim.SetBool("JumpAttack", true);
+
+        Collider2D coli = Physics2D.OverlapCircle(slashPos.position, 0.5f, LayerMask.GetMask("Player"));
+        if (coli)
+        {
+            target.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+        }
 
         if (!enraged)
             jumpCooldownTimer = jumpCooldown;
@@ -156,6 +179,7 @@ public class DemonBoss : BossUnit
     public void DisableAttack()
     {
         isAttacking = false;
+        anim.SetBool("JumpAttack", false);
         if (!enraged)
         {
             slashCooldownTimer = slashCooldown;
@@ -173,6 +197,10 @@ public class DemonBoss : BossUnit
         kickCooldownTimer -= Time.deltaTime;
         slashCooldownTimer -= Time.deltaTime;
         jumpCooldownTimer -= Time.deltaTime;
+    }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(slashPos.position, 0.4f);
     }
 }

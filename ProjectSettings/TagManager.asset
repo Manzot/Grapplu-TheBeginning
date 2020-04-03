@@ -25,7 +25,7 @@ TagManager:
   - NonCollidable
   - Throwable
   - Boss
-  - 
+  - IObject
   - 
   - 
   - 

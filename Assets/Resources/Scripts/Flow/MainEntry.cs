@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainEntry : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class MainEntry : MonoBehaviour
     void Update()
     {
         GameFlow.Instance.Refresh();
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            SceneManager.LoadScene("ManjotScene");
+        }
     }
 
     private void FixedUpdate()

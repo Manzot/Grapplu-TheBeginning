@@ -8,7 +8,7 @@ public class DeathBoundry : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.transform.GetComponent<EnemyUnit>().TakeDamage(100);//.TakeDamage(100);
+            collision.gameObject.transform.GetComponent<EnemyUnit>().TakeDamage(1000);//.TakeDamage(100);
         }
     }
 }

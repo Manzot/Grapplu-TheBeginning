@@ -61,14 +61,14 @@ public class RopeSystem : MonoBehaviour
 
     private void HandleInput(Vector2 aimDirection)
     {
-        if (Input.GetMouseButtonDown(0) && !isRopeAttached)
+        if (Input.GetMouseButtonDown(1) && !isRopeAttached)
         {
             hook.transform.position = hookShootPos.transform.position;
             hook.gameObject.SetActive(true);
             ropeLine.gameObject.SetActive(true);
             hook.ThrowHook(player.angleDirection);
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(1))
         {
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);

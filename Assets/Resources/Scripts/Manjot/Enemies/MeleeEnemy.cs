@@ -110,7 +110,7 @@ public class MeleeEnemy : EnemyUnit
             rb.velocity = newPath * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
 
             if (aStarPath[1].position.y > aStarPath[0].position.y) { }
-                Jump(new Vector2(rb.velocity.x * 10f, jumpForce) * Time.fixedDeltaTime);
+                Jump2(new Vector2(rb.velocity.x * 10f, jumpForce) * Time.fixedDeltaTime);
         }
         else
         {

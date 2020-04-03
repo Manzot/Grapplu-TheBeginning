@@ -11,6 +11,7 @@ public class BossUnit : MonoBehaviour
     public bool enraged;
     public bool isHurt;
     public bool isAttacking;
+    public int damage = 15;
 
 
     const float maxGravity = -12;

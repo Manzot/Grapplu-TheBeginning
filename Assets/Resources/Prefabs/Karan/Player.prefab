@@ -167,7 +167,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -681961979
-  m_SortingLayer: 6
+  m_SortingLayer: 5
   m_SortingOrder: 6
   m_Sprite: {fileID: 1570582575325527468, guid: 057780719db624849bccd7e61d14f7f6,
     type: 3}
@@ -232,8 +232,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ropeHook: {x: 0, y: 0}
   speed: 200
+  damage: 10
   swingForce: 2
-  jumpForce: 600
+  jumpForce: 700
   oldJumpForce: 0
   horizontal: 0
   aimAngle: 0
