@@ -38,11 +38,11 @@ public class ThrowAttacks : ThrowAbles
             {
                 collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
             }
-            else if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 collision.gameObject.GetComponent<EnemyUnit>().TakeDamage(damage);
             }
-            else if(collision.gameObject.layer == LayerMask.NameToLayer("Boss"))
+            if(collision.gameObject.layer == LayerMask.NameToLayer("Boss"))
             {
                 collision.gameObject.GetComponent<BossUnit>().TakeDamage(damage);
             }

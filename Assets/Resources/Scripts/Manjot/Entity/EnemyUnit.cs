@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public enum EnemyType { Melee, Ranged, Flying};
 public class EnemyUnit : MonoBehaviour, IDamage
 {
-    const float KNOCKAMOUNT = 60;
+    const float KNOCKAMOUNT = 200;
     const float maxGravity = -12f;
 
     public EnemyType eType;
@@ -34,7 +34,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
     public bool isStunned;
 
     [HideInInspector]
-    public const float STUN_TIME = .5f;
+    public const float STUN_TIME = .3f;
     [HideInInspector]
     public const int ASTAR_PATH_OFFSET = 0;
 
@@ -43,7 +43,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
                 isJumping,
                 canAttack;
     [HideInInspector]
-    public static bool targetFound;
+    public bool targetFound;
 
     [HideInInspector]
     public float jumpTime = 0.5f,
@@ -141,7 +141,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
     /// Check to see if the target is in range of enemy or not
     public bool FindTarget()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 5f);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 8f);
         if (hit.collider)
         {
             if (hit.collider.gameObject.CompareTag("Player"))
@@ -175,12 +175,12 @@ public class EnemyUnit : MonoBehaviour, IDamage
     /// To check if the enemy is on the ground or not
     public bool Grounded()
     {
-        return groundCheckColi = Physics2D.OverlapCircle(new Vector2(feet.position.x, feet.position.y), .2f, LayerMask.GetMask("Ground"));
+        return groundCheckColi = Physics2D.OverlapCircle(new Vector2(feet.position.x, feet.position.y), .2f, LayerMask.GetMask("Ground","IObject"));
     }
     /// Jumping function
     public void Jump(Vector2 dir)
     {
-        if (Physics2D.Raycast(new Vector2(transform.position.x , transform.position.y), transform.up, 1.3f, LayerMask.GetMask("Ground"))
+        if (Physics2D.Raycast(new Vector2(transform.position.x , transform.position.y), transform.up, 2.3f, LayerMask.GetMask("Ground"))
         || Physics2D.Raycast(transform.position, transform.right, 1.3f, LayerMask.GetMask("Ground")))
         {
             if (Grounded() && jumpTime < 0)

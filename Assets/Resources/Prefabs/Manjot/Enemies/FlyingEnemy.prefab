@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -484893581
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 6
   m_Sprite: {fileID: 8647823593821616703, guid: 505be1654410a4c42b190e41fccdaf1b,
     type: 3}
@@ -153,6 +153,7 @@ MonoBehaviour:
   moveRight: 0
   isJumping: 0
   canAttack: 0
+  targetFound: 0
   jumpTime: 0.5
   attackCooldownTimer: 0.5
   moveTimeCounter: 0
@@ -173,8 +174,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.018392209, y: 0.0061267004}
-  m_Size: {x: 1.030062, y: 0.66243005}
+  m_Offset: {x: 0.018392213, y: 0.045880083}
+  m_Size: {x: 1.0300622, y: 0.8015673}
   m_Direction: 1
 --- !u!1 &7670828621706462586
 GameObject:

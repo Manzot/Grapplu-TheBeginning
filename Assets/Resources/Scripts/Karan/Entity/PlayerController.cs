@@ -8,7 +8,7 @@ public enum Abilities { Grappler, Rewind, SlowMotion }
 public class PlayerController : MonoBehaviour, IDamage
 {
     const float SLOMO_FACTOR = 0.3f;
-    const float ATTACK_RANGE = 0.3f;
+    const float ATTACK_RANGE = 0.4f;
     const float maxGravity = -12f;
 
     public Vector2 ropeHook;
@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour, IDamage
     float timeSlowCooldown = 10f;
 
     bool timeSlow;
-
 
     bool isRewinding;
     List<PointInTime> pointsInTime;
@@ -65,7 +64,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         isAlive = true;
-       
+
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -82,10 +81,6 @@ public class PlayerController : MonoBehaviour, IDamage
         if (!Dead())
         {
             Jump();
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                BossManager.Instance.SpawnBoss(BossManager.Instance.demonBoss);
-            }
 
             SetCrosshairPoint(CrossairDirection());
 
@@ -100,7 +95,7 @@ public class PlayerController : MonoBehaviour, IDamage
             TimeSlowReset();
             Attack();
 
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetMouseButtonDown(0))
             {
                 isAttacking = true;
             }
