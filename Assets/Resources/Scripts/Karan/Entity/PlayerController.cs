@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void Initialize()
     {
-        if (health == 0)
+        if (health <= 0)
         {
             health = MAX_HEALTH;
         }
@@ -262,7 +262,7 @@ public class PlayerController : MonoBehaviour, IDamage
             if (isSwinging)
             {
                 Vector2 perpendicularDirection = CalculatePerpendicularDirection();
-                /* rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);*/
+          
                 var force = perpendicularDirection * swingForce;
                 rb.AddForce(force * Time.fixedDeltaTime, ForceMode2D.Impulse);
             }
