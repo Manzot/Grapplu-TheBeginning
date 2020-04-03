@@ -14,7 +14,6 @@ public class BossSpawner : MonoBehaviour
     {
         if (collision)
         {
-            Debug.Log(collision.gameObject.name);
             if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 BossManager.Instance.SpawnBoss(BossManager.Instance.demonBoss, bossSpawnLocation.transform.position);

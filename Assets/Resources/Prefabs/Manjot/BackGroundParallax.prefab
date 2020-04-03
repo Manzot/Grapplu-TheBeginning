@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f282d62cdd30a1b43a89181c82a34f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxSpeed: 0.25
+  parallaxSpeed: 0.15
 --- !u!1 &6206028576709463320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f282d62cdd30a1b43a89181c82a34f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxSpeed: 0.2
+  parallaxSpeed: 0.1
 --- !u!1 &6206028577751716094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1295,7 +1295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6206028578035557760
 Transform:
   m_ObjectHideFlags: 0
@@ -1305,7 +1305,7 @@ Transform:
   m_GameObject: {fileID: 6206028578035557767}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.54845464, y: 13.19898, z: -275.6874}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 6206028577466799823}
   - {fileID: 6206028576642260144}
