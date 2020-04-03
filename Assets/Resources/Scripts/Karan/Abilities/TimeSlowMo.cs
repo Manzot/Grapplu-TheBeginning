@@ -7,7 +7,7 @@ public class TimeSlowMo {
     // public float slowdownLength = 3f;
 
     // public bool timeSlow;
-    float FIXtIME = Time.fixedDeltaTime;
+    float fixTime = Time.fixedDeltaTime;
 
     public float TimeReset(float _slowdownLength)
     {
@@ -17,7 +17,7 @@ public class TimeSlowMo {
             Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
             if (Time.timeScale == 1.0f)
             {
-                Time.fixedDeltaTime = FIXtIME;
+                Time.fixedDeltaTime = fixTime;
                // timeSlow = false;
             /*pc.jumpForce = pc.oldJumpForce*Time.unscaledDeltaTime;*/
         }
