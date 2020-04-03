@@ -41,7 +41,7 @@ public class RangedEnemy : EnemyUnit
             DirectionFacingWhenMoving();
             AnimationCaller();
 
-            if (!isHurt && !isStunned)
+            if (!isHurt)
             {
                 if (!targetFound)
                 {
@@ -62,16 +62,12 @@ public class RangedEnemy : EnemyUnit
         if (!Death())
         {
 
-            if (!isHurt && !isStunned)
+            if (!isHurt)
             {
                 if (!targetFound)
                 {
                     MoveLeftRight();
                 }
-            }
-            else if (isHurt)
-            {
-                KnockBack();
             }
         }
     }

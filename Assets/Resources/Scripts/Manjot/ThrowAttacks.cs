@@ -46,6 +46,7 @@ public class ThrowAttacks : ThrowAbles
             {
                 collision.gameObject.GetComponent<BossUnit>().TakeDamage(damage);
             }
+            Destroy(gameObject);
         }
     }
 }

@@ -82,9 +82,8 @@ public class BossUnit : MonoBehaviour
         {
             isHurt = true;
             currentHealth -= damage;
-           // anim.SetTrigger("is_hurt");
             rb.velocity = Vector2.zero;
-            TimerDelg.Instance.Add(()=> { isHurt = false; }, .2f);
+            TimerDelg.Instance.Add(()=> { isHurt = false; }, .3f);
         }
     }
 

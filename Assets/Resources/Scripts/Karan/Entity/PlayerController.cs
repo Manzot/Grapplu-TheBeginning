@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour, IDamage
             TimeSlowReset();
             Attack();
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Fire1"))
             {
                 isAttacking = true;
             }

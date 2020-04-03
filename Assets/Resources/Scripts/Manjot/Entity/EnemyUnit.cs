@@ -34,7 +34,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
     public bool isStunned;
 
     [HideInInspector]
-    public const float STUN_TIME = .3f;
+    public const float STUN_TIME = .5f;
     [HideInInspector]
     public const int ASTAR_PATH_OFFSET = 0;
 
@@ -99,15 +99,12 @@ public class EnemyUnit : MonoBehaviour, IDamage
         {
             healthBar.transform.rotation = defaultHbRotation;
         }
-        Debug.Log(currentHealth);
-        if (isStunned)
-        {
-            Stunned();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            TakeDamage(10);
-        }
+        //Debug.Log(currentHealth);
+
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    TakeDamage(10);
+        //}
     }
     public virtual void PhysicsRefresh()
     {
@@ -238,9 +235,10 @@ public class EnemyUnit : MonoBehaviour, IDamage
         {
             healthBarParent.SetActive(true);
         }
-        if (!isHurt && !isStunned)
+        if (!isHurt)
         {
             isHurt = true;
+            anim.SetTrigger("is_hurt");
             currentHealth -= damage;
             KnockBack();
         }
@@ -253,13 +251,8 @@ public class EnemyUnit : MonoBehaviour, IDamage
         canAttack = false;
         Vector2 knockBckVector = (target.position - transform.position).normalized;
         rb.AddForce(knockBckVector * -KNOCKAMOUNT * Time.fixedDeltaTime, ForceMode2D.Impulse);
-    }
-    //Enemy Stunned Function
-    public void Stunned()
-    {
-        isStunned = true;
-        rb.velocity = Vector2.zero;
-        TimerDelg.Instance.Add(() => { isStunned = false; isHurt = false; }, STUN_TIME);
+        TimerDelg.Instance.Add(() => { rb.velocity = new Vector2(0, rb.velocity.y); }, 0.2f);
+        TimerDelg.Instance.Add(() => { isHurt = false; }, STUN_TIME);
     }
     public void DamageTarget(float attackRange, int _damage)
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DemonBoss : BossUnit
 {
     const float maxGravity = -12f;
+    const float jumpAttackCD = 2.25f;
     Vector2 dirTowardsTarget;
     bool isSpawning = true;
 
@@ -13,13 +14,13 @@ public class DemonBoss : BossUnit
 
     float kickCooldown = 1.5f;
     float slashCooldown = 2f;
+    float slash2Cooldown = 2f;
     float jumpCooldown = 9f;
 
     float kickCooldownTimer;
     float slashCooldownTimer;
+    float slash2CooldownTimer;
     float jumpCooldownTimer;
-
-    public Transform slashPos;
 
     public override void Initialize()
     {
@@ -32,25 +33,23 @@ public class DemonBoss : BossUnit
         base.PostInitialize();
         jumpCooldownTimer = 10f;
         slashCooldownTimer = slashCooldown;
+        slash2CooldownTimer = slash2Cooldown;
         kickCooldownTimer = kickCooldown;
         TimerDelg.Instance.Add(() => { isSpawning = false; }, 3f);
     }
 
     public override void Refresh()
     {
+
         base.Refresh();
         if (!Dead())
-        {
-            anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
-            if (!isAttacking)
-            {
-                anim.SetBool("isAttacking", false);
-            }
+        {           
             Timers();
+            AnimationCaller();
             LookingAtTarget();
-
+           
             if (!isSpawning)
-                    AttackMove();
+                AttackMove();
         }
     }
 
@@ -63,49 +62,59 @@ public class DemonBoss : BossUnit
     {
         dirTowardsTarget = (target.position - transform.position).normalized;
         
-            if(!enraged)
-                rb.velocity = new Vector2(dirTowardsTarget.x, 0) * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
-            else
-                rb.velocity = new Vector2(dirTowardsTarget.x, 0) * speed * 2f * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
-
+        if(!enraged)
+            rb.velocity = new Vector2(dirTowardsTarget.x, 0) * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
+        else
+        {
+            int rnd = Random.Range(0, 16);
+            if(rnd == 2 && !isAttacking && Grounded() && slash2CooldownTimer <= 0)
+            {
+                SlashAttack2();
+            }
+            rb.velocity = new Vector2(dirTowardsTarget.x, 0) * speed * 2f * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
+        }
+        
     }
 
+    void AnimationCaller()
+    {
+        anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
+        if (!isAttacking)
+        {
+            anim.SetBool("isAttacking", false);
+        }
+        else
+        {
+            anim.SetBool("isAttacking", true);
+        }
+    }
     void AttackMove()
     {
-        if (!Grounded())
-        {
-            isAttacking = true;
-        }
         if (!isAttacking)
         {
             if((target.position - transform.position).sqrMagnitude < 0.8f)
             {
-                if(kickCooldownTimer <= 0 && !isAttacking && Grounded())
+                if(kickCooldownTimer <= 0 && Grounded())
+                {
                     Kick();
+                }
             }
-            else if((target.position - transform.position).sqrMagnitude > 0.8f && (target.position - transform.position).sqrMagnitude < 3.5f)
+            if((target.position - transform.position).sqrMagnitude > 0.8f && (target.position - transform.position).sqrMagnitude < 4.5f)
             {
-                if (slashCooldownTimer <= 0 && !isAttacking && Grounded())
+                if (slashCooldownTimer <= 0 && Grounded())
+                {
                     SlashAttack1();
-                else
-                    MoveToPlayer();
+                }
             }
-            else if((target.position - transform.position).sqrMagnitude > 10f && (target.position - transform.position).sqrMagnitude > 15f)
+            if((target.position - transform.position).sqrMagnitude > 10f && (target.position - transform.position).sqrMagnitude < 30f)
             {
-                if (jumpCooldownTimer <= 0 && !isAttacking && Grounded())
+                if (jumpCooldownTimer <= 0 && Grounded())
+                {
                     JumpAttack();
-                else
-                    MoveToPlayer();
+                }
             }
-            else
-            {
-                if(!isAttacking && Grounded())
-                    MoveToPlayer();
-            }
-        }
-        else if (!isAttacking && Grounded())
-        {
-            MoveToPlayer();
+            if(Grounded() && (target.position - transform.position).sqrMagnitude > 0.6f)
+                MoveToPlayer();
         }
     }
 
@@ -122,85 +131,75 @@ public class DemonBoss : BossUnit
 
     public void SlashAttack1()
     {
+       
         isAttacking = true;
         rb.velocity = new Vector2(0, rb.velocity.y);
-        anim.SetBool("isAttacking", true);
-        anim.SetTrigger("slash_1");
-
-        Collider2D coli = Physics2D.OverlapCircle(slashPos.position, 0.4f, LayerMask.GetMask("Player"));
-        if (coli)
-        {
-            target.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
-        }
-      //  slashCooldownTimer = slashCooldown;
+        anim.SetBool("slash1", true);
+        slashCooldownTimer = slashCooldown;
     }
     public void SlashAttack2()
     {
         isAttacking = true;
-        rb.velocity = new Vector2(0, rb.velocity.y);
+        rb.velocity = new Vector2(rb.velocity.x/2, rb.velocity.y);
         anim.SetBool("isAttacking", true);
-        anim.SetTrigger("slash_2");
-        
+        anim.SetBool("slash2", true);
+        slash2CooldownTimer = slash2Cooldown;
     }
     public void Kick()
     {
         isAttacking = true;
         rb.velocity = new Vector2(0, rb.velocity.y);
-        anim.SetBool("isAttacking", true);
-        anim.SetTrigger("kick_1");
-        Collider2D coli = Physics2D.OverlapCircle(slashPos.position, 0.4f, LayerMask.GetMask("Player"));
-        if (coli)
-        {
-            target.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
-        }
-        // kickCooldownTimer = kickCooldown;
+        anim.SetBool("kick", true);
+        kickCooldownTimer = kickCooldown;
     }
     public void JumpAttack()
     {
         isAttacking = true;
         slashCooldownTimer = slashCooldown;
         kickCooldownTimer = kickCooldown;
+        anim.SetBool("jump_attack", true);
         Vector2 towardsPlayer = (target.position - transform.position).normalized;
-        rb.AddForce(new Vector2(towardsPlayer.x * 1000f, jumpForce) * Time.fixedDeltaTime, ForceMode2D.Impulse);
-        anim.SetBool("isAttacking", true);
-        anim.SetBool("JumpAttack", true);
-
-        Collider2D coli = Physics2D.OverlapCircle(slashPos.position, 0.5f, LayerMask.GetMask("Player"));
-        if (coli)
-        {
-            target.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
-        }
+        rb.AddForce(new Vector2(towardsPlayer.x * 1300f, jumpForce) * Time.fixedDeltaTime, ForceMode2D.Impulse);
 
         if (!enraged)
             jumpCooldownTimer = jumpCooldown;
         else
             jumpCooldownTimer = jumpCooldown / 2;
+
+        TimerDelg.Instance.Add(()=> { isAttacking = false; anim.SetBool("jump_attack", false); }, jumpAttackCD);
     }
     public void DisableAttack()
     {
         isAttacking = false;
-        anim.SetBool("JumpAttack", false);
-        if (!enraged)
-        {
-            slashCooldownTimer = slashCooldown;
-            kickCooldownTimer = kickCooldown;
-        }
-        else
-        {
-            slashCooldownTimer = slashCooldown / 2;
-            kickCooldownTimer = kickCooldown / 2;
-        }
+        anim.SetBool("slash1", false);
+        anim.SetBool("kick", false);
+        anim.SetBool("jump_attack", false);
     }
+
 
     void Timers()
     {
         kickCooldownTimer -= Time.deltaTime;
         slashCooldownTimer -= Time.deltaTime;
         jumpCooldownTimer -= Time.deltaTime;
+        slash2CooldownTimer -= Time.deltaTime;
     }
 
-    private void OnDrawGizmos()
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawSphere(slashPos.position, 0.4f);
+    //}
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Gizmos.DrawSphere(slashPos.position, 0.4f);
+        if (collision)
+        {
+            Debug.Log(collision.gameObject.name);
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+            }
+        }
     }
+
+
 }

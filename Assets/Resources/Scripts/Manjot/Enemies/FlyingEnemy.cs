@@ -37,7 +37,7 @@ public class FlyingEnemy : EnemyUnit
             AnimationCaller();
             OutofBoundary();
 
-            if (!isHurt && !isStunned)
+            if (!isHurt)
             {
                 if (!targetFound)
                 {
@@ -64,7 +64,7 @@ public class FlyingEnemy : EnemyUnit
 
         if (!Death())
         {
-            if (!isHurt && !isStunned)
+            if (!isHurt)
             {
                 if (!targetFound)
                 {
@@ -74,10 +74,6 @@ public class FlyingEnemy : EnemyUnit
                 {
                     AttackMove();
                 }
-            }
-            else if (isHurt)
-            {
-                KnockBack();
             }
         }
     }
