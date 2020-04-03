@@ -34,7 +34,7 @@ public class MeleeEnemy : EnemyUnit
             AnimationCaller();
             Timers();
 
-            if (!isHurt && !isStunned)
+            if (!isHurt)
             {
                 if (!targetFound) // Searching for target
                 {
@@ -51,7 +51,7 @@ public class MeleeEnemy : EnemyUnit
 
         if (!Death())
         {
-            if (!isHurt && !isStunned)
+            if (!isHurt)
             {
                 if (!targetFound) 
                 {
@@ -249,10 +249,10 @@ public class MeleeEnemy : EnemyUnit
         else
             anim.SetBool("isAttacking", false);
 
-        if (isHurt)
-            anim.SetBool("isHurt", true);
-        else
-            anim.SetBool("isHurt", false);
+        //if (isHurt)
+        //    anim.SetBool("isHurt", true);
+        //else
+        //    anim.SetBool("isHurt", false);
     }
     // All the Timers
     void Timers()
