@@ -225,10 +225,14 @@ public class PlayerController : MonoBehaviour, IDamage
         if (!isSwinging)
         {
             if (Input.GetKey(KeyCode.A))
-                rb.velocity = new Vector2(-1 * speed * Time.fixedDeltaTime, rb.velocity.y);
+            {
+                horizontal = -1;
+                rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
+            }
             else if (Input.GetKey(KeyCode.D))
             {
-                rb.velocity = new Vector2(1 * speed * Time.fixedDeltaTime, rb.velocity.y);
+                horizontal = 1;
+                rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
             }
         }
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));

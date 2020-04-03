@@ -75,7 +75,7 @@ public class RopeSystem : MonoBehaviour
             ropeLine.gameObject.SetActive(false);
             hook.hookRb.isKinematic = false;
             if(isRopeAttached)
-                rb.AddForce(new Vector2(1f, 2f) * 5f, ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(player.horizontal, 2f) * 5f, ForceMode2D.Impulse);
 
             isRopeAttached = false;
             
