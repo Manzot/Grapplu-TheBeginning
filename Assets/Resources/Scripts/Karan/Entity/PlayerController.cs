@@ -5,6 +5,8 @@ using UnityEditor;
 using System;
 
 public enum Abilities { Grappler, Rewind, SlowMotion }
+
+
 public class PlayerController : MonoBehaviour, IDamage
 {
     const float SLOMO_FACTOR = 0.3f;
@@ -82,7 +84,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             Jump();
 
-            SetCrosshairPoint(CrossairDirection());
+            SetCrossairPoint(CrossairDirection());
 
             if (Input.GetKeyDown(KeyCode.T))
             {
@@ -99,16 +101,20 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 isAttacking = true;
             }
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 StartRewind();
             }
-            if (Input.GetKeyUp(KeyCode.Return))
+            if (Input.GetKeyUp(KeyCode.R))
             {
                 StopRewind();
             }
         }
-      
+
+    /*    float angle = CrossairDirection()*Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); */
+
+
     }
     public void PhysicsRefresh()
     {
@@ -116,7 +122,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             Movement();
             GravityCheck();
-           
+
             if (isSwinging)
                 SwingDirectionForce();
 
@@ -129,7 +135,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 Record();
             }
         }
-        
+
     }
 
     private void TimeSlowAbility()
@@ -154,6 +160,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+    /*Deflecting a gameobject */
     private void DeflectBullet(GameObject go)
     {
         Rigidbody2D rbGO = go.GetComponent<Rigidbody2D>();
@@ -172,33 +179,58 @@ public class PlayerController : MonoBehaviour, IDamage
         var playerToHookDirection = (ropeHook - (Vector2)transform.position).normalized;
         Debug.DrawLine(transform.position, playerToHookDirection, Color.red, 0f);
 
-        if (horizontal<0)
+        if (Input.GetAxis("Horizontal")<0)
         {
             perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
-            var leftPerpPos = (Vector2)transform.position + perpendicularDirection * -2f;
+            var leftPerpPos = (Vector2)transform.position + perpendicularDirection;
             Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
         }
         else
         {
 
             perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
-            var rightPerpPos = (Vector2)transform.position - perpendicularDirection * +2f;
+            var rightPerpPos = (Vector2)transform.position - perpendicularDirection;
             Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
         }
 
         return perpendicularDirection;
     }
+    /* Applying the force towards the perpendicular direction */
+    public void SwingDirectionForce()
+    {
+        if (rb.velocity.x < 0f || rb.velocity.x > 0f)
+        {
+            if (isSwinging)
+            {
+                Vector2 perpendicularDirection = CalculatePerpendicularDirection();
 
-    /*Movement and jump of the player*/
+                var force = perpendicularDirection * swingForce;
+                rb.AddForce(force);
+            }
+
+        }
+    }
+
+    /*Movement of the player*/
     public void Movement()
     {
         horizontal = Input.GetAxis("Horizontal");
+        float direction = CrossairDirection();
         if (rb.velocity.x > 0)
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+           // sprite.flipX = true;
         else if (rb.velocity.x < 0)
             transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-
-        rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
+        //sprite.flipX = false;
+        if (!isSwinging)
+        {
+            if (Input.GetKey(KeyCode.A))
+                rb.velocity = new Vector2(-1 * speed * Time.fixedDeltaTime, rb.velocity.y);
+            else if (Input.GetKey(KeyCode.D))
+            {
+                rb.velocity = new Vector2(1 * speed * Time.fixedDeltaTime, rb.velocity.y);
+            }
+        }
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
 
        
@@ -224,7 +256,7 @@ public class PlayerController : MonoBehaviour, IDamage
             animator.SetBool("isJumping", true);
         }
     }
-
+    /* Checking for ground collision */
     public bool Grounded()
     {
         return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Ground", "IObject"));
@@ -237,15 +269,15 @@ public class PlayerController : MonoBehaviour, IDamage
 
         aimAngle = Mathf.Atan2(faceDirection.y, faceDirection.x);
 
-        if (aimAngle < 0)
+        /*if (aimAngle < 0)
         {
             return aimAngle = Mathf.PI * 2 + aimAngle;
-        }
+        }*/
+   
         angleDirection = Quaternion.Euler(0, 0, aimAngle * Mathf.Rad2Deg) * Vector2.right;
         return aimAngle;
     }
-
-    public void SetCrosshairPoint(float aimAngle)
+    public void SetCrossairPoint(float aimAngle)
     {
 
         float x = transform.position.x + 2f * Mathf.Cos(aimAngle);
@@ -255,20 +287,7 @@ public class PlayerController : MonoBehaviour, IDamage
         crosshair.transform.position = crosshairPosition;
     }
 
-    public void SwingDirectionForce()
-    {
-        if (rb.velocity.x < 0f || rb.velocity.x > 0f)
-        {
-            if (isSwinging)
-            {
-                Vector2 perpendicularDirection = CalculatePerpendicularDirection();
-          
-                var force = perpendicularDirection * swingForce;
-                rb.AddForce(force * Time.fixedDeltaTime, ForceMode2D.Impulse);
-            }
-
-        }
-    }
+  
 
     public void Attack()
     {
