@@ -193,7 +193,6 @@ public class DemonBoss : BossUnit
     {
         if (collision)
         {
-            Debug.Log(collision.gameObject.name);
             if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);

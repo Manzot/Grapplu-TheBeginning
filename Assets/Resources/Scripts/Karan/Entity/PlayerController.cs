@@ -9,7 +9,7 @@ public enum Abilities { Grappler, Rewind, SlowMotion }
 public class PlayerController : MonoBehaviour, IDamage
 {
     const float SLOMO_FACTOR = 0.3f;
-    const float ATTACK_RANGE = 0.4f;
+    const float ATTACK_RANGE = .4f;
     const float maxGravity = -12f;
 
     public Vector2 ropeHook;
@@ -392,18 +392,18 @@ public class PlayerController : MonoBehaviour, IDamage
     public void DamageEnemies(int  _damage)
     {
         RaycastHit2D hit = Physics2D.Raycast(punchesPos.position, transform.right, ATTACK_RANGE);
-
+        Collider2D bossCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Boss"));
+        Collider2D enemyCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Enemy"));
+        if (bossCol)
+        {
+            bossCol.gameObject.GetComponent<BossUnit>().TakeDamage(damage);
+        }
+        if (enemyCol)
+        {
+            enemyCol.gameObject.GetComponent<EnemyUnit>().TakeDamage(damage);
+        }
         if (hit.collider)
         {
-            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-            {
-                Debug.Log("hurt");
-                hit.collider.gameObject.GetComponent<EnemyUnit>().TakeDamage(_damage);
-            }
-            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Boss"))
-            {
-                hit.collider.gameObject.GetComponent<BossUnit>().TakeDamage(_damage);
-            }
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Throwable"))
             {
                 if (timeSlow)
