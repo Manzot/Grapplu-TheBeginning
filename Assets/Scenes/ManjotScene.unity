@@ -5090,7 +5090,7 @@ Transform:
   - {fileID: 1378703594}
   - {fileID: 1561122199}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1054872594
 PrefabInstance:
@@ -15231,7 +15231,7 @@ Transform:
   - {fileID: 50582675}
   - {fileID: 1584278885}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6206028577222236231
 GameObject:
@@ -15315,11 +15315,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8929046737287131303, guid: d8f436b18cebd5f49b26643348bee2a6,
-        type: 3}
-      propertyPath: sounds.Array.data[9].pitch
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8f436b18cebd5f49b26643348bee2a6, type: 3}

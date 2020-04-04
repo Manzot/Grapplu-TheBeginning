@@ -46,12 +46,12 @@ MonoBehaviour:
   sounds:
   - name: Theme
     clip: {fileID: 8300000, guid: 0a9ad2e2e9c63a040ac7284cf20bc8b7, type: 3}
-    volume: 1
+    volume: 0.8
     pitch: 0.9
     loop: 1
     source: {fileID: 0}
   - name: PlayerAttack
-    clip: {fileID: 8300000, guid: 5622e96e63b82294f9a26aa0a987e329, type: 3}
+    clip: {fileID: 0}
     volume: 1
     pitch: 1
     loop: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: PlayerTimeRewind
     clip: {fileID: 8300000, guid: c120cfe57648e754c9021aa4ddeb4d06, type: 3}
-    volume: 1
-    pitch: 3
+    volume: 0.51
+    pitch: 1.54
     loop: 0
     source: {fileID: 0}
