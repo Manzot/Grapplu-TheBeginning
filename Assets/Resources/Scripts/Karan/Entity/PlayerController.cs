@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour, IDamage
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         timeSlowMo = new TimeSlowMo();
+        
     }
     public void PostInitialize()
     {
@@ -111,8 +112,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-    /*    float angle = CrossairDirection()*Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); */
+       
 
 
     }
@@ -216,23 +216,54 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         horizontal = Input.GetAxis("Horizontal");
         float direction = CrossairDirection();
-        if (rb.velocity.x > 0)
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-           // sprite.flipX = true;
-        else if (rb.velocity.x < 0)
-            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-        //sprite.flipX = false;
-        if (!isSwinging)
+        float angle = CrossairDirection() * Mathf.Rad2Deg;
+        if (angle > 91)
+        {
+            sprite.flipX = true;
+
+             if (angle > 91 && (rb.velocity.x < 0))
+            {
+                sprite.flipX = true;
+                // transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+
+            }
+            else if (angle > 91 && (rb.velocity.x > 0))
+            {
+                sprite.flipX = false;
+             
+            }
+        }
+        else
+        {
+            sprite.flipX = false;
+
+            if (angle < 91 && (rb.velocity.x > 0))
+            {
+                sprite.flipX = false;
+               
+                // transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+
+            }
+            else if (angle < 91 && (rb.velocity.x < 0))
+            {
+                sprite.flipX = true;
+               
+            }
+         
+        }
+
+           
+            if (!isSwinging)
         {
             if (Input.GetKey(KeyCode.A))
             {
                 horizontal = -1;
-                rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
+                rb.velocity = new Vector2(horizontal * speed * Time.fixedUnscaledDeltaTime, rb.velocity.y);
             }
             else if (Input.GetKey(KeyCode.D))
             {
                 horizontal = 1;
-                rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
+                rb.velocity = new Vector2(horizontal * speed * Time.fixedUnscaledDeltaTime, rb.velocity.y);
             }
         }
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
@@ -329,6 +360,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             rb.velocity = Vector2.zero;
             animator.SetTrigger("isDead");
+            SoundManager.Instance.Play("PlayerDeath");
             isAlive = false;
             deathLoc = this.transform.position;
             TimerDelg.Instance.Add(() => this.gameObject.SetActive(false), 2);

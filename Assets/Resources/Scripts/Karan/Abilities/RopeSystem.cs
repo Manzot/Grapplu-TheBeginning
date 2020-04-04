@@ -21,7 +21,7 @@ public class RopeSystem : MonoBehaviour
     LineRenderer ropeLine;
     Rigidbody2D rb;
 
-    float climbSpeed = 2f;
+    float climbSpeed = 4f;
 
     private void Awake()
     {
@@ -124,14 +124,14 @@ public class RopeSystem : MonoBehaviour
     private void HandleRopeLength()
     {
        
-        if (Input.GetAxis("Vertical") > 0f/* && isRopeAttached*/)
+        if (Input.GetKey(KeyCode.W)/* && isRopeAttached*/)
         {
-            joint.distance -= Time.deltaTime * climbSpeed;
+            joint.distance -= climbSpeed *Time.deltaTime; 
         }
-        else if (Input.GetAxis("Vertical") < 0f/* && isRopeAttached*/)
+        else if (Input.GetKey(KeyCode.S)/* && isRopeAttached*/)
         {
             if(!player.Grounded())
-                joint.distance += Time.deltaTime * climbSpeed;
+                joint.distance += climbSpeed * Time.deltaTime;
         }
     }
     //private void OnDrawGizmos()
