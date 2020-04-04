@@ -234,7 +234,7 @@ MonoBehaviour:
   speed: 200
   damage: 10
   swingForce: 2
-  jumpForce: 700
+  jumpForce: 650
   oldJumpForce: 0
   horizontal: 0
   aimAngle: 0
