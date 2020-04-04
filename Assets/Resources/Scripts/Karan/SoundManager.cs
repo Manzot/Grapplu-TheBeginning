@@ -5,22 +5,25 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    private static SoundManager instance;
+    #region Singleton
+    private static SoundManager instance=null;
     public SoundManager() { }
-    public static SoundManager Instance { get { return instance ?? (instance = new SoundManager()); } }
-    PlayerController player;
+    public static SoundManager Instance { get { return instance ?? (instance = FindObjectOfType<SoundManager>()); } }
+
+    #endregion
 
     public Sound[] sounds;
 
     public void Initialize()
     {
-        sounds = new Sound[5];
+   
         foreach (Sound s in sounds)
         {
             if (this)
             {
                 s.source = this.gameObject.AddComponent<AudioSource>();
                 s.source.clip = s.clip;
+                s.source.loop = s.loop;
             }
 
         }
@@ -44,5 +47,16 @@ public class SoundManager : MonoBehaviour
             }
             s.source.Play();
         }
+    }
+    public void StopPlaying(string sound)
+    {
+        Sound s = Array.Find(sounds, item => item.name == sound);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            return;
+        }
+
+        s.source.Stop();
     }
 }

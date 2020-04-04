@@ -90,8 +90,10 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 if (!timeSlow)
                 {
+                    SoundManager.Instance.Play("PlayerTimeSlow");
                     TimeSlowAbility();
                 }
+
             }
 
             TimeSlowReset();
@@ -103,11 +105,13 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
+                
                 StartRewind();
             }
             if (Input.GetKeyUp(KeyCode.R))
             {
                 StopRewind();
+                SoundManager.Instance.StopPlaying("PlayerTimeRewind");
             }
         }
 
@@ -127,6 +131,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
             if (isRewinding)
             {
+
+                
                 Rewind();
             }
             else
@@ -141,6 +147,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (!timeSlow)
         {
+            
             timeSlowMo.SlowMotion(SLOMO_FACTOR);
          
             timeSlow = true;
@@ -276,10 +283,14 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             {
+                SoundManager.Instance.Play("PlayerJump");
+
                 if (!timeSlow)
                     rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime), ForceMode2D.Impulse);
                 else
+                
                     rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.unscaledDeltaTime), ForceMode2D.Impulse);
+                
                 isJumping = true;
                 TimerDelg.Instance.Add(() => { isJumping = false; }, .5f);
             }
@@ -327,6 +338,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (isAttacking)
         {
+            SoundManager.Instance.Play("PlayerAttack");
             DamageEnemies(damage);
             animator.SetBool("isAttacking", true);
         }
@@ -347,6 +359,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (!isHurt)
         {
             isHurt = true;
+            SoundManager.Instance.Play("PlayerHurt");
             health -= damage;
             animator.SetTrigger("isHurt");
             TimerDelg.Instance.Add(() => { isHurt = false; }, 1f);
@@ -384,6 +397,8 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         this.GetComponent<SpriteRenderer>().material.color = Color.blue;
         isRewinding = true;
+
+        
         rb.isKinematic = true;
     }
 
@@ -406,6 +421,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     private void Rewind()
     {
+        SoundManager.Instance.Play("PlayerTimeRewind");
         if (pointsInTime.Count > 0)
         {
            
