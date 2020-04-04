@@ -10,7 +10,14 @@ public class ThrowAttacks : ThrowAbles
 
     void Start()
     {
-        target = FindObjectOfType<PlayerController>().transform;
+        if (FindObjectOfType<PlayerController>())
+        {
+            target = FindObjectOfType<PlayerController>().transform;
+        }
+        else
+        {
+            target = this.transform;
+        }
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         fireBallFX = transform.GetChild(0).gameObject;

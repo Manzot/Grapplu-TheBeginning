@@ -6,7 +6,6 @@ using System;
 
 public enum Abilities { Grappler, Rewind, SlowMotion }
 
-
 public class PlayerController : MonoBehaviour, IDamage
 {
     const float SLOMO_FACTOR = 0.3f;
@@ -80,7 +79,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     public void Refresh()
     {
-        Debug.Log(health);
+        //Debug.Log(health);
         if (!Dead())
         {
             Jump();

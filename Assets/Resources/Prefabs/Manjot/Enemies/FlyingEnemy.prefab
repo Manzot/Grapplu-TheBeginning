@@ -147,6 +147,7 @@ MonoBehaviour:
   attackCooldown: 5
   damage: 10
   hitPoints: 20
+  currentHealth: 0
   healthBar: {fileID: 6471949397613427483}
   isHurt: 0
   isStunned: 0
@@ -262,7 +263,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 4.164114, y: 0.061231613}
+  m_Offset: {x: -2.9101725, y: 1.585814}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -273,7 +274,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 31.898685, y: 12.362061}
+  m_Size: {x: 17.750113, y: 9.682492}
   m_EdgeRadius: 0
 --- !u!1001 &7533275860704937848
 PrefabInstance:

@@ -175,6 +175,7 @@ MonoBehaviour:
   attackCooldownTimer: 0.5
   moveTimeCounter: 0
   moveTime: 3
+  isSpawnerType: 1
   target: {fileID: 0}
   feet: {fileID: 2161454972402169674}
   walkable: {fileID: 0}

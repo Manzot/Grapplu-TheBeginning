@@ -49,9 +49,6 @@ TagManager:
   - name: Ground
     uniqueID: 3530723931
     locked: 0
-  - name: Clutter
-    uniqueID: 3353074857
-    locked: 0
   - name: Objects
     uniqueID: 2369251481
     locked: 0
@@ -60,6 +57,9 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 3810073715
+    locked: 0
+  - name: Clutter
+    uniqueID: 3353074857
     locked: 0
   - name: Throwables
     uniqueID: 2203462511
