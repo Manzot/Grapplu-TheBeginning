@@ -37,56 +37,55 @@ public class EnemySpawner : MonoBehaviour
     }
     public void Refresh()
     {
-        if (isTriggered)
+        if (gameObject)
         {
-            colliderZone.SetActive(true);
+            if (isTriggered)
+            {
+                colliderZone.SetActive(true);
 
-            if (ToSpawnBossesEnableThis)
-            {
-                if (isTriggered)
+                if (ToSpawnBossesEnableThis)
                 {
-                    if (bossCountList[0].currentHealth <= 0)
+                    if (isTriggered)
                     {
-                        bossCountList.Remove(bossCountList[0]);
-                        EnemySpawnerManager.Instance.enemySpawnersList.Remove(this);
-                        Destroy(gameObject, 1f);
-                    }
-                }
-            }
-            else
-            {
-                if (waveSpawned)
-                {
-                    if (numOfWaves > 0)
-                    {
-                        if (enemieCountList.Count <= 0)
+                        if (bossCountList[0].currentHealth <= 0)
                         {
-                            enemyID = 0;
-                            Spawner();
-                        }
-                    }
-                    else
-                    {
-                        if (enemieCountList.Count <= 0)
-                        {
+                            bossCountList.Remove(bossCountList[0]);
                             EnemySpawnerManager.Instance.enemySpawnersList.Remove(this);
                             Destroy(gameObject, 1f);
                         }
                     }
                 }
-                for (int i = 0; i < enemieCountList.Count; i++)
+                else
                 {
-                    if (enemieCountList[i].currentHealth <= 0)
+                    if (waveSpawned)
                     {
-                        enemieCountList.Remove(enemieCountList[i]);
+                        if (numOfWaves > 0)
+                        {
+                            if (enemieCountList.Count <= 0)
+                            {
+                                enemyID = 0;
+                                Spawner();
+                            }
+                        }
+                        else
+                        {
+                            if (enemieCountList.Count <= 0)
+                            {
+                                EnemySpawnerManager.Instance.enemySpawnersList.Remove(this);
+                                Destroy(gameObject, 1f);
+                            }
+                        }
+                    }
+                    for (int i = 0; i < enemieCountList.Count; i++)
+                    {
+                        if (enemieCountList[i].currentHealth <= 0)
+                        {
+                            enemieCountList.Remove(enemieCountList[i]);
+                        }
                     }
                 }
             }
         }
-
-        
-       
-        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

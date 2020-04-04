@@ -206,8 +206,8 @@ public class EnemyUnit : MonoBehaviour, IDamage
         {
             EnemyManager.Instance.Died(this.gameObject.GetComponent<EnemyUnit>());
             rb.velocity = Vector2.zero;
-            anim.SetBool("isDead", true);
             anim.SetBool("isHurt", true);
+            anim.SetBool("isDead", true);
             anim.SetTrigger("death");
             GameObject.Destroy(gameObject, 2.8f);
             return true;
@@ -231,16 +231,19 @@ public class EnemyUnit : MonoBehaviour, IDamage
 
     public void TakeDamage(int damage)
     {
-        if (!healthBarParent.activeSelf)
+        if (!Death())
         {
-            healthBarParent.SetActive(true);
-        }
-        if (!isHurt)
-        {
-            isHurt = true;
-            anim.SetTrigger("is_hurt");
-            currentHealth -= damage;
-            KnockBack();
+            if (!healthBarParent.activeSelf)
+            {
+                healthBarParent.SetActive(true);
+            }
+            if (!isHurt)
+            {
+                isHurt = true;
+                anim.SetTrigger("is_hurt");
+                currentHealth -= damage;
+                KnockBack();
+            }
         }
         healthBar.fillAmount = (currentHealth) / (float)hitPoints; // Mathf.Lerp(currentHealth / (float)hitPoints, currentHealth - damage / (float)hitPoints, Time.deltaTime);//
     }

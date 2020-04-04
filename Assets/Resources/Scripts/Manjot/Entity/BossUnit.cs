@@ -34,6 +34,8 @@ public class BossUnit : MonoBehaviour
     [HideInInspector]
     public Animator anim;
 
+    bool shaderChange;
+
     public virtual void Initialize()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -49,15 +51,17 @@ public class BossUnit : MonoBehaviour
 
     public virtual void Refresh()
     {
+        Debug.Log(currentHealth);
         if (currentHealth < hitPoints / 2)
         {
             enraged = true;
             anim.SetBool("enraged", true);
         }
 
-        if (isHurt)
+        if (shaderChange)
         {
             sprite.material.color = Color.red;
+            TimerDelg.Instance.Add(() => { shaderChange = false; }, .3f);
         }
         else
         {
@@ -78,12 +82,16 @@ public class BossUnit : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (!isHurt)
+        if (!Dead())
         {
-            isHurt = true;
-            currentHealth -= damage;
-            rb.velocity = Vector2.zero;
-            TimerDelg.Instance.Add(()=> { isHurt = false; }, .3f);
+            if (!isHurt)
+            {
+                isHurt = true;
+                shaderChange = true;
+                currentHealth -= damage;
+                rb.velocity = Vector2.zero;
+                TimerDelg.Instance.Add(()=> { isHurt = false; }, 1f);
+            }
         }
     }
 

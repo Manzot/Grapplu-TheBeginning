@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawnerManager : IManageables
 {
-    public List<EnemySpawner> enemySpawnersList = new List<EnemySpawner>();
+    public List<EnemySpawner> enemySpawnersList;
 
     #region Singleton
     private static EnemySpawnerManager instance = null;
@@ -27,6 +27,7 @@ public class EnemySpawnerManager : IManageables
     public void Initialize()
     {
         //throw new System.NotImplementedException();
+        enemySpawnersList = new List<EnemySpawner>();
     }
 
     public void PostInitialize()
