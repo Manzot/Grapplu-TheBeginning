@@ -23,7 +23,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
 
     public int damage;
     public int hitPoints;
-    int currentHealth;
+    public int currentHealth;
     public Image healthBar;
     GameObject healthBarParent;
     Quaternion defaultHbRotation;
@@ -250,7 +250,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
         canAttack = false;
         Vector2 knockBckVector = (target.position - transform.position).normalized;
         rb.AddForce(knockBckVector * -KNOCKAMOUNT * Time.fixedDeltaTime, ForceMode2D.Impulse);
-        TimerDelg.Instance.Add(() => { rb.velocity = new Vector2(0, rb.velocity.y); }, 0.2f);
+        TimerDelg.Instance.Add(() => { if (rb) { rb.velocity = new Vector2(0, rb.velocity.y); } }, 0.2f);
         TimerDelg.Instance.Add(() => { isHurt = false; }, STUN_TIME);
     }
     public void DamageTarget(float attackRange, int _damage)

@@ -6,7 +6,6 @@ using System;
 
 public enum Abilities { Grappler, Rewind, SlowMotion }
 
-
 public class PlayerController : MonoBehaviour, IDamage
 {
     const float SLOMO_FACTOR = 0.3f;
@@ -79,7 +78,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     public void Refresh()
     {
-        Debug.Log(health);
+        //Debug.Log(health);
         if (!Dead())
         {
             Jump();
@@ -226,12 +225,12 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (Input.GetKey(KeyCode.A))
             {
-                horizontal = -1;
+               // horizontal = -1;
                 rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                horizontal = 1;
+               // horizontal = 1;
                 rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
             }
         }

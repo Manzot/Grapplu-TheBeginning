@@ -28,12 +28,14 @@ public class GameFlow: IManageables
         PlayerManager.Instance.Initialize();
         EnemyManager.Instance.Initialize();
         BossManager.Instance.Initialize();
+        EnemySpawnerManager.Instance.Initialize();
     }
     public void PostInitialize()
     {
         PlayerManager.Instance.PostInitialize();
         EnemyManager.Instance.PostInitialize();
         BossManager.Instance.PostInitialize();
+        EnemySpawnerManager.Instance.PostInitialize();
         TimerDelg.Instance.PostInitialize();
     }
     public void Refresh()
@@ -41,6 +43,7 @@ public class GameFlow: IManageables
         PlayerManager.Instance.Refresh();
         EnemyManager.Instance.Refresh();
         BossManager.Instance.Refresh();
+        EnemySpawnerManager.Instance.Refresh();
         TimerDelg.Instance.Refresh();
     }
     public void PhysicsRefresh()

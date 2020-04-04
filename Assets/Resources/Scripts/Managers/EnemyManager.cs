@@ -5,7 +5,8 @@ using UnityEngine;
 public enum EnemyTypes { Melee, Ranged, Flying, Underground }
 public class EnemyManager : IManageables
 {
-    List<EnemyUnit> enemies;
+    Dictionary<EnemyType, GameObject> enemiesPrefabs;
+    public List<EnemyUnit> enemiesList;
     Transform parent;
     #region Singleton
 
@@ -28,43 +29,69 @@ public class EnemyManager : IManageables
     #endregion
     public void Initialize()
     {
+        enemiesPrefabs = new Dictionary<EnemyType, GameObject>();
+        enemiesPrefabs.Add(EnemyType.Melee, Resources.Load<GameObject>("Prefabs/Manjot/Enemies/MeleeEnemy"));
+        enemiesPrefabs.Add(EnemyType.Ranged, Resources.Load<GameObject>("Prefabs/Manjot/Enemies/RangedEnemy"));
+        enemiesPrefabs.Add(EnemyType.Flying, Resources.Load<GameObject>("Prefabs/Manjot/Enemies/FlyingEnemy"));
+
         parent = new GameObject("EnemiesParent").transform;
-        enemies = new List<EnemyUnit>();
-        enemies.AddRange(GameObject.FindObjectsOfType<EnemyUnit>());
-        for (int i = 0; i < enemies.Count; i++)
+        enemiesList = new List<EnemyUnit>();
+
+        enemiesList.AddRange(GameObject.FindObjectsOfType<EnemyUnit>());
+        for (int i = 0; i < enemiesList.Count; i++)
         {
-            enemies[i].Initialize();
-            if (enemies[i].transform.parent == null)
-                enemies[i].transform.SetParent(parent);
+            enemiesList[i].Initialize();
+            if (enemiesList[i].transform.parent == null)
+                enemiesList[i].transform.SetParent(parent);
             else
-                enemies[i].transform.parent.SetParent(parent);
+                enemiesList[i].transform.parent.SetParent(parent);
         }
     }
     public void PostInitialize()
     {
-        for (int i = 0; i < enemies.Count; i++)
+       
+        for (int i = 0; i < enemiesList.Count; i++)
         {
-            enemies[i].PostInitialize();
+            enemiesList[i].PostInitialize();
         }
     }
     public void Refresh()
     {
-        for (int i = 0; i < enemies.Count; i++)
+
+        for (int i = 0; i < enemiesList.Count; i++)
         {
-            enemies[i].Refresh();
+            enemiesList[i].Refresh();
         }
     }
     public void PhysicsRefresh()
     {
         
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < enemiesList.Count; i++)
         {
-            enemies[i].PhysicsRefresh();
+            enemiesList[i].PhysicsRefresh();
         }
     }
 
     public void Died(EnemyUnit e)
     {
-        enemies.Remove(e);
+        enemiesList.Remove(e);
+    }
+
+    public EnemyUnit SpawnEnemy(EnemyType eType, Vector2 pos)
+    {
+        EnemyUnit newEnemy;
+        if(eType == EnemyType.Flying)
+        {
+            newEnemy = GameObject.Instantiate(enemiesPrefabs[eType], pos, Quaternion.identity, parent).transform.GetComponentInChildren<EnemyUnit>();
+        }
+        else
+        {
+            newEnemy =  GameObject.Instantiate(enemiesPrefabs[eType], pos, Quaternion.identity, parent).GetComponent<EnemyUnit>();
+        }
+        newEnemy.Initialize();
+        newEnemy.PostInitialize();
+        enemiesList.Add(newEnemy);
+
+        return newEnemy;
     }
 }
