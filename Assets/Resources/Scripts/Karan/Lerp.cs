@@ -10,7 +10,7 @@ public class Lerp : MonoBehaviour
 
     Vector2 startPoint;
     Vector2 endPoint;
-    Vector3 target;
+    Vector2 target;
 
     public bool toLerp = true;
     bool isGoing = true;
@@ -42,11 +42,11 @@ public class Lerp : MonoBehaviour
             if (isGoing)
             {
 
-                transform.position = Vector3.Lerp(startPoint, endPoint, timeElapsed / travelTime);
+                transform.position = Vector2.Lerp(startPoint, endPoint, timeElapsed / travelTime);
             }
             else
 
-                transform.position = Vector3.Lerp(endPoint, startPoint, timeElapsed / travelTime);
+                transform.position = Vector2.Lerp(endPoint, startPoint, timeElapsed / travelTime);
         }
     }
 }

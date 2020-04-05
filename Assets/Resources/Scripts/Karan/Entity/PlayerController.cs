@@ -263,12 +263,12 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (Input.GetKey(KeyCode.A))
             {
-                horizontal = -1;
+               // horizontal = -1;
                 rb.velocity = new Vector2(horizontal * speed * Time.fixedUnscaledDeltaTime, rb.velocity.y);
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                horizontal = 1;
+               // horizontal = 1;
                 rb.velocity = new Vector2(horizontal * speed * Time.fixedUnscaledDeltaTime, rb.velocity.y);
             }
         }
