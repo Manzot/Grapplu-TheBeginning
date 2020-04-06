@@ -9,6 +9,8 @@ public class EnemyUnit : MonoBehaviour, IDamage
     const float KNOCKAMOUNT = 200;
     const float maxGravity = -12f;
 
+    float jumpCooldown = 1.5f;
+
     public EnemyType eType;
 
     [HideInInspector]
@@ -43,7 +45,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
                 isJumping,
                 canAttack;
     [HideInInspector]
-    public bool targetFound;
+    public static bool targetFound;
 
     [HideInInspector]
     public float jumpTime = 0.5f,
@@ -66,6 +68,8 @@ public class EnemyUnit : MonoBehaviour, IDamage
     public SetupWalkableArea walkable;
 
     Transform attackPosition;
+    [HideInInspector]
+    public LineRenderer line;
 
     public virtual void Initialize()
     {
@@ -74,7 +78,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
     }
     public virtual void PostInitialize()
     {
-        target = FindObjectOfType<PlayerController>().transform;
+        target = GameObject.FindGameObjectWithTag("Player").transform;// FindObjectOfType<PlayerController>().transform;
 
         if(eType != EnemyType.Ranged)
         {
@@ -90,7 +94,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
         defaultHbRotation = healthBarParent.transform.rotation;
         healthBarParent.SetActive(false);
 
-        //line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
+        line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
         //aStar = new AStarPathfinding(walkable.walkAbleArea);
     }
     public virtual void Refresh()
@@ -141,7 +145,8 @@ public class EnemyUnit : MonoBehaviour, IDamage
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 8f);
         if (hit.collider)
         {
-            if (hit.collider.gameObject.CompareTag("Player"))
+            Debug.Log(hit.collider.gameObject.name);
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 targetFound = true;
                 aStar = new AStarPathfinding(walkable.walkAbleArea);
@@ -172,13 +177,13 @@ public class EnemyUnit : MonoBehaviour, IDamage
     /// To check if the enemy is on the ground or not
     public bool Grounded()
     {
-        return groundCheckColi = Physics2D.OverlapCircle(new Vector2(feet.position.x, feet.position.y), .2f, LayerMask.GetMask("Ground","IObject"));
+        return groundCheckColi = Physics2D.OverlapCircle(new Vector2(feet.position.x, feet.position.y), .2f, LayerMask.GetMask("Ground","IObject","Platform"));
     }
     /// Jumping function
-    public void Jump(Vector2 dir)
+    public void Jump(Vector2 dir, Vector2 jumpPointer)
     {
-        if (Physics2D.Raycast(new Vector2(transform.position.x , transform.position.y), transform.up, 2.3f, LayerMask.GetMask("Ground"))
-        || Physics2D.Raycast(transform.position, transform.right, 1.3f, LayerMask.GetMask("Ground")))
+        if (Physics2D.Raycast(transform.position, transform.up, 2.5f, LayerMask.GetMask("Ground", "Platform"))
+        || Physics2D.Raycast(transform.position, transform.right, 1.3f, LayerMask.GetMask("Ground", "Platform")))
         {
             if (Grounded() && jumpTime < 0)
             {
@@ -195,7 +200,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
         if (Grounded() && jumpTime < 0)
         {
             rb.AddForce(dir, ForceMode2D.Impulse);
-            jumpTime = 1f;
+            jumpTime = jumpCooldown;
             isJumping = true;
         }
     }

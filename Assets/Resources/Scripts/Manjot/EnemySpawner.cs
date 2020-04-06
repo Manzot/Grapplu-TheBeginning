@@ -113,19 +113,19 @@ public class EnemySpawner : MonoBehaviour
         numOfWaves--;
         for (int i = 0; i < numOfMeleeEnemies; i++)
         {
-            newEnemies[enemyID] = EnemyManager.Instance.SpawnEnemy(EnemyType.Melee, positionsMelee[0].position);
+            newEnemies[enemyID] = EnemyManager.Instance.SpawnEnemy(EnemyType.Melee, positionsMelee[i].position);
             enemieCountList.Add(newEnemies[enemyID]);
             enemyID++;
         }
         for (int i = 0; i < numOfRangedEnemies; i++)
         {
-            newEnemies[enemyID] = EnemyManager.Instance.SpawnEnemy(EnemyType.Ranged, positionsRanged[0].position);
+            newEnemies[enemyID] = EnemyManager.Instance.SpawnEnemy(EnemyType.Ranged, positionsRanged[i].position);
             enemieCountList.Add(newEnemies[enemyID]);
             enemyID++;
         }
         for (int i = 0; i < numOfFlyingEnemies; i++)
         {
-            newEnemies[enemyID] = EnemyManager.Instance.SpawnEnemy(EnemyType.Flying, positionsFlying[0].position);
+            newEnemies[enemyID] = EnemyManager.Instance.SpawnEnemy(EnemyType.Flying, positionsFlying[i].position);
             enemieCountList.Add(newEnemies[enemyID]);
             enemyID++;
         }

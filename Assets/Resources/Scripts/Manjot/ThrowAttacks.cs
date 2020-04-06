@@ -39,21 +39,27 @@ public class ThrowAttacks : ThrowAbles
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision)
+        //if (collision.gameObject.layer != LayerMask.NameToLayer("Platform"))
         {
             if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+                Destroy(gameObject);
             }
             if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 collision.gameObject.GetComponent<EnemyUnit>().TakeDamage(damage);
+                Destroy(gameObject);
             }
             if(collision.gameObject.layer == LayerMask.NameToLayer("Boss"))
             {
                 collision.gameObject.GetComponent<BossUnit>().TakeDamage(damage);
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

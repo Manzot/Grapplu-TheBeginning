@@ -74,8 +74,9 @@ public class RopeSystem : MonoBehaviour
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);
             hook.hookRb.isKinematic = false;
-            if(isRopeAttached)
-                rb.AddForce(new Vector2(player.horizontal, 2f) * 5f, ForceMode2D.Impulse);
+            hook.transform.SetParent(null);
+            if (isRopeAttached && !player.Grounded())
+                rb.AddForce(new Vector2(player.horizontal, 2f) * 3f, ForceMode2D.Impulse);
 
             isRopeAttached = false;
             
@@ -84,14 +85,15 @@ public class RopeSystem : MonoBehaviour
 
     void GrappleCollisionCheck()
     {
-        var grappleCheck = Physics2D.OverlapCircle(new Vector2(hook.transform.position.x - .1f, hook.transform.position.y - .1f), .05f, LayerMask.GetMask("Grappleable"));
+        var grappleCheck = Physics2D.OverlapCircle(new Vector2(hook.transform.position.x - .1f, hook.transform.position.y - .1f), .05f, LayerMask.GetMask("Grappleable", "Ground", "Platform"));
         if (grappleCheck)
         {
             hook.hookRb.velocity = Vector2.zero;
             hook.hookRb.isKinematic = true;
             isRopeAttached = true;
+            hook.transform.SetParent(grappleCheck.transform);
         }
-        if ((hook.transform.position - player.transform.position).sqrMagnitude >= 80)
+        if ((hook.transform.position - player.transform.position).sqrMagnitude >= 25)
         {
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);

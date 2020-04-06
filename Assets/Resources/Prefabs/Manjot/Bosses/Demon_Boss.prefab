@@ -197,7 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   jumpForce: 10000
-  hitPoints: 100
+  hitPoints: 200
   attackCooldown: 4
   enraged: 0
   isHurt: 0

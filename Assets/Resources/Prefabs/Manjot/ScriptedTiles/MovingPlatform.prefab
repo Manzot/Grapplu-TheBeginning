@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3406051867192563399}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LerpPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3406051867192563398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.18, z: 0}
+  m_LocalPosition: {x: 6.14, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3406051867923041443}
@@ -100,8 +100,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1925715815
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -8213782765776912250, guid: 22c48f921480b824dabd76c4122a72ec,
     type: 3}
@@ -128,7 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endTransform: {fileID: 3406051867192563399}
-  travelTime: 0.4
+  travelTime: 2
+  AttachableToPlayer: 1
   toLerp: 1
 --- !u!61 &3406051867923041444
 BoxCollider2D:

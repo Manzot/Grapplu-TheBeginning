@@ -41,7 +41,7 @@ public class BossUnit : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-        target = FindObjectOfType<PlayerController>().transform;
+        target = GameObject.FindGameObjectWithTag("Player").transform;//FindObjectOfType<PlayerController>().transform;
     }
     public virtual void PostInitialize()
     {
@@ -51,7 +51,7 @@ public class BossUnit : MonoBehaviour
 
     public virtual void Refresh()
     {
-        Debug.Log(currentHealth);
+      //  Debug.Log(currentHealth);
         if (currentHealth < hitPoints / 2)
         {
             enraged = true;

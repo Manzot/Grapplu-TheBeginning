@@ -5,13 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 public class TutorialTextCreator : MonoBehaviour
 {
-    TextMeshProUGUI tutText;
+    public TextMeshProUGUI tutText;
     public string message;
 
     public void Start()
     {
-        tutText = GameObject.FindGameObjectWithTag("TutorialDialog").GetComponent<TextMeshProUGUI>();
-        tutText.gameObject.SetActive(false);
+        if(tutText.gameObject.activeSelf)
+            tutText.gameObject.SetActive(false);
     }
     private void OnTriggerStay2D(Collider2D collision)
     {

@@ -304,7 +304,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /* Checking for ground collision */
     public bool Grounded()
     {
-        return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Ground", "IObject"));
+        return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Ground", "IObject", "Platform"));
     }
 
     float CrossairDirection()

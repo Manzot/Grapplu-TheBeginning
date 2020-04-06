@@ -7,6 +7,7 @@ public class Lerp : MonoBehaviour
     public Transform endTransform;
     public float travelTime;
     float timeElapsed = 0;
+    public bool AttachableToPlayer = true;
 
     Vector2 startPoint;
     Vector2 endPoint;
@@ -31,23 +32,34 @@ public class Lerp : MonoBehaviour
     void UpdatePosition()
     {
         timeElapsed += Time.deltaTime;
-
-        if (timeElapsed >= travelTime)
-        {
-            timeElapsed = 0;
-            isGoing = !isGoing;
-        }
-        if (toLerp)
-        {
-            if (isGoing)
+            if (timeElapsed >= travelTime)
             {
-
-                transform.position = Vector2.Lerp(startPoint, endPoint, timeElapsed / travelTime);
+                timeElapsed = 0;
+                isGoing = !isGoing;
             }
-            else
+            if (toLerp)
+            {
+                if (isGoing)
+                {
 
-                transform.position = Vector2.Lerp(endPoint, startPoint, timeElapsed / travelTime);
-        }
+                    transform.position = Vector2.Lerp(startPoint, endPoint, timeElapsed / travelTime);
+                }
+                else
+
+                    transform.position = Vector2.Lerp(endPoint, startPoint, timeElapsed / travelTime);
+            }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(AttachableToPlayer)
+            collision.gameObject.transform.SetParent(transform);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(AttachableToPlayer)
+            collision.gameObject.transform.SetParent(null);
     }
 }
 

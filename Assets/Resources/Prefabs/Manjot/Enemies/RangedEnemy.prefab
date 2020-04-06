@@ -161,21 +161,20 @@ MonoBehaviour:
   anim: {fileID: 0}
   speed: 80
   jumpForce: 800
-  attackCooldown: 5
-  damage: 12
+  attackCooldown: 4
+  damage: 15
   hitPoints: 30
+  currentHealth: 0
   healthBar: {fileID: 6305182690529166365}
   isHurt: 0
   isStunned: 0
   moveRight: 1
   isJumping: 0
   canAttack: 0
-  targetFound: 0
   jumpTime: 0.5
   attackCooldownTimer: 0.5
   moveTimeCounter: 0
   moveTime: 3
-  isSpawnerType: 1
   target: {fileID: 0}
   feet: {fileID: 2161454972402169674}
   walkable: {fileID: 0}

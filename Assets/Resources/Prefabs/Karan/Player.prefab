@@ -233,8 +233,8 @@ MonoBehaviour:
   ropeHook: {x: 0, y: 0}
   speed: 200
   damage: 10
-  swingForce: 2
-  jumpForce: 650
+  swingForce: 1
+  jumpForce: 700
   oldJumpForce: 0
   horizontal: 0
   aimAngle: 0

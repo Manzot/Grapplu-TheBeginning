@@ -28,8 +28,8 @@ TagManager:
   - Boss
   - IObject
   - CanDamagePlayerOnly
-  - 
-  - 
+  - Platform
+  - NonGrappableWalls
   - 
   - 
   - 
@@ -53,7 +53,7 @@ TagManager:
   - name: Objects
     uniqueID: 2369251481
     locked: 0
-  - name: Clutter
+  - name: ClutterBehind
     uniqueID: 3353074857
     locked: 0
   - name: Player
@@ -64,6 +64,9 @@ TagManager:
     locked: 0
   - name: Throwables
     uniqueID: 2203462511
+    locked: 0
+  - name: ClutterFront
+    uniqueID: 1614381197
     locked: 0
   - name: UI
     uniqueID: 442927593

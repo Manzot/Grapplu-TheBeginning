@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1508469446081369069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4797105657375500654}
+  m_Layer: 10
+  m_Name: JumpPointer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4797105657375500654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508469446081369069}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7909186483129055157}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3377913859322186881
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +125,7 @@ Transform:
   - {fileID: 7909186482538835572}
   - {fileID: 4933439230214407078}
   - {fileID: 24189509516753481}
+  - {fileID: 4797105657375500654}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -201,25 +232,26 @@ MonoBehaviour:
   rb: {fileID: 0}
   anim: {fileID: 0}
   speed: 100
-  jumpForce: 800
-  attackCooldown: 3
+  jumpForce: 700
+  attackCooldown: 2
   damage: 10
-  hitPoints: 40
+  hitPoints: 50
+  currentHealth: 0
   healthBar: {fileID: 624949900021324526}
   isHurt: 0
   isStunned: 0
   moveRight: 1
   isJumping: 0
   canAttack: 0
-  targetFound: 0
   jumpTime: 0.5
   attackCooldownTimer: 0.5
   moveTimeCounter: 0
   moveTime: 2
-  isSpawnerType: 1
   target: {fileID: 0}
   feet: {fileID: 7909186482538835572}
   walkable: {fileID: 0}
+  line: {fileID: 0}
+  jumpPointer: {fileID: 4797105657375500654}
 --- !u!95 &1539609709
 Animator:
   serializedVersion: 3
