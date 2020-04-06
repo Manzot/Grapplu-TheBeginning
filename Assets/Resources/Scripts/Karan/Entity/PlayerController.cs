@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public bool isSwinging;
     public bool isAlive;
     bool isHurt;
-    
+
 
     public Transform feet;
     public Rigidbody2D rb;
@@ -51,11 +51,12 @@ public class PlayerController : MonoBehaviour, IDamage
     TimeSlowMo timeSlowMo;
 
     Transform punchesPos;
-    
+
     //Hook hook;
 
     public float health = 100f;
     private const float MAX_HEALTH = 100;
+
 
     public void Initialize()
     {
@@ -64,13 +65,15 @@ public class PlayerController : MonoBehaviour, IDamage
             health = MAX_HEALTH;
         }
 
+
         isAlive = true;
 
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         timeSlowMo = new TimeSlowMo();
-        
+
+
     }
     public void PostInitialize()
     {
@@ -88,6 +91,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
             if (Input.GetKeyDown(KeyCode.T))
             {
+
                 if (!timeSlow)
                 {
                     SoundManager.Instance.Play("PlayerTimeSlow");
@@ -105,8 +109,8 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
-                
-                StartRewind();
+                if (!timeSlow)
+                    StartRewind();
             }
             if (Input.GetKeyUp(KeyCode.R))
             {
@@ -115,7 +119,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-       
+
 
 
     }
@@ -132,7 +136,7 @@ public class PlayerController : MonoBehaviour, IDamage
             if (isRewinding)
             {
 
-                
+
                 Rewind();
             }
             else
@@ -147,11 +151,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (!timeSlow)
         {
-            
+
             timeSlowMo.SlowMotion(SLOMO_FACTOR);
-         
+
             timeSlow = true;
-            
+
         }
     }
 
@@ -185,15 +189,16 @@ public class PlayerController : MonoBehaviour, IDamage
         var playerToHookDirection = (ropeHook - (Vector2)transform.position).normalized;
         Debug.DrawLine(transform.position, playerToHookDirection, Color.red, 0f);
 
-        if (Input.GetAxis("Horizontal")<0)
+        if (Input.GetAxis("Horizontal") < 0)
         {
+            sprite.flipX = true;
             perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
             var leftPerpPos = (Vector2)transform.position + perpendicularDirection;
             Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
         }
         else
         {
-
+            sprite.flipX = false;
             perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
             var rightPerpPos = (Vector2)transform.position - perpendicularDirection;
             Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
@@ -223,60 +228,67 @@ public class PlayerController : MonoBehaviour, IDamage
         horizontal = Input.GetAxis("Horizontal");
         float direction = CrossairDirection();
         float angle = CrossairDirection() * Mathf.Rad2Deg;
-        if (angle > 91)
+        /*Debug.Log(angle);*/
+        if (!RopeSystem.isRopeAttached)
         {
-            sprite.flipX = true;
-
-             if (angle > 91 && (rb.velocity.x < 0))
+            if (angle > 91)
             {
                 sprite.flipX = true;
-                // transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
 
+                if (angle > 91 && (rb.velocity.x < 0))
+                {
+                    sprite.flipX = true;
+                    // transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+
+                }
+                else if (angle > 91 && (rb.velocity.x > 0))
+                {
+                    sprite.flipX = false;
+
+                }
             }
-            else if (angle > 91 && (rb.velocity.x > 0))
+            else
             {
                 sprite.flipX = false;
-             
+
+                if (angle < 91 && (rb.velocity.x > 0))
+                {
+                    sprite.flipX = false;
+
+                    // transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+
+                }
+                else if (angle < 91 && (rb.velocity.x < 0))
+                {
+                    sprite.flipX = true;
+
+                }
+
             }
         }
-        else
-        {
-            sprite.flipX = false;
 
-            if (angle < 91 && (rb.velocity.x > 0))
-            {
-                sprite.flipX = false;
-               
-                // transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-
-            }
-            else if (angle < 91 && (rb.velocity.x < 0))
-            {
-                sprite.flipX = true;
-               
-            }
-         
-        }
-
-           
-            if (!isSwinging)
+        if (!isSwinging)
         {
             if (Input.GetKey(KeyCode.A))
             {
-               // horizontal = -1;
-                rb.velocity = new Vector2(horizontal * speed * Time.fixedUnscaledDeltaTime, rb.velocity.y);
+                // horizontal = -1;
+                rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
+
+
             }
             else if (Input.GetKey(KeyCode.D))
             {
-               // horizontal = 1;
-                rb.velocity = new Vector2(horizontal * speed * Time.fixedUnscaledDeltaTime, rb.velocity.y);
+                // horizontal = 1;
+                rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
+
+
             }
         }
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
 
-       
-    }
 
+
+    }
     public void Jump()
     {
         if (Grounded())
@@ -286,11 +298,11 @@ public class PlayerController : MonoBehaviour, IDamage
                 SoundManager.Instance.Play("PlayerJump");
 
                 if (!timeSlow)
-                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime), ForceMode2D.Impulse);
+                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce * timeSlowMo.customFixedUnscaledDeltaTime), ForceMode2D.Impulse);
                 else
-                
-                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce * Time.unscaledDeltaTime), ForceMode2D.Impulse);
-                
+
+                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce * timeSlowMo.customFixedUnscaledDeltaTime), ForceMode2D.Impulse);
+
                 isJumping = true;
                 TimerDelg.Instance.Add(() => { isJumping = false; }, .5f);
             }
@@ -318,7 +330,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             return aimAngle = Mathf.PI * 2 + aimAngle;
         }*/
-   
+
         angleDirection = Quaternion.Euler(0, 0, aimAngle * Mathf.Rad2Deg) * Vector2.right;
         return aimAngle;
     }
@@ -332,7 +344,7 @@ public class PlayerController : MonoBehaviour, IDamage
         crosshair.transform.position = crosshairPosition;
     }
 
-  
+
 
     public void Attack()
     {
@@ -346,7 +358,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             animator.SetBool("isAttacking", false);
         }
-        
+
     }
 
     public void DisableBools()
@@ -398,7 +410,7 @@ public class PlayerController : MonoBehaviour, IDamage
         this.GetComponent<SpriteRenderer>().material.color = Color.blue;
         isRewinding = true;
 
-        
+
         rb.isKinematic = true;
     }
 
@@ -410,7 +422,8 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     private void Record()
     {
-        if (pointsInTime.Count > Mathf.Round(2f / Time.fixedDeltaTime))
+
+        if (pointsInTime.Count > Mathf.Round(3f / timeSlowMo.customFixedDeltaTime))
         {
             pointsInTime.RemoveAt(pointsInTime.Count - 1);
         }
@@ -424,7 +437,7 @@ public class PlayerController : MonoBehaviour, IDamage
         SoundManager.Instance.Play("PlayerTimeRewind");
         if (pointsInTime.Count > 0)
         {
-           
+
             PointInTime pointInTime = pointsInTime[0];
             transform.position = pointInTime.position;
             transform.rotation = pointInTime.rotation;
@@ -437,7 +450,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    public void DamageEnemies(int  _damage)
+    public void DamageEnemies(int _damage)
     {
         RaycastHit2D hit = Physics2D.Raycast(punchesPos.position, transform.right, ATTACK_RANGE);
         Collider2D bossCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Boss"));

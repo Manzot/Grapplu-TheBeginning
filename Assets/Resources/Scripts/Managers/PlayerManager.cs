@@ -35,8 +35,8 @@ public class PlayerManager : IManageables
     }
     public void PhysicsRefresh()
     {
-        if(player.isAlive)
-        player.PhysicsRefresh();
+        if (player.isAlive)
+            player.PhysicsRefresh();
     }
     public void PostInitialize()
     {
@@ -44,7 +44,7 @@ public class PlayerManager : IManageables
     }
     public void Refresh()
     {
-        if (player.isAlive) 
+        if (player.isAlive)
             player.Refresh();
         IsDead();
 
@@ -53,7 +53,7 @@ public class PlayerManager : IManageables
     {
         player.gameObject.SetActive(true);
         player.Initialize();
-        
+
     }
     public void IsDead()
     {

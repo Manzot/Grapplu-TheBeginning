@@ -2,23 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeSlowMo {
+public class TimeSlowMo
+{
     //public float slowdownFactor = 0.05f;
     // public float slowdownLength = 3f;
 
     // public bool timeSlow;
-    float fixTime = Time.fixedDeltaTime;
 
+    public float customUnscaledDeltaTime = Time.unscaledDeltaTime * 1;
+    public float customFixedUnscaledDeltaTime = Time.fixedUnscaledDeltaTime * 1;
+    public float customFixedDeltaTime = Time.fixedDeltaTime * 1;
+    public float customTimeScale = 1;
+    private float fixTime = Time.fixedDeltaTime;
+
+
+    public float TimeScaleReset(float timeScale)
+    {
+        if (timeScale < 1 || timeScale > 1)
+        {
+            customTimeScale = 1;
+        }
+        return customTimeScale;
+    }
     public float TimeReset(float _slowdownLength)
     {
-        
-            Time.timeScale += (1f / _slowdownLength) * Time.unscaledDeltaTime;
-           
-            Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
-            if (Time.timeScale == 1.0f)
-            {
-                Time.fixedDeltaTime = fixTime;
-               // timeSlow = false;
+
+        Time.timeScale += (1f / _slowdownLength) * Time.unscaledDeltaTime;
+
+        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+
+        if (Time.timeScale == 1.0f)
+        {
+            Time.fixedDeltaTime = fixTime;
+            // timeSlow = false;
             /*pc.jumpForce = pc.oldJumpForce*Time.unscaledDeltaTime;*/
         }
         return Time.timeScale;
