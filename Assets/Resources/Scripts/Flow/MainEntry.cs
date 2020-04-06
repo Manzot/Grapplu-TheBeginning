@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class MainEntry : MonoBehaviour
 {
+    public float customTimeScale;
+
     public void Awake()
     {
+
+
         GameFlow.Instance.Initialize();
     }
     void Start()
@@ -21,7 +25,9 @@ public class MainEntry : MonoBehaviour
         GameFlow.Instance.Refresh();
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
+
             SceneManager.LoadScene("ManjotScene");
+
         }
     }
 

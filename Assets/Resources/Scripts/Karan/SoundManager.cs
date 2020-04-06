@@ -1,22 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
     #region Singleton
-    private static SoundManager instance=null;
-    public SoundManager() { }
-    public static SoundManager Instance { get { return instance ?? (instance = FindObjectOfType<SoundManager>()); } }
-
+    public static SoundManager Instance = null;
     #endregion
 
     public Sound[] sounds;
 
-    public void Initialize()
+    public void Awake()
     {
-   
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+
         foreach (Sound s in sounds)
         {
             if (this)
@@ -27,12 +34,9 @@ public class SoundManager : MonoBehaviour
             }
 
         }
-
-    }
-    public void PostInitialize()
-    {
         Play("Theme");
     }
+
     public void Play(string name)
     {
         if (this)

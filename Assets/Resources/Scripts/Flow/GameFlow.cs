@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameFlow: IManageables
+public class GameFlow : IManageables
 {
     #region Singleton
 
@@ -10,7 +10,8 @@ public class GameFlow: IManageables
 
     public GameFlow() { }
 
-    public static GameFlow Instance {
+    public static GameFlow Instance
+    {
         get
         {
             if (instance == null)
@@ -28,7 +29,7 @@ public class GameFlow: IManageables
         PlayerManager.Instance.Initialize();
         EnemyManager.Instance.Initialize();
         BossManager.Instance.Initialize();
-        SoundManager.Instance.Initialize();
+        //  SoundManager.Instance.Initialize();
         EnemySpawnerManager.Instance.Initialize();
     }
     public void PostInitialize()
@@ -38,7 +39,7 @@ public class GameFlow: IManageables
         BossManager.Instance.PostInitialize();
         EnemySpawnerManager.Instance.PostInitialize();
         TimerDelg.Instance.PostInitialize();
-        SoundManager.Instance.PostInitialize();
+
     }
     public void Refresh()
     {
