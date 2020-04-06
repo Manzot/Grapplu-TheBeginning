@@ -76,9 +76,9 @@ public class RopeSystem : MonoBehaviour
             hook.hookRb.isKinematic = false;
             hook.transform.SetParent(null);
             if (isRopeAttached && !player.Grounded())
-                rb.AddForce(new Vector2(player.horizontal, 2f) * 3f, ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(player.horizontal, 2f) * 2f, ForceMode2D.Impulse);
             if (isRopeAttached)
-                rb.AddForce(new Vector2(player.horizontal, 2f) * 5f, ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(player.horizontal, 2f) * 1f, ForceMode2D.Impulse);
 
             isRopeAttached = false;
 
@@ -95,7 +95,7 @@ public class RopeSystem : MonoBehaviour
             isRopeAttached = true;
             hook.transform.SetParent(grappleCheck.transform);
         }
-        if ((hook.transform.position - player.transform.position).sqrMagnitude >= 25)
+        if ((hook.transform.position - player.transform.position).sqrMagnitude >= 35)
         {
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);

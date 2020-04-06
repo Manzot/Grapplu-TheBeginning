@@ -145,7 +145,6 @@ public class EnemyUnit : MonoBehaviour, IDamage
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 8f);
         if (hit.collider)
         {
-            Debug.Log(hit.collider.gameObject.name);
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 targetFound = true;
