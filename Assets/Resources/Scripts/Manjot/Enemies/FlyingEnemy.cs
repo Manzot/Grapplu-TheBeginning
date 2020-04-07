@@ -10,8 +10,7 @@ public class FlyingEnemy : EnemyUnit
 
     float RANDOM_Y = 0;
     bool movingUp;
-
-    Collider2D coli;
+    
     Collider2D boundary;
 
     public override void Initialize()

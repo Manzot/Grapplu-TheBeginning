@@ -17,6 +17,8 @@ public class EnemyUnit : MonoBehaviour, IDamage
     public Rigidbody2D rb;
     [HideInInspector]
     public Animator anim;
+    [HideInInspector]
+    public Collider2D coli;
 
 
     public float speed;
@@ -75,6 +77,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        coli = GetComponent<Collider2D>();
     }
     public virtual void PostInitialize()
     {
@@ -103,12 +106,6 @@ public class EnemyUnit : MonoBehaviour, IDamage
         {
             healthBar.transform.rotation = defaultHbRotation;
         }
-        //Debug.Log(currentHealth);
-
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    TakeDamage(10);
-        //}
     }
     public virtual void PhysicsRefresh()
     {
@@ -142,10 +139,12 @@ public class EnemyUnit : MonoBehaviour, IDamage
     /// Check to see if the target is in range of enemy or not
     public bool FindTarget()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 8f);
-        if (hit.collider)
-        {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+        //RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 8f);
+
+        Collider2D playerCheck = Physics2D.OverlapCapsule(transform.position, new Vector2(1, 10), CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Player"));
+        if (playerCheck)
+        {            
+           // if ((hit.collider.gameObject.layer == LayerMask.NameToLayer("Player")))
             {
                 targetFound = true;
                 aStar = new AStarPathfinding(walkable.walkAbleArea);
@@ -160,6 +159,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
     {
       //  Debug.DrawRay(transform.position, new Vector3(transform.right.x, -1f, 0) * 6f, Color.red);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, lookDirection, range);
+        
         if (hit.collider)
         {
             if (hit.collider.gameObject.CompareTag("Player"))

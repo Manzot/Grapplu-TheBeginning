@@ -45,40 +45,44 @@ public class RopeSystem : MonoBehaviour
     }
     void Update()
     {
-        HandleInput(player.angleDirection);
-
-        JointAttached();
-
-        if (hook.gameObject.activeSelf)
+        if (player.health > 0)
         {
-            GrappleCollisionCheck();
-            if (isRopeAttached)
-                HandleRopeLength();
+            HandleInput(player.angleDirection);
 
-            ropeLine.SetPosition(0, hookShootPos.transform.position);
-            ropeLine.SetPosition(1, hook.transform.position);
+            JointAttached();
+
+            if (hook.gameObject.activeSelf)
+            {
+                GrappleCollisionCheck();
+                if (isRopeAttached)
+                    HandleRopeLength();
+
+                ropeLine.SetPosition(0, hookShootPos.transform.position);
+                ropeLine.SetPosition(1, hook.transform.position);
+            }
         }
+        
     }
 
     private void HandleInput(Vector2 aimDirection)
     {
-        if (Input.GetMouseButtonDown(1) && !isRopeAttached)
+        if (Input.GetButtonDown("Grapple") && !isRopeAttached)
         {
             hook.transform.position = hookShootPos.transform.position;
             hook.gameObject.SetActive(true);
             ropeLine.gameObject.SetActive(true);
             hook.ThrowHook(player.angleDirection);
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetButtonUp("Grapple"))
         {
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);
             hook.hookRb.isKinematic = false;
             hook.transform.SetParent(null);
             if (isRopeAttached && !player.Grounded())
-                rb.AddForce(new Vector2(player.horizontal, 2f) * 2f, ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(player.horizontal, 2f) * 3f, ForceMode2D.Impulse);
             if (isRopeAttached)
-                rb.AddForce(new Vector2(player.horizontal, 2f) * 1f, ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(player.horizontal, 1f) * 1f, ForceMode2D.Impulse);
 
             isRopeAttached = false;
 
