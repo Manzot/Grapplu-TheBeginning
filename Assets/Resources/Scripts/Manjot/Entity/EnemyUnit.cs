@@ -71,7 +71,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
 
     Transform attackPosition;
     [HideInInspector]
-    public LineRenderer line;
+   // public LineRenderer line;
 
     public virtual void Initialize()
     {
@@ -97,7 +97,7 @@ public class EnemyUnit : MonoBehaviour, IDamage
         defaultHbRotation = healthBarParent.transform.rotation;
         healthBarParent.SetActive(false);
 
-        line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
+        //line = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Line")).GetComponent<LineRenderer>();
         //aStar = new AStarPathfinding(walkable.walkAbleArea);
     }
     public virtual void Refresh()

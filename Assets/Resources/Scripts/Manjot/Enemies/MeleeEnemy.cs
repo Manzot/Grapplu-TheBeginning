@@ -292,13 +292,13 @@ public class MeleeEnemy : EnemyUnit
     /// Drawing Line that shows walking path
     void DrawLine(List<Node> path)
     {
-        line.positionCount = path.Count;
+        //line.positionCount = path.Count;
 
-        Vector3[] linePoints = new Vector3[path.Count];
-        for (int i = 0; i < path.Count; i++)
-        {
-            linePoints[i] = new Vector3(path[i].position.x, path[i].position.y, 0);
-        }
-        line.SetPositions(linePoints);
+        //Vector3[] linePoints = new Vector3[path.Count];
+        //for (int i = 0; i < path.Count; i++)
+        //{
+        //    linePoints[i] = new Vector3(path[i].position.x, path[i].position.y, 0);
+        //}
+        //line.SetPositions(linePoints);
     }
 }

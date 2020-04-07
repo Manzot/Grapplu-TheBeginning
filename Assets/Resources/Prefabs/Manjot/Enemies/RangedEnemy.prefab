@@ -159,8 +159,9 @@ MonoBehaviour:
   eType: 0
   rb: {fileID: 0}
   anim: {fileID: 0}
+  coli: {fileID: 0}
   speed: 80
-  jumpForce: 680
+  jumpForce: 600
   attackCooldown: 4
   damage: 15
   hitPoints: 30

@@ -73,7 +73,7 @@ public class RopeSystem : MonoBehaviour
             ropeLine.gameObject.SetActive(true);
             hook.ThrowHook(player.angleDirection);
         }
-        else if (Input.GetButtonUp("Grapple"))
+        else if (Input.GetButtonUp("Grapple") || player.health <= 0)
         {
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);
