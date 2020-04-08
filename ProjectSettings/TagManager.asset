@@ -32,7 +32,7 @@ TagManager:
   - CanDamagePlayerOnly
   - Platform
   - NonGrappableWalls
-  - 
+  - FlyingEnemy
   - 
   - 
   - 
