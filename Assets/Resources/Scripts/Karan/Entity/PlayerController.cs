@@ -42,21 +42,26 @@ public class PlayerController : MonoBehaviour, IDamage
     public Transform feet;
     public Rigidbody2D rb;
     private SpriteRenderer sprite;
-    private Animator animator;
+    [HideInInspector]
+    public Animator animator;
 
     public Vector2 angleDirection;
     public Vector3 deathLoc;
 
     public GameObject crosshair;
-    TimeSlowMo timeSlowMo;
+    [HideInInspector]
+    public TimeSlowMo timeSlowMo;
 
     Transform punchesPos;
-
-    //Hook hook;
 
     public float health = 100f;
     private const float MAX_HEALTH = 100;
 
+    public const float slowMoCooldown = 10f;
+    public const float rewindCooldown = 6f;
+    float slowMoTimer;
+    bool isCoolingDown = false;
+    private float rewindTimer;
 
     public void Initialize()
     {
@@ -78,45 +83,85 @@ public class PlayerController : MonoBehaviour, IDamage
         pointsInTime = new List<PointInTime>();
         punchesPos = transform.Find("Punches").transform;
     }
+
+
     public void Refresh()
     {
+
         //Debug.Log(health);
         if (!Dead())
         {
             Jump();
-
             SetCrossairPoint(CrossairDirection());
-
-            if (Input.GetButtonDown("TimeSlow"))
+            /*
+                        if (!isCoolingDown)
+                        {*/
+            Timers();
+            if (Input.GetKeyDown(KeyCode.T))
             {
 
                 if (!timeSlow)
                 {
-                    SoundManager.Instance.Play("PlayerTimeSlow");
-                    TimeSlowAbility();
+
+                    if (slowMoTimer <= 0)
+                    {
+                        SoundManager.Instance.Play("PlayerTimeSlow");
+                        TimeSlowAbility();
+
+
+                        slowMoTimer = slowMoCooldown;
+                        Debug.Log(slowMoTimer);
+                    }
+
                 }
             }
-
             TimeSlowReset();
-            Attack();
+            /* StartCoroutine(CoolDown(slowMoCooldown));*/
 
-            if (Input.GetButtonDown("Attack"))
-            {
-                isAttacking = true;
-            }
+            /*}*/
+
+        }
+        Attack();
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            isAttacking = true;
+        }
+        if (!isCoolingDown)
+        {
             if (Input.GetKeyDown(KeyCode.R))
             {
+
                 if (!timeSlow)
-                    StartRewind();
+                {
+                    if (rewindTimer <= 0)
+                    {
+                        StartRewind();
+                        rewindTimer = rewindCooldown;
+                    }
+                }
+                /* StartCoroutine(CoolDown(rewindCooldown));*/
+
+
             }
-            if (Input.GetButtonUp("TimeRewind"))
+
+            if (Input.GetKeyUp(KeyCode.R))
             {
                 StopRewind();
                 SoundManager.Instance.StopPlaying("PlayerTimeRewind");
+                /*          StopCoroutine(CoolDown(rewindCooldown));*/
             }
+
         }
 
     }
+
+    private void Timers()
+    {
+        slowMoTimer -= Time.deltaTime;
+        rewindTimer -= Time.deltaTime;
+    }
+
     public void PhysicsRefresh()
     {
         if (!Dead())
@@ -149,9 +194,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
             timeSlow = true;
 
+
         }
     }
-
     private void TimeSlowReset()
     {
         if (timeSlow)
@@ -172,7 +217,6 @@ public class PlayerController : MonoBehaviour, IDamage
         var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         go.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
     }
-
     /*Get a normalized direction vector from the player to the hook point 
      * and  Inverse the direction to get a perpendicular direction based on the HorizontalInput */
     private Vector2 CalculatePerpendicularDirection()
@@ -488,6 +532,14 @@ public class PlayerController : MonoBehaviour, IDamage
         //    }
         //}
     }
+
+    /*IEnumerator CoolDown(float _cooldown)
+    {
+        float cooldown = 2 * _cooldown;
+        yield return new WaitForSeconds(cooldown);
+
+        isCoolingDown = false;
+    }*/
 }
 
 
