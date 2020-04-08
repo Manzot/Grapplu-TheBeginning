@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour, IDamage
                         if (!isCoolingDown)
                         {*/
             Timers();
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetButtonDown("TimeSlow"))
             {
 
                 if (!timeSlow)
@@ -107,10 +107,7 @@ public class PlayerController : MonoBehaviour, IDamage
                     {
                         SoundManager.Instance.Play("PlayerTimeSlow");
                         TimeSlowAbility();
-
-
                         slowMoTimer = slowMoCooldown;
-                        Debug.Log(slowMoTimer);
                     }
 
                 }
@@ -123,13 +120,13 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         Attack();
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Attack"))
         {
             isAttacking = true;
         }
         if (!isCoolingDown)
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetButtonDown("TimeRewind"))
             {
 
                 if (!timeSlow)
@@ -142,10 +139,9 @@ public class PlayerController : MonoBehaviour, IDamage
                 }
                 /* StartCoroutine(CoolDown(rewindCooldown));*/
 
-
             }
 
-            if (Input.GetKeyUp(KeyCode.R))
+            if (Input.GetButtonUp("TimeRewind"))
             {
                 StopRewind();
                 SoundManager.Instance.StopPlaying("PlayerTimeRewind");
@@ -156,12 +152,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     }
 
-    private void Timers()
-    {
-        slowMoTimer -= Time.deltaTime;
-        rewindTimer -= Time.deltaTime;
-    }
 
+   
     public void PhysicsRefresh()
     {
         if (!Dead())
@@ -183,7 +175,12 @@ public class PlayerController : MonoBehaviour, IDamage
                 Record();
             }
         }
+    }
 
+    private void Timers()
+    {
+        slowMoTimer -= Time.deltaTime;
+        rewindTimer -= Time.deltaTime;
     }
 
     private void TimeSlowAbility()
@@ -267,12 +264,6 @@ public class PlayerController : MonoBehaviour, IDamage
         horizontal = Input.GetAxis("Horizontal");
         float direction = CrossairDirection();
         float angle = CrossairDirection() * Mathf.Rad2Deg;
-        /*Debug.Log(angle);*/
-
-        if (rb.velocity.x > 0)
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        else if (rb.velocity.x < 0)
-            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
 
         if (!RopeSystem.isRopeAttached)
         {
@@ -289,40 +280,57 @@ public class PlayerController : MonoBehaviour, IDamage
                     transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 }
             }
+            else
+            {
+                if (rb.velocity.x > 0)
+                    transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                else if (rb.velocity.x < 0)
+                    transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            }
         }
         else
         {
+
             if (Grounded())
             {
                 if (Mathf.Abs(angle) < 90)
                 {
-                  //  sprite.flipX = false;
+                    //sprite.flipX = false;
                     transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
                 }
                 else if (Mathf.Abs(angle) > 90)
                 {
-                   // sprite.flipX = true;
+                    //sprite.flipX = true;
                     transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 }
             }
+            else if(!RopeSystem.isClimbing)
+            {
+                if (rb.velocity.x > 0)
+                    transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                else if (rb.velocity.x < 0)
+                    transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            }
         }
 
-        if (!isSwinging)
+        if (!isSwinging && !RopeSystem.isThrowingHook)
         {
-            if (Input.GetKey(KeyCode.A))
-            {
-                // horizontal = -1;
+            //if (Input.GetKey(KeyCode.A))
+            //{
+            //    //horizontal = -1;
+            //    rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
+
+
+            //}
+            //else if (Input.GetKey(KeyCode.D))
+            //{
+            //    // horizontal = 1;
+            //    rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
+
+            //}
                 rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
 
 
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                // horizontal = 1;
-                rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
-
-
-            }
         }
         
     }
@@ -380,8 +388,6 @@ public class PlayerController : MonoBehaviour, IDamage
         Vector3 crosshairPosition = new Vector3(x, y, 0);
         crosshair.transform.position = crosshairPosition;
     }
-
-
 
     public void Attack()
     {

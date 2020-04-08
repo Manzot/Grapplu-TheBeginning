@@ -10,7 +10,7 @@ public class RangedEnemy : EnemyUnit
     const float SAME_Y_AS_PLAYER = 0.5f;
     const float PLATFROM_COLI_CHECK_DISTANCE = 1.2f;
 
-    float layerCollisionOffTimer = 1.5f;
+    float layerCollisionOffTimer = 1.3f;
 
     Vector2 dirOppToPlayer;
     GameObject fireball;
@@ -19,6 +19,8 @@ public class RangedEnemy : EnemyUnit
     bool isRuuningFromPlayer;
     
     float attackMoveTimer = 1f;
+
+    ThrowAttacks newFireball;
 
     public override void Initialize()
     {
@@ -77,7 +79,6 @@ public class RangedEnemy : EnemyUnit
         moveTimeCounter -= Time.deltaTime;
         attackMoveTimer -= Time.deltaTime;
         jumpTime -= Time.deltaTime;
-        layerCollisionOffTimer -= Time.deltaTime;
 
         if(targetFound)
             attackCooldownTimer -= Time.deltaTime;
@@ -240,19 +241,15 @@ public class RangedEnemy : EnemyUnit
     {
         if(!isJumping && !isHurt)
         {
-            ThrowAttacks fireballObj = GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint).GetComponent<ThrowAttacks>();
-            fireballObj.Initialize();
-            layerCollisionOffTimer = 1.5f;
-            fireballObj.damage = this.damage;
-            Physics2D.IgnoreCollision(fireballObj.fbColi, coli, true);
+            newFireball = GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint).GetComponent<ThrowAttacks>();
+            newFireball.Initialize();
+            newFireball.damage = this.damage;
+            Physics2D.IgnoreCollision(newFireball.fbColi, coli, true);
 
-            if (gameObject)
+            TimerDelg.Instance.Add(() =>
             {
-                if(layerCollisionOffTimer <= 0)
-                {
-                    Physics2D.IgnoreCollision(fireballObj.fbColi, coli, false);
-                }
-            }
+                Physics2D.IgnoreCollision(newFireball.fbColi, coli, false);
+            }, layerCollisionOffTimer);
         }
 
     }

@@ -21,6 +21,9 @@ public class RopeSystem : MonoBehaviour
     LineRenderer ropeLine;
     Rigidbody2D rb;
 
+    public static bool isClimbing;
+    public static bool isThrowingHook;
+
     float climbSpeed = 4.5f;
 
     private void Awake()
@@ -55,11 +58,25 @@ public class RopeSystem : MonoBehaviour
             {
                 GrappleCollisionCheck();
                 if (isRopeAttached)
+                {
                     HandleRopeLength();
+                    player.animator.SetBool("is_grappling", true);
+
+                    player.animator.SetBool("throwRope", false);
+                }
+                else
+                {
+                    player.animator.SetBool("is_grappling", false);
+                }
 
                 ropeLine.SetPosition(0, hookShootPos.transform.position);
                 ropeLine.SetPosition(1, hook.transform.position);
+
+                isThrowingHook = true;
+
             }
+            else
+                isThrowingHook = false;
         }
         
     }
@@ -71,8 +88,7 @@ public class RopeSystem : MonoBehaviour
             hook.transform.position = hookShootPos.transform.position;
             hook.gameObject.SetActive(true);
             ropeLine.gameObject.SetActive(true);
-            player.animator.SetTrigger("isGrappling");
-
+            player.animator.SetBool("throwRope", true);
             hook.ThrowHook(player.angleDirection);
         }
         else if (Input.GetButtonUp("Grapple") || player.health <= 0)
@@ -80,6 +96,8 @@ public class RopeSystem : MonoBehaviour
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);
             hook.hookRb.isKinematic = false;
+            player.animator.SetBool("is_grappling", false);
+            player.animator.SetBool("throwRope", false);
             hook.transform.SetParent(null);
             if (isRopeAttached && !player.Grounded())
                 rb.AddForce(new Vector2(player.horizontal, 2f) * 3f, ForceMode2D.Impulse);
@@ -106,6 +124,7 @@ public class RopeSystem : MonoBehaviour
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);
             isRopeAttached = false;
+            player.animator.SetBool("throwRope", false);
         }
     }
 
@@ -125,6 +144,7 @@ public class RopeSystem : MonoBehaviour
         }
         else
         {
+
             player.SetCrossairPoint(player.aimAngle);
             player.isSwinging = false;
             joint.enabled = false;
@@ -140,6 +160,7 @@ public class RopeSystem : MonoBehaviour
             {
                 player.animator.SetTrigger("isClimbing");
                 joint.distance -= climbSpeed * Time.deltaTime;
+                isClimbing = true;
             }
         }
         else if (Input.GetKey(KeyCode.S)/* && isRopeAttached*/)
@@ -148,7 +169,12 @@ public class RopeSystem : MonoBehaviour
             {
                 player.animator.SetTrigger("isClimbing");
                 joint.distance += climbSpeed * Time.deltaTime;
+                isClimbing = true;
             }
+        }
+        else
+        {
+            isClimbing = false;
         }
     }
     //private void OnDrawGizmos()
