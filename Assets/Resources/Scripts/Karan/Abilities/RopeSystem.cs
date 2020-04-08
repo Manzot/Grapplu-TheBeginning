@@ -67,6 +67,8 @@ public class RopeSystem : MonoBehaviour
             hook.transform.position = hookShootPos.transform.position;
             hook.gameObject.SetActive(true);
             ropeLine.gameObject.SetActive(true);
+            player.animator.SetTrigger("isGrappling");
+
             hook.ThrowHook(player.angleDirection);
         }
         else if (Input.GetMouseButtonUp(1))
@@ -132,13 +134,17 @@ public class RopeSystem : MonoBehaviour
         {
             if (joint.distance > 1.5f)
             {
+                player.animator.SetTrigger("isClimbing");
                 joint.distance -= climbSpeed * Time.deltaTime;
             }
         }
         else if (Input.GetKey(KeyCode.S)/* && isRopeAttached*/)
         {
             if (!player.Grounded())
+            {
+                player.animator.SetTrigger("isClimbing");
                 joint.distance += climbSpeed * Time.deltaTime;
+            }
         }
     }
     //private void OnDrawGizmos()

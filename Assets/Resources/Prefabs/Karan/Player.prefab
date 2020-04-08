@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834549508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.34, z: 0}
+  m_LocalPosition: {x: -0.167, y: -0.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8408564739618083746}
@@ -243,6 +243,7 @@ MonoBehaviour:
   isAlive: 0
   feet: {fileID: 8408564740201401014}
   rb: {fileID: 8408564739618083744}
+  animator: {fileID: 0}
   angleDirection: {x: 0, y: 0}
   deathLoc: {x: 0, y: 0, z: 0}
   crosshair: {fileID: 1903393565}
@@ -280,7 +281,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 3449669798920881393}
   player: {fileID: 8408564739618083750}
-  isRopeAttached: 0
   hook: {fileID: 0}
 --- !u!231 &3449669798920881393
 SpringJoint2D:
