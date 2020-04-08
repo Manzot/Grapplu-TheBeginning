@@ -158,7 +158,7 @@ public class RopeSystem : MonoBehaviour
         {
             if (joint.distance > 1.5f)
             {
-                player.animator.SetTrigger("isClimbing");
+                player.animator.SetBool("is_climbing", true);
                 joint.distance -= climbSpeed * Time.deltaTime;
                 isClimbing = true;
             }
@@ -167,13 +167,14 @@ public class RopeSystem : MonoBehaviour
         {
             if (!player.Grounded())
             {
-                player.animator.SetTrigger("isClimbing");
+                player.animator.SetBool("is_climbing", true);
                 joint.distance += climbSpeed * Time.deltaTime;
                 isClimbing = true;
             }
         }
         else
         {
+            player.animator.SetBool("is_climbing", false);
             isClimbing = false;
         }
     }

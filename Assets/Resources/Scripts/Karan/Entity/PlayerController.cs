@@ -315,22 +315,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (!isSwinging && !RopeSystem.isThrowingHook)
         {
-            //if (Input.GetKey(KeyCode.A))
-            //{
-            //    //horizontal = -1;
-            //    rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
-
-
-            //}
-            //else if (Input.GetKey(KeyCode.D))
-            //{
-            //    // horizontal = 1;
-            //    rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
-
-            //}
                 rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
-
-
         }
         
     }
