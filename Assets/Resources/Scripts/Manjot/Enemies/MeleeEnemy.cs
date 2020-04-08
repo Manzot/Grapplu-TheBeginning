@@ -75,14 +75,20 @@ public class MeleeEnemy : EnemyUnit
         DirectionFacingWhenMoving();
         if (!canAttack && !isJumping)
         {
-            if (target.position.y > transform.position.y + 1f && (transform.position - target.position).sqrMagnitude <= 120)
+            if ((transform.position - target.position).sqrMagnitude <= TARGET_IN_RANGE - 80)
             {
-                FollowWithAstar();
+                if (target.position.y > transform.position.y + 1f)
+                {
+                    FollowWithAstar();
+                }
+                else
+                {
+                    FollowPlayer();
+                }
             }
             else
-            {
-                FollowPlayer();
-            }
+                MoveLeftRight();
+
         }
 
     }

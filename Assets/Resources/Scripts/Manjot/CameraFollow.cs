@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    Cinemachine.CinemachineVirtualCamera cinemachineCamera;
     private void Start()
     {
-        var cinemachineCamera = GetComponent<Cinemachine.CinemachineVirtualCamera>();
-        cinemachineCamera.Follow = FindObjectOfType<PlayerController>().transform;
+        
+        cinemachineCamera = GetComponent<Cinemachine.CinemachineVirtualCamera>();
+        cinemachineCamera.Follow = GameObject.FindGameObjectWithTag("Player").transform;
     }
 }

@@ -74,7 +74,9 @@ public class FlyingEnemy : EnemyUnit
                 }
                 else
                 {
-                    AttackMove();
+                    if ((transform.position - target.position).sqrMagnitude <= TARGET_IN_RANGE)
+                        AttackMove();
+                    else RandomMove();
                 }
             }
         }
@@ -202,10 +204,5 @@ public class FlyingEnemy : EnemyUnit
             coli.isTrigger = true;
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 0.4f);
-    }
+    
 }

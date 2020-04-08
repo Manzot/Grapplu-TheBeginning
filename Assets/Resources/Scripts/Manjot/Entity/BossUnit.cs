@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BossUnit : MonoBehaviour
 {
+
     public float speed;
     public float jumpForce;
     public float hitPoints;
@@ -14,7 +15,7 @@ public class BossUnit : MonoBehaviour
     public int damage = 15;
 
 
-    const float maxGravity = -12;
+    const float MAX_GRAVITY = -12;
 
     [HideInInspector]
     public Collider2D groundCheckColi;
@@ -78,9 +79,9 @@ public class BossUnit : MonoBehaviour
     }
     public virtual void PhysicsRefresh()
     {
-        if (rb.velocity.y < maxGravity)
+        if (rb.velocity.y < MAX_GRAVITY)
         {
-            rb.velocity = new Vector2(rb.velocity.x, maxGravity);
+            rb.velocity = new Vector2(rb.velocity.x, MAX_GRAVITY);
         }
     }
     public bool Grounded()

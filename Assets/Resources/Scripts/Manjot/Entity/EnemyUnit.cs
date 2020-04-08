@@ -7,7 +7,9 @@ public enum EnemyType { Melee, Ranged, Flying};
 public class EnemyUnit : MonoBehaviour, IDamage
 {
     const float KNOCKAMOUNT = 200;
-    const float maxGravity = -12f;
+    const float MAX_GRAVITY = -12f;
+    [HideInInspector]
+   public const float TARGET_IN_RANGE = 200;
 
     float jumpCooldown = 1.5f;
 
@@ -113,9 +115,9 @@ public class EnemyUnit : MonoBehaviour, IDamage
         {
             if (!Grounded())
             {
-                if (rb.velocity.y < maxGravity)
+                if (rb.velocity.y < MAX_GRAVITY)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, maxGravity);
+                    rb.velocity = new Vector2(rb.velocity.x, MAX_GRAVITY);
                 }
             }
         }

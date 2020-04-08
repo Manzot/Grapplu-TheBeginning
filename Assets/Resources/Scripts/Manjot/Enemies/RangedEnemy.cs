@@ -9,9 +9,7 @@ public class RangedEnemy : EnemyUnit
     const float STOPPING_DISTANCE = 6f;
     const float SAME_Y_AS_PLAYER = 0.5f;
     const float PLATFROM_COLI_CHECK_DISTANCE = 1.2f;
-
-    float layerCollisionOffTimer = 1.3f;
-
+    
     Vector2 dirOppToPlayer;
     GameObject fireball;
     Transform throwPoint;
@@ -53,7 +51,10 @@ public class RangedEnemy : EnemyUnit
                 }
                 else
                 {
-                    AttackMove();
+                    if ((transform.position - target.position).sqrMagnitude <= TARGET_IN_RANGE)
+                        AttackMove();
+                    else
+                        MoveLeftRight();
                 }
             }
         }
@@ -244,12 +245,12 @@ public class RangedEnemy : EnemyUnit
             newFireball = GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint).GetComponent<ThrowAttacks>();
             newFireball.Initialize();
             newFireball.damage = this.damage;
-            Physics2D.IgnoreCollision(newFireball.fbColi, coli, true);
+            //Physics2D.IgnoreCollision(newFireball.fbColi, coli, true);
 
-            TimerDelg.Instance.Add(() =>
-            {
-                Physics2D.IgnoreCollision(newFireball.fbColi, coli, false);
-            }, layerCollisionOffTimer);
+            //TimerDelg.Instance.Add(() =>
+            //{
+            //    Physics2D.IgnoreCollision(newFireball.fbColi, coli, false);
+            //}, layerCollisionOffTimer);
         }
 
     }

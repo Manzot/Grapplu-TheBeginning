@@ -14,8 +14,11 @@ public class UIManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        healthbar.fillAmount = player.health / 100;
-    }
+    //void Update()
+    //{
+    //    healthbar.fillAmount = player.health / 100;
+    //}
+
+
+    
 }

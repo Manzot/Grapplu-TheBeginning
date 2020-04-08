@@ -10,7 +10,7 @@ public class ParallaxBG : MonoBehaviour
     [SerializeField]
     bool infiniteHorizontal = true;
     [SerializeField]
-    bool infiniteVertical;
+    bool infiniteVertical = false;
 
     public Vector2 parallaxSpeed;
 

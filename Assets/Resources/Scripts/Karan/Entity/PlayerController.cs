@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour, IDamage
     public float aimAngle;
     float timeSlowCooldown = 10f;
 
+    UnityEngine.UI.Image healthBar;
+
     bool timeSlow;
 
     bool isRewinding;
@@ -76,7 +78,7 @@ public class PlayerController : MonoBehaviour, IDamage
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         timeSlowMo = new TimeSlowMo();
-
+        healthBar = GameObject.FindGameObjectWithTag("PlayerHealthUI").GetComponent<UnityEngine.UI.Image>();
     }
     public void PostInitialize()
     {
@@ -392,7 +394,6 @@ public class PlayerController : MonoBehaviour, IDamage
     public void DisableBools()
     {
         isAttacking = false;
-
       
     }
 
@@ -406,6 +407,7 @@ public class PlayerController : MonoBehaviour, IDamage
             animator.SetTrigger("isHurt");
             TimerDelg.Instance.Add(() => { isHurt = false; }, 0.7f);
         }
+        healthBar.fillAmount = health / MAX_HEALTH;
     }
 
     public bool Dead()
