@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class BossUnit : MonoBehaviour
 {
     public float speed;
@@ -36,11 +36,19 @@ public class BossUnit : MonoBehaviour
 
     bool shaderChange;
 
+    GameObject bossHealthUI;
+    Image healthBar;
+
     public virtual void Initialize()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        bossHealthUI = GameObject.FindGameObjectWithTag("BossUI");
+        bossHealthUI.transform.GetChild(0).gameObject.SetActive(true);
+        bossHealthUI.transform.GetChild(1).gameObject.SetActive(true);
+        healthBar = bossHealthUI.transform.GetChild(1).GetComponent<Image>();
+        healthBar.fillAmount = hitPoints/hitPoints;
         target = GameObject.FindGameObjectWithTag("Player").transform;//FindObjectOfType<PlayerController>().transform;
     }
     public virtual void PostInitialize()
@@ -92,6 +100,7 @@ public class BossUnit : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 TimerDelg.Instance.Add(()=> { isHurt = false; }, 1f);
             }
+            healthBar.fillAmount = currentHealth / (float)hitPoints;
         }
     }
 
@@ -100,6 +109,8 @@ public class BossUnit : MonoBehaviour
         if(currentHealth <= 0)
         {
             anim.SetTrigger("death");
+            bossHealthUI.transform.GetChild(0).gameObject.SetActive(false);
+            bossHealthUI.transform.GetChild(1).gameObject.SetActive(false);
             Destroy(gameObject, 2f);
             BossManager.Instance.Died(this);
             return true;

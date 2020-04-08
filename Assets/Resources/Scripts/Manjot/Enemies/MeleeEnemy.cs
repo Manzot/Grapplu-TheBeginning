@@ -75,7 +75,7 @@ public class MeleeEnemy : EnemyUnit
         DirectionFacingWhenMoving();
         if (!canAttack && !isJumping)
         {
-            if (target.position.y > transform.position.y + 1f)
+            if (target.position.y > transform.position.y + 1f && (transform.position - target.position).sqrMagnitude <= 120)
             {
                 FollowWithAstar();
             }
@@ -102,6 +102,7 @@ public class MeleeEnemy : EnemyUnit
     void FollowWithAstar()
     {
         aStar = new AStarPathfinding(walkable.walkAbleArea);
+        
         aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + ASTAR_PATH_OFFSET, (int)transform.position.y + ASTAR_PATH_OFFSET),
                 new Vector2Int((int)target.position.x + ASTAR_PATH_OFFSET, (int)target.position.y + ASTAR_PATH_OFFSET));
         
