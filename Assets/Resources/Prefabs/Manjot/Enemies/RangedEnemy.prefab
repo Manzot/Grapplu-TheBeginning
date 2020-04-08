@@ -159,8 +159,9 @@ MonoBehaviour:
   eType: 0
   rb: {fileID: 0}
   anim: {fileID: 0}
+  coli: {fileID: 0}
   speed: 80
-  jumpForce: 800
+  jumpForce: 600
   attackCooldown: 4
   damage: 15
   hitPoints: 30
@@ -178,6 +179,7 @@ MonoBehaviour:
   target: {fileID: 0}
   feet: {fileID: 2161454972402169674}
   walkable: {fileID: 0}
+  line: {fileID: 0}
 --- !u!1 &2161454971662335757
 GameObject:
   m_ObjectHideFlags: 0

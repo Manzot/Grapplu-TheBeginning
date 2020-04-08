@@ -16,6 +16,9 @@ public class EnemySpawner : MonoBehaviour
     public int numOfFlyingEnemies;
     public int numOfWaves;
 
+    float waitTimeforNextWave = 3;
+    public float waitNextWaveTime = 3f;
+
     public Transform[] positionsMelee;
     public Transform[] positionsRanged;
     public Transform[] positionsFlying;
@@ -63,14 +66,18 @@ public class EnemySpawner : MonoBehaviour
                         {
                             if (enemieCountList.Count <= 0)
                             {
+                                waitTimeforNextWave -= Time.deltaTime;
                                 enemyID = 0;
-                                Spawner();
+
+                                if(waitTimeforNextWave <= 0)
+                                   Spawner();
                             }
                         }
                         else
                         {
                             if (enemieCountList.Count <= 0)
                             {
+
                                 EnemySpawnerManager.Instance.enemySpawnersList.Remove(this);
                                 Destroy(gameObject, 1f);
                             }
@@ -130,5 +137,6 @@ public class EnemySpawner : MonoBehaviour
             enemyID++;
         }
         waveSpawned = true;
+        waitTimeforNextWave = waitNextWaveTime;
     }
 }

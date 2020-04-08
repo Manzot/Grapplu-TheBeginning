@@ -104,15 +104,12 @@ public class MeleeEnemy : EnemyUnit
         aStar = new AStarPathfinding(walkable.walkAbleArea);
         aStarPath = aStar.FindPath(new Vector2Int((int)transform.position.x + ASTAR_PATH_OFFSET, (int)transform.position.y + ASTAR_PATH_OFFSET),
                 new Vector2Int((int)target.position.x + ASTAR_PATH_OFFSET, (int)target.position.y + ASTAR_PATH_OFFSET));
-
-        //DrawLine(aStarPath);
-
+        
         if (aStarPath.Count > 0)
         {
             Vector2 newPath = new Vector2(aStarPath[1].position.x - aStarPath[0].position.x, 0).normalized;
             rb.velocity = newPath * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
-            DrawLine(aStarPath);
-            Debug.Log(aStarPath[1].position.y + ", " + aStarPath[0].position.y);
+            //DrawLine(aStarPath);
 
             if (aStarPath[1].position.y > aStarPath[0].position.y)
             { 
@@ -295,13 +292,13 @@ public class MeleeEnemy : EnemyUnit
     /// Drawing Line that shows walking path
     void DrawLine(List<Node> path)
     {
-        line.positionCount = path.Count;
+        //line.positionCount = path.Count;
 
-        Vector3[] linePoints = new Vector3[path.Count];
-        for (int i = 0; i < path.Count; i++)
-        {
-            linePoints[i] = new Vector3(path[i].position.x, path[i].position.y, 0);
-        }
-        line.SetPositions(linePoints);
+        //Vector3[] linePoints = new Vector3[path.Count];
+        //for (int i = 0; i < path.Count; i++)
+        //{
+        //    linePoints[i] = new Vector3(path[i].position.x, path[i].position.y, 0);
+        //}
+        //line.SetPositions(linePoints);
     }
 }

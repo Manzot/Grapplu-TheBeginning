@@ -13,8 +13,8 @@ public class TimeSlowMo
     public float customFixedUnscaledDeltaTime = Time.fixedUnscaledDeltaTime * 1;
     public float customFixedDeltaTime = Time.fixedDeltaTime * 1;
     public float customTimeScale = 1;
-    private float fixTime = Time.fixedDeltaTime;
-
+    private float fixTime = 0.02f;// Time.fixedDeltaTime;
+    
 
     public float TimeScaleReset(float timeScale)
     {
@@ -34,8 +34,6 @@ public class TimeSlowMo
         if (Time.timeScale == 1.0f)
         {
             Time.fixedDeltaTime = fixTime;
-            // timeSlow = false;
-            /*pc.jumpForce = pc.oldJumpForce*Time.unscaledDeltaTime;*/
         }
         return Time.timeScale;
     }
@@ -44,6 +42,12 @@ public class TimeSlowMo
     {
         Time.timeScale = _slowdownFactor;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+    }
+
+    public void InstantResetTime()
+    {
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = fixTime;
     }
 
 }

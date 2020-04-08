@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 34000347}
   - component: {fileID: 34000346}
   - component: {fileID: 34000345}
+  - component: {fileID: 34000349}
   m_Layer: 20
   m_Name: FallingTile (7)
   m_TagString: Untagged
@@ -214,7 +215,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -290,6 +291,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &34000349
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34000343}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &61881528
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +323,7 @@ GameObject:
   - component: {fileID: 61881532}
   - component: {fileID: 61881531}
   - component: {fileID: 61881530}
+  - component: {fileID: 61881534}
   m_Layer: 20
   m_Name: FallingTile (2)
   m_TagString: Untagged
@@ -349,7 +370,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -425,6 +446,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &61881534
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61881528}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &83454090
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,6 +478,7 @@ GameObject:
   - component: {fileID: 83454094}
   - component: {fileID: 83454093}
   - component: {fileID: 83454092}
+  - component: {fileID: 83454096}
   m_Layer: 20
   m_Name: FallingTile (10)
   m_TagString: Untagged
@@ -484,7 +525,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -560,6 +601,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &83454096
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83454090}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &122458086
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,6 +633,7 @@ GameObject:
   - component: {fileID: 122458090}
   - component: {fileID: 122458089}
   - component: {fileID: 122458088}
+  - component: {fileID: 122458092}
   m_Layer: 20
   m_Name: FallingTile (8)
   m_TagString: Untagged
@@ -619,7 +680,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -695,6 +756,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &122458092
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122458086}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!114 &147202860 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3808583651215341156, guid: f9c92735f94e9bf42b7d631aefaa6db0,
@@ -720,6 +800,7 @@ GameObject:
   - component: {fileID: 207811756}
   - component: {fileID: 207811755}
   - component: {fileID: 207811754}
+  - component: {fileID: 207811758}
   m_Layer: 20
   m_Name: FallingTile (9)
   m_TagString: Untagged
@@ -766,7 +847,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -842,6 +923,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &207811758
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207811752}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1001 &229556203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1098,6 +1198,7 @@ GameObject:
   - component: {fileID: 231176112}
   - component: {fileID: 231176111}
   - component: {fileID: 231176110}
+  - component: {fileID: 231176113}
   m_Layer: 20
   m_Name: MovingTile (3)
   m_TagString: Untagged
@@ -1131,7 +1232,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
@@ -1212,6 +1313,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &231176113
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231176108}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &236819058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,6 +1345,7 @@ GameObject:
   - component: {fileID: 236819062}
   - component: {fileID: 236819061}
   - component: {fileID: 236819060}
+  - component: {fileID: 236819064}
   m_Layer: 20
   m_Name: FallingTile (7)
   m_TagString: Untagged
@@ -1271,7 +1392,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -1347,6 +1468,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &236819064
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236819058}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &246939287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,6 +1530,7 @@ GameObject:
   - component: {fileID: 282823904}
   - component: {fileID: 282823903}
   - component: {fileID: 282823902}
+  - component: {fileID: 282823906}
   m_Layer: 20
   m_Name: FallingTile (10)
   m_TagString: Untagged
@@ -1436,7 +1577,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -1512,6 +1653,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &282823906
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282823900}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &297882459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1525,6 +1685,7 @@ GameObject:
   - component: {fileID: 297882463}
   - component: {fileID: 297882462}
   - component: {fileID: 297882461}
+  - component: {fileID: 297882465}
   m_Layer: 20
   m_Name: FallingTile (8)
   m_TagString: Untagged
@@ -1571,7 +1732,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -1647,6 +1808,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &297882465
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297882459}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &352842149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,6 +1840,7 @@ GameObject:
   - component: {fileID: 352842153}
   - component: {fileID: 352842152}
   - component: {fileID: 352842151}
+  - component: {fileID: 352842155}
   m_Layer: 20
   m_Name: FallingTile (6)
   m_TagString: Untagged
@@ -1706,7 +1887,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -1782,6 +1963,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &352842155
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352842149}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &398066974
 GameObject:
   m_ObjectHideFlags: 0
@@ -1795,6 +1995,7 @@ GameObject:
   - component: {fileID: 398066978}
   - component: {fileID: 398066977}
   - component: {fileID: 398066976}
+  - component: {fileID: 398066980}
   m_Layer: 20
   m_Name: FallingTile (9)
   m_TagString: Untagged
@@ -1841,7 +2042,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -1917,6 +2118,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &398066980
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398066974}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &445890768
 GameObject:
   m_ObjectHideFlags: 0
@@ -2007,6 +2227,7 @@ GameObject:
   - component: {fileID: 460182488}
   - component: {fileID: 460182487}
   - component: {fileID: 460182486}
+  - component: {fileID: 460182490}
   m_Layer: 20
   m_Name: FallingTile (7)
   m_TagString: Untagged
@@ -2053,7 +2274,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -2129,6 +2350,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &460182490
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460182484}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!4 &507705743 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5208196855282193382, guid: 7bed559cb578e0c48b1e98dff91af6fe,
@@ -2147,6 +2387,7 @@ GameObject:
   - component: {fileID: 556991075}
   - component: {fileID: 556991074}
   - component: {fileID: 556991076}
+  - component: {fileID: 556991077}
   m_Layer: 20
   m_Name: MovingTile (2)
   m_TagString: Untagged
@@ -2246,7 +2487,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
@@ -2261,6 +2502,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.96875, y: 0.96875}
   m_EdgeRadius: 0
+--- !u!251 &556991077
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556991072}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &603053934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,6 +2564,7 @@ GameObject:
   - component: {fileID: 611436737}
   - component: {fileID: 611436736}
   - component: {fileID: 611436735}
+  - component: {fileID: 611436739}
   m_Layer: 20
   m_Name: FallingTile (10)
   m_TagString: Untagged
@@ -2350,7 +2611,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -2426,6 +2687,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &611436739
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611436733}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &619040462
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,6 +2718,7 @@ GameObject:
   - component: {fileID: 619040464}
   - component: {fileID: 619040463}
   - component: {fileID: 619040466}
+  - component: {fileID: 619040467}
   m_Layer: 20
   m_Name: MovingTile
   m_TagString: Untagged
@@ -2537,7 +2818,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
@@ -2552,6 +2833,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.96875, y: 0.96875}
   m_EdgeRadius: 0
+--- !u!251 &619040467
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619040462}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &645290165
 GameObject:
   m_ObjectHideFlags: 0
@@ -3019,6 +3319,7 @@ GameObject:
   - component: {fileID: 684570846}
   - component: {fileID: 684570845}
   - component: {fileID: 684570844}
+  - component: {fileID: 684570848}
   m_Layer: 20
   m_Name: FallingTile (4)
   m_TagString: Untagged
@@ -3065,7 +3366,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -3141,6 +3442,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &684570848
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684570842}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!4 &695916399 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4283306873602786315, guid: 439145ff3d4590949996ae092c0db3ad,
@@ -3160,6 +3480,7 @@ GameObject:
   - component: {fileID: 736147044}
   - component: {fileID: 736147043}
   - component: {fileID: 736147042}
+  - component: {fileID: 736147046}
   m_Layer: 20
   m_Name: FallingTile (3)
   m_TagString: Untagged
@@ -3206,7 +3527,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -3282,6 +3603,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &736147046
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736147040}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &738360661
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,6 +3656,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &814486566 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4283306873602786314, guid: 439145ff3d4590949996ae092c0db3ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 4283306873994580836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!251 &814486567
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814486566}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1001 &841723628
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3454,6 +3819,7 @@ GameObject:
   - component: {fileID: 894708299}
   - component: {fileID: 894708298}
   - component: {fileID: 894708297}
+  - component: {fileID: 894708301}
   m_Layer: 20
   m_Name: FallingTile (5)
   m_TagString: Untagged
@@ -3500,7 +3866,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -3576,6 +3942,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &894708301
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894708295}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &929475713
 GameObject:
   m_ObjectHideFlags: 0
@@ -3589,6 +3974,7 @@ GameObject:
   - component: {fileID: 929475717}
   - component: {fileID: 929475716}
   - component: {fileID: 929475715}
+  - component: {fileID: 929475719}
   m_Layer: 20
   m_Name: FallingTile (8)
   m_TagString: Untagged
@@ -3635,7 +4021,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -3711,6 +4097,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &929475719
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929475713}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1001 &997080463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3946,6 +4351,7 @@ GameObject:
   - component: {fileID: 1163612705}
   - component: {fileID: 1163612704}
   - component: {fileID: 1163612703}
+  - component: {fileID: 1163612707}
   m_Layer: 20
   m_Name: FallingTile (8)
   m_TagString: Untagged
@@ -3992,7 +4398,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -4068,6 +4474,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1163612707
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163612701}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1325964618
 GameObject:
   m_ObjectHideFlags: 0
@@ -4081,6 +4506,7 @@ GameObject:
   - component: {fileID: 1325964622}
   - component: {fileID: 1325964621}
   - component: {fileID: 1325964620}
+  - component: {fileID: 1325964624}
   m_Layer: 20
   m_Name: FallingTile (7)
   m_TagString: Untagged
@@ -4127,7 +4553,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -4203,6 +4629,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1325964624
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325964618}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1001 &1351208954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4914,6 +5359,7 @@ GameObject:
   - component: {fileID: 1434899535}
   - component: {fileID: 1434899534}
   - component: {fileID: 1434899533}
+  - component: {fileID: 1434899537}
   m_Layer: 20
   m_Name: FallingTile (5)
   m_TagString: Untagged
@@ -4960,7 +5406,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -5036,6 +5482,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1434899537
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434899531}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1001 &1436576995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5641,6 +6106,7 @@ GameObject:
   - component: {fileID: 1494090640}
   - component: {fileID: 1494090639}
   - component: {fileID: 1494090638}
+  - component: {fileID: 1494090642}
   m_Layer: 20
   m_Name: FallingTile (6)
   m_TagString: Untagged
@@ -5687,7 +6153,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -5763,6 +6229,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1494090642
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494090636}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!4 &1540097844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5208196855802695318, guid: 7bed559cb578e0c48b1e98dff91af6fe,
@@ -5782,6 +6267,7 @@ GameObject:
   - component: {fileID: 1571242595}
   - component: {fileID: 1571242594}
   - component: {fileID: 1571242593}
+  - component: {fileID: 1571242597}
   m_Layer: 20
   m_Name: FallingTile (1)
   m_TagString: Untagged
@@ -5828,7 +6314,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -5904,6 +6390,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1571242597
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571242591}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!60 &1611332585 stripped
 PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 8176414468599685479, guid: f008eee341d104745b032ae92d6cabb0,
@@ -5923,6 +6428,7 @@ GameObject:
   - component: {fileID: 1624726334}
   - component: {fileID: 1624726333}
   - component: {fileID: 1624726332}
+  - component: {fileID: 1624726336}
   m_Layer: 20
   m_Name: FallingTile (10)
   m_TagString: Untagged
@@ -5969,7 +6475,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -6045,6 +6551,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1624726336
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624726330}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1624938498
 GameObject:
   m_ObjectHideFlags: 0
@@ -6058,6 +6583,7 @@ GameObject:
   - component: {fileID: 1624938502}
   - component: {fileID: 1624938501}
   - component: {fileID: 1624938500}
+  - component: {fileID: 1624938504}
   m_Layer: 20
   m_Name: FallingTile (9)
   m_TagString: Untagged
@@ -6104,7 +6630,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -6180,6 +6706,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1624938504
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624938498}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1643928208
 GameObject:
   m_ObjectHideFlags: 0
@@ -6193,7 +6738,7 @@ GameObject:
   - component: {fileID: 1643928212}
   - component: {fileID: 1643928211}
   - component: {fileID: 1643928210}
-  m_Layer: 19
+  m_Layer: 8
   m_Name: DamageableGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7883,6 +8428,7 @@ GameObject:
   - component: {fileID: 1664320892}
   - component: {fileID: 1664320891}
   - component: {fileID: 1664320890}
+  - component: {fileID: 1664320894}
   m_Layer: 20
   m_Name: FallingTile (9)
   m_TagString: Untagged
@@ -7929,7 +8475,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -8005,6 +8551,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1664320894
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664320888}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1703213366
 GameObject:
   m_ObjectHideFlags: 0
@@ -8018,6 +8583,7 @@ GameObject:
   - component: {fileID: 1703213370}
   - component: {fileID: 1703213369}
   - component: {fileID: 1703213368}
+  - component: {fileID: 1703213372}
   m_Layer: 20
   m_Name: FallingTile
   m_TagString: Untagged
@@ -8064,7 +8630,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -8140,6 +8706,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1703213372
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703213366}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1766785445
 GameObject:
   m_ObjectHideFlags: 0
@@ -8153,6 +8738,7 @@ GameObject:
   - component: {fileID: 1766785449}
   - component: {fileID: 1766785448}
   - component: {fileID: 1766785447}
+  - component: {fileID: 1766785451}
   m_Layer: 20
   m_Name: FallingTile (3)
   m_TagString: Untagged
@@ -8199,7 +8785,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -8275,6 +8861,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1766785451
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766785445}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1776913911
 GameObject:
   m_ObjectHideFlags: 0
@@ -8288,6 +8893,7 @@ GameObject:
   - component: {fileID: 1776913915}
   - component: {fileID: 1776913914}
   - component: {fileID: 1776913913}
+  - component: {fileID: 1776913917}
   m_Layer: 20
   m_Name: FallingTile (4)
   m_TagString: Untagged
@@ -8334,7 +8940,7 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9375, y: 0.65625}
@@ -8410,6 +9016,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!251 &1776913917
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776913911}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1815679024
 GameObject:
   m_ObjectHideFlags: 0
@@ -9417,6 +10042,38 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.892
       objectReference: {fileID: 0}
+    - target: {fileID: 110066699, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 110066699, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 110066699, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 110066699, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 110066699, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 110066699, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 4.7833066
+      objectReference: {fileID: 0}
+    - target: {fileID: 110066699, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 110066699, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.drawMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2019740349, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.63
@@ -9424,6 +10081,38 @@ PrefabInstance:
     - target: {fileID: 2019740349, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.892
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019740350, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019740350, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019740350, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019740350, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019740350, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019740350, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 4.7833066
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019740350, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019740350, guid: 7bed559cb578e0c48b1e98dff91af6fe, type: 3}
+      propertyPath: m_SpriteTilingProperty.drawMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5208196855274433735, guid: 7bed559cb578e0c48b1e98dff91af6fe,
         type: 3}
@@ -9633,7 +10322,7 @@ PrefabInstance:
     - target: {fileID: 8408564739618083746, guid: 43fd701f8d962f84c8ef8773a1a7cfef,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.49
+      value: 41.3
       objectReference: {fileID: 0}
     - target: {fileID: 8408564739618083746, guid: 43fd701f8d962f84c8ef8773a1a7cfef,
         type: 3}
@@ -10702,7 +11391,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116218578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.348213, y: 13.21973, z: -2491.2256}
+  m_LocalPosition: {x: 18.336847, y: 13.219734, z: -2491.2256}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -48927,21 +49616,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2556668914115672285, guid: 6652f1f42c798bd48846b43af43503ea,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: -764243365
-      objectReference: {fileID: 0}
-    - target: {fileID: 2556668914115672285, guid: 6652f1f42c798bd48846b43af43503ea,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2556668914115672285, guid: 6652f1f42c798bd48846b43af43503ea,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6652f1f42c798bd48846b43af43503ea, type: 3}
 --- !u!1001 &4283306873994580836
@@ -49010,6 +49684,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283306873602786324, guid: 439145ff3d4590949996ae092c0db3ad,
+        type: 3}
+      propertyPath: m_UsedByEffector
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4283306873602786326, guid: 439145ff3d4590949996ae092c0db3ad,
         type: 3}
@@ -49317,21 +49996,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 22052975}
     m_Modifications:
-    - target: {fileID: 8178247089528557210, guid: 3405f356638ff2e44a8978b3349b1c67,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: -764243365
-      objectReference: {fileID: 0}
-    - target: {fileID: 8178247089528557210, guid: 3405f356638ff2e44a8978b3349b1c67,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8178247089528557210, guid: 3405f356638ff2e44a8978b3349b1c67,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8178247089528557212, guid: 3405f356638ff2e44a8978b3349b1c67,
         type: 3}
       propertyPath: m_LocalPosition.x

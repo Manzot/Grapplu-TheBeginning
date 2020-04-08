@@ -10,6 +10,8 @@ public class RangedEnemy : EnemyUnit
     const float SAME_Y_AS_PLAYER = 0.5f;
     const float PLATFROM_COLI_CHECK_DISTANCE = 1.2f;
 
+    float layerCollisionOffTimer = 1.5f;
+
     Vector2 dirOppToPlayer;
     GameObject fireball;
     Transform throwPoint;
@@ -75,6 +77,7 @@ public class RangedEnemy : EnemyUnit
         moveTimeCounter -= Time.deltaTime;
         attackMoveTimer -= Time.deltaTime;
         jumpTime -= Time.deltaTime;
+        layerCollisionOffTimer -= Time.deltaTime;
 
         if(targetFound)
             attackCooldownTimer -= Time.deltaTime;
@@ -236,7 +239,22 @@ public class RangedEnemy : EnemyUnit
     void CreateThrowable()
     {
         if(!isJumping && !isHurt)
-            GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint).GetComponent<ThrowAttacks>().damage = this.damage;
+        {
+            ThrowAttacks fireballObj = GameObject.Instantiate(fireball, throwPoint.position, Quaternion.identity, throwPoint).GetComponent<ThrowAttacks>();
+            fireballObj.Initialize();
+            layerCollisionOffTimer = 1.5f;
+            fireballObj.damage = this.damage;
+            Physics2D.IgnoreCollision(fireballObj.fbColi, coli, true);
+
+            if (gameObject)
+            {
+                if(layerCollisionOffTimer <= 0)
+                {
+                    Physics2D.IgnoreCollision(fireballObj.fbColi, coli, false);
+                }
+            }
+        }
+
     }
     void DrawRays()
     {
