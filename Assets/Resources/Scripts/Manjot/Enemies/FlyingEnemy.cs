@@ -10,8 +10,9 @@ public class FlyingEnemy : EnemyUnit
 
     float RANDOM_Y = 0;
     bool movingUp;
+    Vector3 startPos;
     
-    Collider2D boundary;
+    //Collider2D boundary;
 
     public override void Initialize()
     {
@@ -22,8 +23,9 @@ public class FlyingEnemy : EnemyUnit
     public override void PostInitialize()
     {
         base.PostInitialize();
-        coli = GetComponent<Collider2D>();
-        boundary = transform.parent.GetComponent<Collider2D>();
+        //coli = GetComponent<Collider2D>();
+        startPos = transform.position;
+        //boundary = transform.parent.GetComponent<Collider2D>();
     }
 
     public override void Refresh()
@@ -35,6 +37,7 @@ public class FlyingEnemy : EnemyUnit
             Timers();
             AnimationCaller();
             OutofBoundary();
+            CheckGroundCollision();
 
             if (!isHurt)
             {
@@ -71,7 +74,9 @@ public class FlyingEnemy : EnemyUnit
                 }
                 else
                 {
-                    AttackMove();
+                    if ((transform.position - target.position).sqrMagnitude <= TARGET_IN_RANGE)
+                        AttackMove();
+                    else RandomMove();
                 }
             }
         }
@@ -110,33 +115,30 @@ public class FlyingEnemy : EnemyUnit
 
     void AttackMove()
     {
-        Vector3 distanceToPlayer = (target.position - transform.position);
+        Vector3 directionToPlayer = (target.position - transform.position);
         
 
         if (canAttack)
         {
-            if (distanceToPlayer.sqrMagnitude > NEAR_TARGET && distanceToPlayer.sqrMagnitude < ATTACK_DISTANCE && attackCooldownTimer <= 0)
+            if (directionToPlayer.sqrMagnitude > NEAR_TARGET && directionToPlayer.sqrMagnitude < ATTACK_DISTANCE && attackCooldownTimer <= 0)
             {
-                rb.velocity = distanceToPlayer.normalized * speed * ATTACK_SPEED_MULTIPLIER * Time.fixedDeltaTime;
+                rb.velocity = directionToPlayer.normalized * speed * ATTACK_SPEED_MULTIPLIER * Time.fixedDeltaTime;
             }
-            else if (distanceToPlayer.sqrMagnitude < NEAR_TARGET)
+            else if (directionToPlayer.sqrMagnitude < NEAR_TARGET)
             {
-                rb.velocity = -distanceToPlayer.normalized * speed * ATTACK_SPEED_MULTIPLIER * Time.fixedDeltaTime;
+                rb.velocity = -directionToPlayer.normalized * speed * ATTACK_SPEED_MULTIPLIER * Time.fixedDeltaTime;
                 canAttack = false;
                 attackCooldownTimer = attackCooldown;
             }
             else
             {
-                rb.velocity = distanceToPlayer.normalized * speed * Time.fixedDeltaTime;
+                if(!movingUp)
+                    rb.velocity = directionToPlayer.normalized * speed * Time.fixedDeltaTime;
             }
         }
         else
         {
-            if(transform.position.y < target.position.y - NEAR_TARGET)
-            {
-                CorrectingDirection(new Vector2(0, 1) * speed * Time.fixedDeltaTime);
-            }
-            else
+            if(!movingUp)
                 RandomMove();
         }
 
@@ -167,10 +169,11 @@ public class FlyingEnemy : EnemyUnit
 
     void OutofBoundary()
     {
-        if (transform.position.x < boundary.bounds.min.x || transform.position.x > boundary.bounds.max.x ||
-            transform.position.y < boundary.bounds.min.y || transform.position.y > boundary.bounds.max.y)
+        //if (transform.position.x < boundary.bounds.min.x || transform.position.x > boundary.bounds.max.x ||
+        //    transform.position.y < boundary.bounds.min.y || transform.position.y > boundary.bounds.max.y)
+        if((transform.position - startPos).sqrMagnitude >= 200 && !canAttack)
         {
-            CorrectingDirection(rb.velocity * -1);
+            CorrectingDirection((startPos - transform.position).normalized * speed * Time.fixedDeltaTime);
         }
     }
 
@@ -178,6 +181,28 @@ public class FlyingEnemy : EnemyUnit
     {
         movingUp = true;
         rb.velocity = dir;
-        TimerDelg.Instance.Add(() => { movingUp = false; moveTimeCounter = moveTime; }, 2f);
+        TimerDelg.Instance.Add(() => { movingUp = false;  }, 2f);
     }
+
+    
+
+    private void CheckGroundCollision()
+    {
+        Collider2D coll = Physics2D.OverlapCircle(transform.position, 0.4f, LayerMask.GetMask("Ground", "NonGrappableWalls"));
+        
+        if(coll)
+        {
+            coli.isTrigger = false;
+            if (!canAttack)
+            {
+                moveTimeCounter = 0;
+                moveRight = !moveRight;
+            }
+        }
+        else
+        {
+            coli.isTrigger = true;
+        }
+    }
+    
 }

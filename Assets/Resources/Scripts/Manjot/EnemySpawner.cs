@@ -26,6 +26,13 @@ public class EnemySpawner : MonoBehaviour
     int enemyID = 0;
     bool waveSpawned;
     bool isTriggered;
+    public bool enableDisableGameobjectsAtStart;
+    public bool enableDisableGameobjectsAtEnd;
+
+    public GameObject gameObjectToEnableAtStart;
+    public GameObject gameObjectToDisableAtStart;
+    public GameObject gameObjectToEnableAtEnd;
+    public GameObject gameObjectToDisableAtEnd;
 
     EnemyUnit[] newEnemies;
     List<EnemyUnit> enemieCountList;
@@ -54,6 +61,7 @@ public class EnemySpawner : MonoBehaviour
                         {
                             bossCountList.Remove(bossCountList[0]);
                             EnemySpawnerManager.Instance.enemySpawnersList.Remove(this);
+                            DisableEnableGOatEnd(gameObjectToEnableAtEnd, gameObjectToDisableAtEnd);
                             Destroy(gameObject, 1f);
                         }
                     }
@@ -79,6 +87,7 @@ public class EnemySpawner : MonoBehaviour
                             {
 
                                 EnemySpawnerManager.Instance.enemySpawnersList.Remove(this);
+                                 DisableEnableGOatEnd(gameObjectToEnableAtEnd, gameObjectToDisableAtEnd);    
                                 Destroy(gameObject, 1f);
                             }
                         }
@@ -100,9 +109,14 @@ public class EnemySpawner : MonoBehaviour
         {
                 if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
+                    if (enableDisableGameobjectsAtStart)
+                    {
+                        DisableEnableGOatStart(gameObjectToEnableAtStart, gameObjectToDisableAtStart);
+                    }
                     if (ToSpawnBossesEnableThis)
                     {
                         BossUnit boss = BossManager.Instance.SpawnBoss(bossToSpawn.GetComponent<BossUnit>(), bossLocation.position);
+                        
                         bossCountList.Add(boss);
                         isTriggered = true;
                     }
@@ -138,5 +152,28 @@ public class EnemySpawner : MonoBehaviour
         }
         waveSpawned = true;
         waitTimeforNextWave = waitNextWaveTime;
+    }
+
+    void DisableEnableGOatStart(GameObject toEnable, GameObject toDisable)
+    {
+        if (toEnable)
+        {
+            toEnable.SetActive(true);
+        }
+        if (toDisable)
+        {
+            toDisable.SetActive(false);
+        }
+    }
+    void DisableEnableGOatEnd(GameObject toEnable, GameObject toDisable)
+    {
+        if (toEnable)
+        {
+            toEnable.SetActive(true);
+        }
+        if (toDisable)
+        {
+            toDisable.SetActive(false);
+        }
     }
 }

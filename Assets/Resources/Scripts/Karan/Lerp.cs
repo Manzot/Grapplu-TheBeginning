@@ -52,14 +52,22 @@ public class Lerp : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(AttachableToPlayer)
-            collision.gameObject.transform.SetParent(transform);
+        if (AttachableToPlayer)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || collision.gameObject.layer == LayerMask.NameToLayer("Hook")
+           || collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                collision.gameObject.transform.SetParent(transform);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if(AttachableToPlayer)
-            collision.gameObject.transform.SetParent(null);
+        if (AttachableToPlayer)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || collision.gameObject.layer == LayerMask.NameToLayer("Hook")
+            || collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                collision.gameObject.transform.SetParent(null);
+        }
     }
 }
 

@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour, IDamage
     public float aimAngle;
     float timeSlowCooldown = 10f;
 
+    UnityEngine.UI.Image healthBar;
+
     bool timeSlow;
 
     bool isRewinding;
@@ -76,7 +78,7 @@ public class PlayerController : MonoBehaviour, IDamage
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         timeSlowMo = new TimeSlowMo();
-
+        healthBar = GameObject.FindGameObjectWithTag("PlayerHealthUI").GetComponent<UnityEngine.UI.Image>();
     }
     public void PostInitialize()
     {
@@ -392,7 +394,6 @@ public class PlayerController : MonoBehaviour, IDamage
     public void DisableBools()
     {
         isAttacking = false;
-
       
     }
 
@@ -406,6 +407,7 @@ public class PlayerController : MonoBehaviour, IDamage
             animator.SetTrigger("isHurt");
             TimerDelg.Instance.Add(() => { isHurt = false; }, 0.7f);
         }
+        healthBar.fillAmount = health / MAX_HEALTH;
     }
 
     public bool Dead()
@@ -491,9 +493,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void DamageEnemies(int _damage)
     {
-        //RaycastHit2D hit = Physics2D.Raycast(punchesPos.position, transform.right, ATTACK_RANGE);
         Collider2D bossCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Boss"));
-        Collider2D enemyCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Enemy"));
+        Collider2D enemyCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Enemy","FlyingEnemy"));
         Collider2D deflectCol = Physics2D.OverlapCircle(punchesPos.position, 0.3f, LayerMask.GetMask("Throwable"));
 
         
@@ -512,16 +513,6 @@ public class PlayerController : MonoBehaviour, IDamage
                 DeflectBullet(deflectCol.gameObject);
             }
         }
-
-        //if (hit.collider)
-        //{
-        //    Debug.Log(hit.collider.gameObject.name);
-        //    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Throwable"))
-        //    {
-        //        if (timeSlow)
-        //            DeflectBullet(hit.collider.gameObject);
-        //    }
-        //}
     }
 
     /*IEnumerator CoolDown(float _cooldown)
