@@ -322,9 +322,16 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-        if (!isSwinging && !RopeSystem.isThrowingHook)
+        if (!isSwinging && !RopeSystem.isThrowingHook )
         {
-            rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
+            if (!timeSlow)
+            {
+                rb.velocity = new Vector2(horizontal * speed   /*timeSlowMo.customFixedUnscaledDeltaTime*/, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = new Vector2(horizontal * speed  + 2 /*timeSlowMo.customFixedUnscaledDeltaTime*/, rb.velocity.y); ;
+            }
         }
 
     }
