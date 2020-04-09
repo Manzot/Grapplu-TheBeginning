@@ -10,6 +10,7 @@ TagManager:
   - BossUI
   - BossHealthBar
   - PlayerHealthUI
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

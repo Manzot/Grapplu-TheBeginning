@@ -53,7 +53,7 @@ public class PlayerManager : IManageables
     {
         player.gameObject.SetActive(true);
         player.Initialize();
-
+          
     }
     public void IsDead()
     {
@@ -64,7 +64,8 @@ public class PlayerManager : IManageables
             if (spawnTime <= 0)
             {
                 PlayerSpawn();
-                player.transform.position = deathLoc;
+                player.transform.position = player.playerData.Location;
+              /*  player.health = player.playerData.Health;*/
                 player.transform.rotation = Quaternion.Euler(Vector3.zero);
                 spawnTime = 5f;
             }
