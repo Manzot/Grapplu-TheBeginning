@@ -27,8 +27,6 @@ public class PlayerManager : IManageables
 
     #endregion
     PlayerData playerData;
-    Vector3 position;
-    int SceneIndex;
     bool isLoaded = false;
     public void Initialize()
     {
@@ -41,11 +39,10 @@ public class PlayerManager : IManageables
         }
         else
         {
-            player.transform.position = position;
-
+            player.transform.position = SaveLoadManager.Instance.position;
         }
+
         player.isAlive = true;
-      
         player.Initialize();
     }
     public void PhysicsRefresh()
@@ -69,7 +66,8 @@ public class PlayerManager : IManageables
         player.health = 100f;
         player.Initialize();
         player.gameObject.SetActive(true);
-        LoadGame();
+        SaveLoadManager.Instance.Load();
+        isLoaded = true;    
 
        /* playerData = PlayerPersistence.LoadData(player);
         player.transform.position = playerData.Location;*/
@@ -90,21 +88,5 @@ public class PlayerManager : IManageables
                 spawnTime = 5f;
             }
         }
-    }
-    public void LoadGame()
-    {
-        playerData = new PlayerData(player);
-        PlayerData playerdata = PlayerPersistence.LoadData();
-       
-            float x = playerdata.position[0];
-            float y = playerdata.position[1];
-            float z = 0;
-
-            SceneIndex = playerData.sceneIndex;
-            position = new Vector3(x, y, z);
-            SceneManager.LoadScene(SceneIndex);
-            /*player.transform.position = position;*/
-            player.transform.rotation = Quaternion.Euler(Vector3.zero);
-        isLoaded = true;
     }
 }
