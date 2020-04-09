@@ -33,11 +33,6 @@ public class Checkpoint:MonoBehaviour
             PlayerPersistence.SaveData(player);*/
 
         }
-        else
-        {
-            
-            currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-        }
+        
     }
 }

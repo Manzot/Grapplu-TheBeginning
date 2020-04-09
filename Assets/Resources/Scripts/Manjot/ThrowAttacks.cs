@@ -23,10 +23,14 @@ public class ThrowAttacks : ThrowAbles
 
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        if (target) { 
         Vector2 dir = (target.position - transform.position).normalized;
-        var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
+            var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
+            
+        }
         spriteRend = GetComponent<SpriteRenderer>();
+
 
         if (isLaser)
         {

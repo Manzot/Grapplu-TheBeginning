@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    /*Movement of the player also checking the direction mouse cursor and rotating the player towards it*/
+    /*Movement of the player left and right also checking the direction mouse cursor and rotating the player towards it*/
     public void Movement()
     {
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
@@ -335,6 +335,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
     }
+    /* Player Jump */
     public void Jump()
     {
         if (Grounded())
@@ -364,7 +365,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Ground", "IObject", "Platform"));
     }
-
+    /* getting a direction and angle between User mouse and User */
     float CrossairDirection()
     {
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
@@ -380,6 +381,7 @@ public class PlayerController : MonoBehaviour, IDamage
         angleDirection = Quaternion.Euler(0, 0, aimAngle * Mathf.Rad2Deg) * Vector2.right;
         return aimAngle;
     }
+    
     public void SetCrossairPoint(float aimAngle)
     {
 
@@ -389,7 +391,7 @@ public class PlayerController : MonoBehaviour, IDamage
         Vector3 crosshairPosition = new Vector3(x, y, 0);
         crosshair.transform.position = crosshairPosition;
     }
-
+    /* Attacking Animation of the player */
     public void Attack()
     {
         if (isAttacking)
@@ -410,7 +412,7 @@ public class PlayerController : MonoBehaviour, IDamage
         isAttacking = false;
 
     }
-
+    /* Player Damage and triggering the hurt animation */
     public void TakeDamage(int damage)
     {
         if (!isHurt)
@@ -424,6 +426,7 @@ public class PlayerController : MonoBehaviour, IDamage
         healthBar.fillAmount = health / MAX_HEALTH;
     }
 
+    /* Checking if the player is dead or not, Playing the animation if dead and Setting the timeScale to normal if player dies during slowMo*/
     public bool Dead()
     {
         if (health <= 0)
@@ -448,7 +451,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         return false;
     }
-
+    /* Using Gravity Check */
     void GravityCheck()
     {
         if (!Grounded())
@@ -459,7 +462,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
     }
-
+    
     private void StartRewind()
     {
         this.GetComponent<SpriteRenderer>().material.color = Color.blue;
@@ -475,6 +478,7 @@ public class PlayerController : MonoBehaviour, IDamage
         isRewinding = false;
         rb.isKinematic = false;
     }
+    /* Recording the position in List<PointsInTime> where PointsInTime is the class, to rewind the player for 3 seconds */
     private void Record()
     {
 
@@ -487,6 +491,7 @@ public class PlayerController : MonoBehaviour, IDamage
             pointsInTime.Insert(0, new PointInTime(transform.position, transform.rotation));
         }
     }
+    /* Rewind The player */
     private void Rewind()
     {
         SoundManager.Instance.Play("PlayerTimeRewind");
@@ -505,6 +510,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+    /* Damaging the Enemies using Colliders */
     public void DamageEnemies(int _damage)
     {
         Collider2D bossCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Boss"));
