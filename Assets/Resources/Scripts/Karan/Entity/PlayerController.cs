@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour, IDamage
         animator = GetComponent<Animator>();
         timeSlowMo = new TimeSlowMo();
         healthBar = GameObject.FindGameObjectWithTag("PlayerHealthUI").GetComponent<UnityEngine.UI.Image>();
+        healthBar.fillAmount = health / MAX_HEALTH;
 
     }
     public void PostInitialize()

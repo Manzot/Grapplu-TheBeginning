@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ElementalBoss : BossUnit
 {
+    const float PUNCH_ATK_TIME = 1.2f;
+    const float BIGLASER_ATK_TIME = 3f;
+    const float SMALLLASERS_ATK_TIME = 3f;
+    const float SPIKY_ATK_TIME = 2f;
+
     Vector2 dirTowardsTarget;
     float moveTimeCounter;
     float moveTime = 2;
@@ -25,38 +30,79 @@ public class ElementalBoss : BossUnit
         base.Refresh();
         dirTowardsTarget = (target.position - transform.position);
 
-        if (!isAttacking)
-            RandomMove();
+        if (!Dead())
+        {
+            Timers();
+            LookingAtTarget();
+            Debug.Log(isAttacking);
+            //PunchAttack();
+            //if(Input.GetKey(KeyCode.Alpha1))
+                PunchAttack();
+        }
 
-        PunchAttack();
     }
     public override void PhysicsRefresh()
     {
         base.PhysicsRefresh();
+
+        if (!Dead())
+        {
+            if (!isAttacking)
+            {
+               // RandomMove();
+            }
+        }
     }
 
     public void MoveToPlayer()
     {
-       
-
+      //  anim.SetFloat("xFloat", Mathf.Abs(rb.velocity.x));
         if (!enraged)
-            rb.velocity = new Vector2(dirTowardsTarget.normalized.x, 0) * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
+            rb.velocity = new Vector2(dirTowardsTarget.normalized.x, dirTowardsTarget.normalized.y / 50) * speed * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
         else
         {
-            rb.velocity = new Vector2(dirTowardsTarget.normalized.x, 0) * speed * 2f * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
+            rb.velocity = new Vector2(dirTowardsTarget.normalized.x, dirTowardsTarget.normalized.y / 50) * speed * 2f * Time.fixedDeltaTime + new Vector2(0, rb.velocity.y);
         }
     }
 
     public void PunchAttack()
     {
-        if(dirTowardsTarget.sqrMagnitude <= 3f)
+        isAttacking = true;
+
+        if (dirTowardsTarget.sqrMagnitude <= 3f)
         {
-            isAttacking = true;
             rb.velocity = Vector2.zero;
             anim.SetBool("punchAttack", true);
-            TimerDelg.Instance.Add(() => { anim.SetBool("punchAttack", false); isAttacking = false; }, 1.2f);
-
+            TimerDelg.Instance.Add(() => { anim.SetBool("punchAttack", false); isAttacking = false; }, PUNCH_ATK_TIME);
         }
+        else
+            MoveToPlayer();
+    }
+
+    public void BigLaserAttack()
+    {
+        isAttacking = true;
+        rb.velocity = Vector2.zero;
+        anim.SetTrigger("bigLaserAttack");
+        TimerDelg.Instance.Add(() => { isAttacking = false; moveTimeCounter = 0; }, BIGLASER_ATK_TIME);
+
+    }
+
+    public void SmallLasersAttacks()
+    {
+        isAttacking = true;
+        rb.velocity = Vector2.zero;
+        RandomMove();
+        anim.SetBool("smallaserAttack", true);
+        TimerDelg.Instance.Add(() => { isAttacking = false; moveTimeCounter = 0; anim.SetBool("smallaserAttack", false); }, SMALLLASERS_ATK_TIME);
+    }
+
+    public void SpikyAttack()
+    {
+        isAttacking = true;
+        rb.velocity = Vector2.zero;
+        anim.SetTrigger("spikyAttack");
+        TimerDelg.Instance.Add(() => { isAttacking = false; moveTimeCounter = 0; }, SPIKY_ATK_TIME);
     }
 
     public void RandomMove()
@@ -72,11 +118,10 @@ public class ElementalBoss : BossUnit
 
             moveTimeCounter = moveTime;
         }
-        else
+       // else
         {
                 if (moveRight) rb.velocity = new Vector2(1, RANDOM_Y) * speed * Time.fixedDeltaTime; // Move Right
                 else rb.velocity = new Vector2(-1, RANDOM_Y) * speed * Time.fixedDeltaTime; // Move Left
-            
         }
 
     }

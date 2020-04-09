@@ -14,6 +14,12 @@ TextureImporter:
   - first:
       213: -6427428255209537813
     second: Elemental_attack1_3
+  - first:
+      213: 7515696784818071767
+    second: Elemental_attack1_4
+  - first:
+      213: -3775437480880406331
+    second: Elemental_attack1_5
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -118,7 +124,7 @@ TextureImporter:
         width: 49
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -139,7 +145,7 @@ TextureImporter:
         width: 47
         height: 69
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -158,9 +164,9 @@ TextureImporter:
         x: 144
         y: 1
         width: 70
-        height: 66
+        height: 52
       alignment: 9
-      pivot: {x: 0.69248134, y: 0.50318986}
+      pivot: {x: 0.6894738, y: 0.6610847}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -179,9 +185,9 @@ TextureImporter:
         x: 216
         y: 1
         width: 72
-        height: 66
+        height: 51
       alignment: 9
-      pivot: {x: 0.6666667, y: 0.50971663}
+      pivot: {x: 0.65789455, y: 0.6830913}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -189,6 +195,48 @@ TextureImporter:
       bones: []
       spriteID: c6d537ed8b4c9784a8254a2ff318b2d1
       internalID: -6427428255209537813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Elemental_attack1_4
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 54
+        width: 66
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efd53dea43ebf6e4682dd7b420d1a769
+      internalID: 7515696784818071767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Elemental_attack1_5
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 54
+        width: 67
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f40544da88fe60f449f058a79d2cf463
+      internalID: -3775437480880406331
       vertices: []
       indices: 
       edges: []
