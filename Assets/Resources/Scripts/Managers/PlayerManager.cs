@@ -25,11 +25,13 @@ public class PlayerManager : IManageables
     }
 
     #endregion
+    PlayerData playerData;
     public void Initialize()
     {
+        playerData = new PlayerData();
         GameObject playerPrefab = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Karan/Player"));
         player = GameObject.FindObjectOfType<PlayerController>();
-        player.transform.position = new Vector2(43, 13);
+        player.transform.position = new Vector2(10, 13);
         player.isAlive = true;
         player.Initialize();
     }
@@ -51,8 +53,14 @@ public class PlayerManager : IManageables
     }
     public void PlayerSpawn()
     {
-        player.gameObject.SetActive(true);
+        player.health = 100f;
         player.Initialize();
+        player.gameObject.SetActive(true);
+        playerData = PlayerPersistence.LoadData(player);
+        player.transform.position = playerData.Location;
+        
+        player.transform.rotation = Quaternion.Euler(Vector3.zero);
+       
           
     }
     public void IsDead()
@@ -64,9 +72,7 @@ public class PlayerManager : IManageables
             if (spawnTime <= 0)
             {
                 PlayerSpawn();
-                player.transform.position = player.playerData.Location;
               /*  player.health = player.playerData.Health;*/
-                player.transform.rotation = Quaternion.Euler(Vector3.zero);
                 spawnTime = 5f;
             }
         }

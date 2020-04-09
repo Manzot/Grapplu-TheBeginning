@@ -65,11 +65,10 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isCoolingDown = false;
     private float rewindTimer;
 
-    public PlayerData playerData { get; private set; }
+   public PlayerData playerData;
 
     public void Initialize()
     {
-        playerData = PlayerPersistence.LoadData(this);
         if (health <= 0)
         {
             health = MAX_HEALTH;
@@ -215,7 +214,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private void DeflectBullet(GameObject go)
     {
         ThrowAttacks throwObject = go.GetComponent<ThrowAttacks>();
-       // throwObject.rb.velocity = Vector2.zero;
+        // throwObject.rb.velocity = Vector2.zero;
         throwObject.rb.AddForce((throwObject.transform.position - transform.position) * throwObject.throwSpeed / 1.5f, ForceMode2D.Impulse);
         Vector2 dir = (go.transform.position - transform.position).normalized;
         var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -411,6 +410,7 @@ public class PlayerController : MonoBehaviour, IDamage
             isHurt = true;
             SoundManager.Instance.Play("PlayerHurt");
             health -= damage;
+            Debug.Log(health);
             animator.SetTrigger("isHurt");
             TimerDelg.Instance.Add(() => { isHurt = false; }, 0.7f);
         }
@@ -501,7 +501,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void DamageEnemies(int _damage)
     {
         Collider2D bossCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Boss"));
-        Collider2D enemyCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Enemy","FlyingEnemy"));
+        Collider2D enemyCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Enemy", "FlyingEnemy"));
         Collider2D deflectCol = Physics2D.OverlapCircle(punchesPos.position, 0.35f, LayerMask.GetMask("Throwable"));
 
 
@@ -523,16 +523,9 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
 
-    
 
 
-}        /*IEnumerator CoolDown(float _cooldown)
-        {
-            float cooldown = 2 * _cooldown;
-            yield return new WaitForSeconds(cooldown);
-
-            isCoolingDown = false;
-        }*/
+}
 
 
 
