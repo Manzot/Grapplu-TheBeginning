@@ -8,6 +8,7 @@ public class BossManager : IManageables
     Transform parent;
     public List<BossUnit> bosses;
     public BossUnit demonBoss;
+    public BossUnit elementalBoss;
 
     #region Singleton
 
@@ -32,7 +33,7 @@ public class BossManager : IManageables
         demonBoss = Resources.Load<GameObject>("Prefabs/Manjot/Bosses/Demon_Boss").transform.GetComponentInChildren<BossUnit>();
         parent = new GameObject("BossParent").transform;
         bosses = new List<BossUnit>();
-        //bosses.AddRange(GameObject.FindObjectsOfType<BossUnit>());
+        bosses.AddRange(GameObject.FindObjectsOfType<BossUnit>());
 
         for (int i = 0; i < bosses.Count; i++)
         {
