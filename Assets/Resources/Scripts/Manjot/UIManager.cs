@@ -18,20 +18,28 @@ public class UIManager : MonoBehaviour
     public static bool isPaused = false;
     bool canContinue;
     ColorBlock newColors;
-    string fileName="Save.fun";
+    string fileName = "Save.fun";
     private void Awake()
     {
-        
+
         player = FindObjectOfType<PlayerController>();
 
-        continueButton =   GameObject.Find("ContinueButton").GetComponent<Button>();
-        if (!continueButton) {
-            Debug.Log("Continue Button is not there in this Scene..");
+        /*  */
+        string scene = SceneManager.GetActiveScene().name;
+        if (scene == "MainMenu")
+        {
+            continueButton = GameObject.Find("ContinueButton").GetComponent<Button>();
+
+            if (!continueButton)
+            {
+
+                Debug.Log("Continue Button is not there in this Scene..");
+            }
+            
+                continueButton.interactable = canContinue;
+                continueButton.gameObject.SetActive(false);
         }
-        else {
-            newColors = continueButton.colors;
-        }
-        
+
 
     }
     void Start()
@@ -47,7 +55,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-       
+
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -62,7 +70,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    
+
 
     private void Pause()
     {
@@ -81,7 +89,7 @@ public class UIManager : MonoBehaviour
     }
     public void RestartButton()
     {
-       string currentScene =  SceneManager.GetActiveScene().name;
+        string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
     }
     public void LoadButton()
@@ -89,7 +97,7 @@ public class UIManager : MonoBehaviour
         SaveLoadManager.Instance.Load();
     }
 
-   // **** FOR MAIN MENU // **** 
+    // **** FOR MAIN MENU // **** 
 
     public void ContinueButton()
     {
@@ -109,7 +117,7 @@ public class UIManager : MonoBehaviour
                 SaveLoadManager.Instance.Load();
             }
         }
-       
+
         else
         {
             canContinue = false;
@@ -125,12 +133,12 @@ public class UIManager : MonoBehaviour
     public void SoundButton()
     {
         if (playing)
-        { 
+        {
             SoundManager.Instance.StopPlaying("Theme");
             playing = false;
-           
+
         }
-        else if(!playing)
+        else if (!playing)
         {
             SoundManager.Instance.Play("Theme");
             playing = true;
@@ -141,7 +149,7 @@ public class UIManager : MonoBehaviour
         Application.Quit();
 
     }
-    
+
 
 
 

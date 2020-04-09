@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    /*Movement of the player*/
+    /*Movement of the player also checking the direction mouse cursor and rotating the player towards it*/
     public void Movement()
     {
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
@@ -330,7 +330,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else
             {
-                rb.velocity = new Vector2(horizontal * speed  + 2 /*timeSlowMo.customFixedUnscaledDeltaTime*/, rb.velocity.y); ;
+                rb.velocity = new Vector2(horizontal * speed  + 1 /*timeSlowMo.customFixedUnscaledDeltaTime*/, rb.velocity.y); ;
             }
         }
 
