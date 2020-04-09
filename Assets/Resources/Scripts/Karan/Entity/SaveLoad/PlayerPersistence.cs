@@ -6,10 +6,10 @@ using UnityEngine;
 public class PlayerPersistence
 {
 
-    public static void SaveData(PlayerController playerController)
+    public static void SaveData(PlayerData playerData)
     {
-        PlayerPrefs.SetFloat("x", playerController.playerData.Location.x);
-        PlayerPrefs.SetFloat("y", playerController.playerData.Location.y);
+        PlayerPrefs.SetFloat("x", playerData.Location.x);
+        PlayerPrefs.SetFloat("y", playerData.Location.y);
        /* PlayerPrefs.SetFloat("health", playerController.playerData.Health);*/
 
 

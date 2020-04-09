@@ -19,7 +19,7 @@ public class Checkpoint:MonoBehaviour
             playerData.Location = colli.gameObject.transform.position;
             Debug.Log(playerData.Location);
             /* playerData.Health = this.health;*/
-            PlayerPersistence.SaveData(player);
+            PlayerPersistence.SaveData(playerData);
 
         }
     }
