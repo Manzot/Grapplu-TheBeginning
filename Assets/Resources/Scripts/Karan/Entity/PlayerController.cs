@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             health = MAX_HEALTH;
         }
-        
+
         isAlive = true;
 
         rb = GetComponent<Rigidbody2D>();
