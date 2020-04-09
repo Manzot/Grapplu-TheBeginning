@@ -10,15 +10,21 @@ public class Checkpoint:MonoBehaviour
     PlayerController player;
     public static Vector3 location;
     public static int currentSceneIndex;
+
+
+    public void Awake()
+    {
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex; 
+    }
     void OnTriggerEnter2D(Collider2D colli)
     {
         if (colli.gameObject.CompareTag("Player"))
         {
            
             location = colli.gameObject.transform.position;
-            /*Debug.Log(location);*/
             currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             SaveLoadManager.Instance.Save();
+            /*Debug.Log(location);*/
             // player.savePoint.x = colli.gameObject.transform.position.x;
             // player.savePoint.y = colli.gameObject.transform.position.y;
             // player.currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -33,5 +39,6 @@ public class Checkpoint:MonoBehaviour
             PlayerPersistence.SaveData(player);*/
 
         }
+        
     }
 }

@@ -4,31 +4,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class UIManager : MonoBehaviour
 {
     [HideInInspector]
     public Image healthbar;
     PlayerController player;
-     GameObject continueButton;
+    Button continueButton;
     bool playing = true;
     public GameObject pauseMenuUI;
-
     public static bool isPaused = false;
-
+    bool canContinue;
+    ColorBlock newColors;
+    string fileName = "Save.fun";
     private void Awake()
     {
+
         player = FindObjectOfType<PlayerController>();
-       continueButton =   GameObject.Find("ContinueButton");
-       
-           
+
+        /*  */
+        string scene = SceneManager.GetActiveScene().name;
+        if (scene == "MainMenu")
+        {
+            continueButton = GameObject.Find("ContinueButton").GetComponent<Button>();
+
+            if (!continueButton)
+            {
+
+                Debug.Log("Continue Button is not there in this Scene..");
+            }
+            
+                continueButton.interactable = canContinue;
+                continueButton.gameObject.SetActive(false);
+        }
+
 
     }
     void Start()
     {
-        if(continueButton)
-        continueButton.SetActive(false);
     }
+
 
     // Update is called once per frame
     //void Update()
@@ -36,8 +53,10 @@ public class UIManager : MonoBehaviour
     //    healthbar.fillAmount = player.health / 100;
     //}
 
-        void Update()
+    void Update()
     {
+
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -50,6 +69,8 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
+
 
     private void Pause()
     {
@@ -68,7 +89,7 @@ public class UIManager : MonoBehaviour
     }
     public void RestartButton()
     {
-       string currentScene =  SceneManager.GetActiveScene().name;
+        string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
     }
     public void LoadButton()
@@ -76,11 +97,34 @@ public class UIManager : MonoBehaviour
         SaveLoadManager.Instance.Load();
     }
 
-   // **** FOR MAIN MENU // **** 
+    // **** FOR MAIN MENU // **** 
 
     public void ContinueButton()
     {
-        SaveLoadManager.Instance.Load();
+
+
+        string savedFile = Application.persistentDataPath + "Save.fun";
+        Debug.Log(savedFile);
+
+        if (File.Exists(savedFile))
+        {
+            canContinue = true;
+            continueButton.interactable = canContinue;
+            if (canContinue)
+            {
+                newColors.disabledColor = new Color(255, 255, 255);
+                continueButton.colors = newColors;
+                SaveLoadManager.Instance.Load();
+            }
+        }
+
+        else
+        {
+            canContinue = false;
+            newColors.disabledColor = new Color(0, 0, 0);
+            continueButton.colors = newColors;
+            continueButton.interactable = canContinue;
+        }
     }
     public void NewGameButton()
     {
@@ -89,12 +133,12 @@ public class UIManager : MonoBehaviour
     public void SoundButton()
     {
         if (playing)
-        { 
+        {
             SoundManager.Instance.StopPlaying("Theme");
             playing = false;
-           
+
         }
-        else if(!playing)
+        else if (!playing)
         {
             SoundManager.Instance.Play("Theme");
             playing = true;
@@ -105,7 +149,7 @@ public class UIManager : MonoBehaviour
         Application.Quit();
 
     }
-    
+
 
 
 

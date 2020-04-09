@@ -7,7 +7,7 @@ public class Hook : MonoBehaviour
 {
     public Rigidbody2D hookRb;
     TimeSlowMo timeSlowMo;
-    public float moveSpeed = 300f;
+    public float moveSpeed;
     
     public void Initialise()
     {
@@ -17,6 +17,6 @@ public class Hook : MonoBehaviour
     }
     public void ThrowHook(Vector2 dir)
     {
-       hookRb.AddForce(dir * moveSpeed * timeSlowMo.customUnscaledDeltaTime, ForceMode2D.Impulse);
+       hookRb.AddForce(dir * moveSpeed , ForceMode2D.Impulse);
     }
 }

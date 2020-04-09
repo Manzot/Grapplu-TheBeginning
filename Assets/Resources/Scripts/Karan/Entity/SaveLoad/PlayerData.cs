@@ -10,8 +10,10 @@ public class PlayerData
     public PlayerData(PlayerController playerController)
     {
         position = new float[2];
+
         position[0] = playerController.savePoint[0];
         position[1] = playerController.savePoint[1];
+
         sceneIndex  = playerController.currentSceneIndex;
     }
 }
