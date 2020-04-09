@@ -10,6 +10,12 @@ public class Checkpoint:MonoBehaviour
     PlayerController player;
     public static Vector3 location;
     public static int currentSceneIndex;
+
+
+    public void Awake()
+    {
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex; 
+    }
     void OnTriggerEnter2D(Collider2D colli)
     {
         if (colli.gameObject.CompareTag("Player"))

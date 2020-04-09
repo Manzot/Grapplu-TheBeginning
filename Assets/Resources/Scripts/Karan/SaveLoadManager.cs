@@ -12,15 +12,15 @@ public class SaveLoadManager
 
     PlayerController player;
     PlayerData playerData;
-    Checkpoint checkpoint;
+    GameObject checkpoint;
     public Vector3 position;
-    static int sceneIndex;
+    int sceneIndex;
     bool isLoaded;
     public void Initialize()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
         playerData = new PlayerData(player);
-        checkpoint = GameObject.FindObjectOfType<Checkpoint>();
+        checkpoint = GameObject.FindGameObjectWithTag("Checkpoint");
        
     }
     public void Save() {
@@ -30,27 +30,31 @@ public class SaveLoadManager
         position = Checkpoint.location;
         player.savePoint = position;
         /* Debug.Log(position);*/
-        if (!checkpoint)
-        {
-            player.currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        }
-        else
-        {
-            player.currentSceneIndex = Checkpoint.currentSceneIndex;
-        }
+       
+        
+
         PlayerPersistence.SaveData(player);
     }
    
     public void Load()
     {
-       /* playerData = new PlayerData(player);*/
+      
         PlayerData playerdata = PlayerPersistence.LoadData();
 
         float x = playerdata.position[0];
         float y = playerdata.position[1];
         float z = 0;
+        if (!checkpoint)
+        {
+
+            sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        }
+
+        else {
+            sceneIndex = Checkpoint.currentSceneIndex;
+        }
+       
         
-        sceneIndex = playerdata.sceneIndex;
         position = new Vector3(x, y, z);
         SceneManager.LoadScene(sceneIndex);
         /*player.transform.position = position;*/
