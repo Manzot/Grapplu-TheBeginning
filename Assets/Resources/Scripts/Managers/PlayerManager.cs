@@ -32,11 +32,13 @@ public class PlayerManager : IManageables
     bool isLoaded = false;
     public void Initialize()
     {
-        
         GameObject playerPrefab = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Karan/Player"));
         player = GameObject.FindObjectOfType<PlayerController>();
-        if(!isLoaded)
-        player.transform.position = new Vector3(10,13);
+
+        if (!isLoaded)
+        {
+            player.transform.position = new Vector3(40,13);
+        }
         else
         {
             player.transform.position = position;
@@ -100,7 +102,7 @@ public class PlayerManager : IManageables
 
             SceneIndex = playerData.sceneIndex;
             position = new Vector3(x, y, z);
-           SceneManager.LoadScene(SceneIndex);
+            SceneManager.LoadScene(SceneIndex);
             /*player.transform.position = position;*/
             player.transform.rotation = Quaternion.Euler(Vector3.zero);
         isLoaded = true;
