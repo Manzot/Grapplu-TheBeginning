@@ -46,7 +46,8 @@ public class DemonBoss : BossUnit
         {           
             Timers();
             AnimationCaller();
-            LookingAtTarget();
+            if(!isAttacking)
+                LookingAtTarget();
            
             if (!isSpawning)
                 AttackMove();
@@ -120,16 +121,7 @@ public class DemonBoss : BossUnit
         }
     }
 
-    public void LookingAtTarget()
-    {
-        if (!isAttacking)
-        {
-            if (target.position.x < transform.position.x)
-                transform.rotation = Quaternion.Euler(new Vector2(0, 180));
-            else
-                transform.rotation = Quaternion.Euler(new Vector2(0, 0));
-        }
-    }
+   
 
     public void SlashAttack1()
     {

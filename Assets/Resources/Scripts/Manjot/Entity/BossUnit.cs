@@ -89,6 +89,17 @@ public class BossUnit : MonoBehaviour
         return groundCheckColi = Physics2D.OverlapCircle(new Vector2(feet.position.x, feet.position.y), .2f, LayerMask.GetMask("Ground"));
     }
 
+    public void LookingAtTarget()
+    {
+       // if (!isAttacking)
+        {
+            if (target.position.x < transform.position.x)
+                transform.rotation = Quaternion.Euler(new Vector2(0, 180));
+            else
+                transform.rotation = Quaternion.Euler(new Vector2(0, 0));
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         if (!Dead())
