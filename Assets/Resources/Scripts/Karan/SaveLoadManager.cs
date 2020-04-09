@@ -12,22 +12,22 @@ public class SaveLoadManager
 
     PlayerController player;
     PlayerData playerData;
-    Checkpoint checkpoint;
+    /*Checkpoint checkpoint;*/
     public Vector3 position;
     int sceneIndex;
     bool isLoaded;
     public void Initialize()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
-        checkpoint = GameObject.FindObjectOfType<Checkpoint>();
+        /*checkpoint = GameObject.FindObjectOfType<Checkpoint>();*/
     }
     public void Save() {
         
         playerData = new PlayerData(player);
         position = Checkpoint.location;
         player.savePoint = position;
-        Debug.Log(position);
-        player.currentSceneIndex = checkpoint.currentSceneIndex;
+       /* Debug.Log(position);*/
+        player.currentSceneIndex = Checkpoint.currentSceneIndex;
         PlayerPersistence.SaveData(player);
     }
    

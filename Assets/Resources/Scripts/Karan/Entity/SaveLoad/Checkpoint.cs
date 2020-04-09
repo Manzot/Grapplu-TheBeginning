@@ -9,14 +9,14 @@ public class Checkpoint:MonoBehaviour
     PlayerData playerData;
     PlayerController player;
     public static Vector3 location;
-    public int currentSceneIndex;
+    public static int currentSceneIndex;
     void OnTriggerEnter2D(Collider2D colli)
     {
         if (colli.gameObject.CompareTag("Player"))
         {
            
             location = colli.gameObject.transform.position;
-            Debug.Log(location);
+            /*Debug.Log(location);*/
             currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             SaveLoadManager.Instance.Save();
             // player.savePoint.x = colli.gameObject.transform.position.x;
