@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public Animator animator;
 
     public Vector2 angleDirection;
+    public  Vector2 savePoint;
     public Vector3 deathLoc;
 
     public GameObject crosshair;
@@ -64,8 +65,7 @@ public class PlayerController : MonoBehaviour, IDamage
     float slowMoTimer;
     bool isCoolingDown = false;
     private float rewindTimer;
-
-   public PlayerData playerData;
+    public int currentSceneIndex;
 
     public void Initialize()
     {
@@ -411,7 +411,6 @@ public class PlayerController : MonoBehaviour, IDamage
             isHurt = true;
             SoundManager.Instance.Play("PlayerHurt");
             health -= damage;
-            Debug.Log(health);
             animator.SetTrigger("isHurt");
             TimerDelg.Instance.Add(() => { isHurt = false; }, 0.7f);
         }
