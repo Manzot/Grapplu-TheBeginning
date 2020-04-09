@@ -345,10 +345,10 @@ public class PlayerController : MonoBehaviour, IDamage
                 SoundManager.Instance.Play("PlayerJump");
 
                 if (!timeSlow)
-                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce * timeSlowMo.customFixedUnscaledDeltaTime), ForceMode2D.Impulse);
+                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce /** timeSlowMo.customFixedUnscaledDeltaTime*/), ForceMode2D.Impulse);
                 else
 
-                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce * timeSlowMo.customFixedUnscaledDeltaTime), ForceMode2D.Impulse);
+                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce /** timeSlowMo.customFixedUnscaledDeltaTime*/), ForceMode2D.Impulse);
 
                 isJumping = true;
                 TimerDelg.Instance.Add(() => { isJumping = false; }, .5f);

@@ -14,7 +14,7 @@ public class SaveLoadManager
     PlayerData playerData;
     /*Checkpoint checkpoint;*/
     public Vector3 position;
-    int sceneIndex;
+    static int sceneIndex;
     bool isLoaded;
     public void Initialize()
     {

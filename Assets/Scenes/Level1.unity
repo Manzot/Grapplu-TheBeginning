@@ -3569,30 +3569,15 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 645290170}
-    - target: {fileID: 8353782983583423992, guid: d0cd946beab25b94f93df69f614017b8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitButton
-      objectReference: {fileID: 0}
     - target: {fileID: 8353782984250578014, guid: d0cd946beab25b94f93df69f614017b8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 645290170}
-    - target: {fileID: 8353782984250578014, guid: d0cd946beab25b94f93df69f614017b8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadButton
-      objectReference: {fileID: 0}
     - target: {fileID: 8353782984377121384, guid: d0cd946beab25b94f93df69f614017b8,
         type: 3}
       propertyPath: m_Name
       value: PauseMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8353782984377121384, guid: d0cd946beab25b94f93df69f614017b8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8353782984377121385, guid: d0cd946beab25b94f93df69f614017b8,
         type: 3}
@@ -3704,31 +3689,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 645290170}
-    - target: {fileID: 8353782984819164093, guid: d0cd946beab25b94f93df69f614017b8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SoundButton
-      objectReference: {fileID: 0}
     - target: {fileID: 8353782985198158850, guid: d0cd946beab25b94f93df69f614017b8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 645290170}
-    - target: {fileID: 8353782985198158850, guid: d0cd946beab25b94f93df69f614017b8,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 8353782985582499143, guid: d0cd946beab25b94f93df69f614017b8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 645290170}
     - target: {fileID: 8353782985582499143, guid: d0cd946beab25b94f93df69f614017b8,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResumeButton
-      objectReference: {fileID: 0}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 645290170}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0cd946beab25b94f93df69f614017b8, type: 3}
 --- !u!1 &814486566 stripped

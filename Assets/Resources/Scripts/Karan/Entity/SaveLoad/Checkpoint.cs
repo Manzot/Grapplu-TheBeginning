@@ -16,9 +16,9 @@ public class Checkpoint:MonoBehaviour
         {
            
             location = colli.gameObject.transform.position;
-            /*Debug.Log(location);*/
             currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             SaveLoadManager.Instance.Save();
+            /*Debug.Log(location);*/
             // player.savePoint.x = colli.gameObject.transform.position.x;
             // player.savePoint.y = colli.gameObject.transform.position.y;
             // player.currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -31,6 +31,12 @@ public class Checkpoint:MonoBehaviour
             Debug.Log(playerData.Location);
              playerData.Health = this.health;
             PlayerPersistence.SaveData(player);*/
+
+        }
+        else
+        {
+            
+            currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
         }
     }
