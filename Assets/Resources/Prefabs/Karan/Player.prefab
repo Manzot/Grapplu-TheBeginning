@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ropeHook: {x: 0, y: 0}
-  speed: 200
+  speed: 5
   damage: 10
   swingForce: 1
   jumpForce: 700
@@ -245,9 +245,11 @@ MonoBehaviour:
   rb: {fileID: 8408564739618083744}
   animator: {fileID: 0}
   angleDirection: {x: 0, y: 0}
+  savePoint: {x: 0, y: 0}
   deathLoc: {x: 0, y: 0, z: 0}
   crosshair: {fileID: 1903393565}
   health: 100
+  currentSceneIndex: 0
 --- !u!95 &8408564739618083757
 Animator:
   serializedVersion: 3
