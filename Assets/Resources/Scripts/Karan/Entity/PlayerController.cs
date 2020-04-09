@@ -211,7 +211,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private void DeflectBullet(GameObject go)
     {
         ThrowAttacks throwObject = go.GetComponent<ThrowAttacks>();
-        throwObject.rb.velocity *= -1;
+       // throwObject.rb.velocity = Vector2.zero;
+        throwObject.rb.AddForce((throwObject.transform.position - transform.position) * throwObject.throwSpeed / 1.5f, ForceMode2D.Impulse);
         Vector2 dir = (go.transform.position - transform.position).normalized;
         var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         go.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
@@ -495,7 +496,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         Collider2D bossCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Boss"));
         Collider2D enemyCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Enemy","FlyingEnemy"));
-        Collider2D deflectCol = Physics2D.OverlapCircle(punchesPos.position, 0.3f, LayerMask.GetMask("Throwable"));
+        Collider2D deflectCol = Physics2D.OverlapCircle(punchesPos.position, 0.35f, LayerMask.GetMask("Throwable"));
 
         
         if (bossCol)
