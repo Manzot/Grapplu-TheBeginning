@@ -7,8 +7,8 @@ public class ElementalBoss : BossUnit
     const float PUNCH_ATK_TIME = 1.2f;
     const float BIGLASER_ATK_TIME = 3f;
     const float SMALLLASERS_ATK_TIME = 3f;
-    const float SPIKY_ATK_TIME = 2f;
-    const float WAIT_TO_ATTACK_TIME = 1f;
+    const float SPIKY_ATK_TIME = 1.5f;
+    const float WAIT_TO_ATTACK_TIME = 2.5f;
     const int BIG_LASER_DAMAGE = 25;
     const int SMALL_LASER_DAMAGE = 10;
 
@@ -19,14 +19,15 @@ public class ElementalBoss : BossUnit
     float waitTimeForAttack;
     bool moveRight;
     bool isMovingAttack;
-
+    bool doOnce = false;
     int randomAttack;
 
     ThrowAttacks newBigLaser;
     ThrowAttacks newSmallLaser;
     GameObject laser;
-
+    public GameObject spikes;
     public Transform laserPos;
+
 
     public override void Initialize()
     {
@@ -38,7 +39,7 @@ public class ElementalBoss : BossUnit
     public override void PostInitialize()
     {
         base.PostInitialize();
-        randomAttack = Random.Range(0, 4);
+        randomAttack = Random.Range(0, 5);
     }
 
     public override void Refresh()
@@ -50,6 +51,8 @@ public class ElementalBoss : BossUnit
         {
             Timers();
             LookingAtTarget();
+            if(!isAttacking)
+                CheckGroundCollision();
             
             anim.SetBool("is_attacking", isAttacking);
             anim.SetBool("movingTowardsPlayer", isMovingAttack);
@@ -144,21 +147,26 @@ public class ElementalBoss : BossUnit
                     BigLaserAttack();
                 break;
             default:
-                PunchAttack();
+                if (enraged)
+                    SmallLasersAttacks();
+                else
+                    BigLaserAttack();
                 break;
         }
     }
 
     public void PunchAttack()
     {
-        if (dirTowardsTarget.sqrMagnitude <= 3f && Grounded())
+        if (dirTowardsTarget.sqrMagnitude <= 2f)
         {
             rb.velocity = Vector2.zero;
             anim.SetBool("punchAttack", true);
             TimerDelg.Instance.Add(() => { anim.SetBool("punchAttack", false); isAttacking = false; isMovingAttack = false; moveTimeCounter = 0; randomAttack = Random.Range(0, 6); waitTimeForAttack = WAIT_TO_ATTACK_TIME; }, PUNCH_ATK_TIME);
         }
         else
-            MoveToPlayer();
+        {
+            MoveToPlayer(3);
+        }
     }
 
     public void BigLaserAttack()
@@ -183,19 +191,38 @@ public class ElementalBoss : BossUnit
     {
         if (Grounded())
         {
-            anim.SetTrigger("spikyAttack");
             rb.velocity = Vector2.zero;
-            TimerDelg.Instance.Add(() => { isAttacking = false; moveTimeCounter = 0; randomAttack = Random.Range(0, 6); waitTimeForAttack = WAIT_TO_ATTACK_TIME; }, SPIKY_ATK_TIME);
+            anim.SetBool("spiky_attack", true);
+            if (!spikes.activeSelf)
+            {
+                spikes.SetActive(true);
+                doOnce = true;
+            }
+            if (doOnce)
+            {
+                doOnce = false;
+                TimerDelg.Instance.Add(() => { MoveUp(); isMovingAttack = false; isAttacking = false; moveTimeCounter = 0; anim.SetBool("spiky_attack", false); randomAttack = Random.Range(0, 6); waitTimeForAttack = WAIT_TO_ATTACK_TIME; rb.gravityScale = 0; spikes.SetActive(false); }, SPIKY_ATK_TIME);
+            }
         }
         else
         {
-            MoveToPlayer(2);
+            if (isAttacking)
+            {
+                MoveToPlayer(2);
+                rb.gravityScale = 0.5f;
+            }
         }
     }
 
     public void RandomMove()
     {
-        
+        float speedMult = 1;
+
+        if (enraged)
+            speedMult = 2.2f;
+        else
+            speedMult = 1;
+
         if (moveTimeCounter <= 0)
         {
             RANDOM_Y = Random.Range(-1f, 1f);
@@ -208,8 +235,8 @@ public class ElementalBoss : BossUnit
         }
        // else
         {
-                if (moveRight) rb.velocity = new Vector2(1, RANDOM_Y) * speed * Time.fixedDeltaTime; // Move Right
-                else rb.velocity = new Vector2(-1, RANDOM_Y) * speed * Time.fixedDeltaTime; // Move Left
+                if (moveRight) rb.velocity = new Vector2(1, RANDOM_Y) * speed * speedMult* Time.fixedDeltaTime; // Move Right
+                else rb.velocity = new Vector2(-1, RANDOM_Y) * speed * speedMult * Time.fixedDeltaTime; // Move Left
         }
 
     }
@@ -241,9 +268,23 @@ public class ElementalBoss : BossUnit
             newSmallLaser.spriteRend.size = new Vector2(0.7f, newSmallLaser.spriteRend.size.y * 0.6f);
             newSmallLaser.Throw();
         }
-
     }
 
+    private void CheckGroundCollision()
+    {
+        Collider2D coll = Physics2D.OverlapCircle(feet.position, 1, LayerMask.GetMask("Ground", "NonGrappableWalls"));
+
+        if (coll)
+        {
+            if (!isAttacking)
+            {
+               // moveTimeCounter = 0;
+               // moveRight = !moveRight;
+                if (Grounded())
+                    RANDOM_Y = 1;
+            }
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision)
@@ -253,6 +294,11 @@ public class ElementalBoss : BossUnit
                 collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
             }
         }
+    }
+
+    void MoveUp()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, 1);
     }
 
 }

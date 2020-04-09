@@ -55,6 +55,10 @@ public class ThrowAttacks : ThrowAbles
             {
                 collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
                 DestryWithExplosion();
+                if (isLaser)
+                {
+                    Destroy(gameObject);
+                }
             }
             if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
@@ -69,7 +73,12 @@ public class ThrowAttacks : ThrowAbles
             if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 DestryWithExplosion();
+                if (isLaser)
+                {
+                    Destroy(gameObject, 0.5f);
+                }
             }
+
         }
     }
 
@@ -77,13 +86,7 @@ public class ThrowAttacks : ThrowAbles
     {
         isTriggered = true;
         rb.velocity = Vector2.zero;
-        if (isLaser)
-        {
-            //laserExplosionGO.transform.position = new Vector2(transform.forward.x + spriteRend.size.x, transform.position.y);//new Vector2(transform.position.x + spriteRend.size.x, transform.position.y);
-            //laserExplosionGO.SetActive(true);
-            Destroy(gameObject, 1f);
-        }
-        else
+        if(!isLaser)
         {
             anim.SetTrigger("explode");
             Destroy(gameObject, 1.5f);
