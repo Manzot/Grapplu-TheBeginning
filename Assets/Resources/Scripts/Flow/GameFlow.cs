@@ -29,6 +29,7 @@ public class GameFlow : IManageables
         PlayerManager.Instance.Initialize();
         EnemyManager.Instance.Initialize();
         BossManager.Instance.Initialize();
+        SaveLoadManager.Instance.Initialize();
         //  SoundManager.Instance.Initialize();
         EnemySpawnerManager.Instance.Initialize();
     }

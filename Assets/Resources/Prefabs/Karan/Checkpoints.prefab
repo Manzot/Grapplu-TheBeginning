@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543617704}
   - component: {fileID: 543617706}
-  - component: {fileID: 543617705}
+  - component: {fileID: 444705353783455535}
   m_Layer: 0
   m_Name: Checkpoint (2)
   m_TagString: Checkpoint
@@ -58,7 +58,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &543617705
+--- !u!114 &444705353783455535
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,9 +67,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 543617703}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c9f07c6610d78f41b7e1870075aa6b2, type: 3}
+  m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: {x: 0, y: 0, z: 0}
+  currentSceneIndex: 0
 --- !u!1 &744221577
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 744221578}
   - component: {fileID: 744221580}
-  - component: {fileID: 744221579}
+  - component: {fileID: 9041486142480435390}
   m_Layer: 0
   m_Name: Checkpoint (1)
   m_TagString: Checkpoint
@@ -128,7 +130,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &744221579
+--- !u!114 &9041486142480435390
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,9 +139,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 744221577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c9f07c6610d78f41b7e1870075aa6b2, type: 3}
+  m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: {x: 0, y: 0, z: 0}
+  currentSceneIndex: 0
 --- !u!1 &804033653
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 804033654}
   - component: {fileID: 804033656}
-  - component: {fileID: 804033655}
+  - component: {fileID: 8236253110847886942}
   m_Layer: 0
   m_Name: Checkpoint (3)
   m_TagString: Checkpoint
@@ -198,7 +202,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &804033655
+--- !u!114 &8236253110847886942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,9 +211,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 804033653}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c9f07c6610d78f41b7e1870075aa6b2, type: 3}
+  m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: {x: 0, y: 0, z: 0}
+  currentSceneIndex: 0
 --- !u!1 &1578206707
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1578206708}
   - component: {fileID: 1578206710}
-  - component: {fileID: 1578206709}
+  - component: {fileID: 4715434695752632969}
   m_Layer: 0
   m_Name: Checkpoint (4)
   m_TagString: Checkpoint
@@ -268,7 +274,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1578206709
+--- !u!114 &4715434695752632969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,9 +283,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1578206707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c9f07c6610d78f41b7e1870075aa6b2, type: 3}
+  m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: {x: 0, y: 0, z: 0}
+  currentSceneIndex: 0
 --- !u!1 &7071696068993144316
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7632489406587768905}
   - component: {fileID: 7632489406587768904}
-  - component: {fileID: 7632489406587768917}
+  - component: {fileID: 7478435089699194899}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Checkpoint
@@ -373,7 +381,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7632489406587768917
+--- !u!114 &7478435089699194899
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -382,6 +390,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7632489406587768918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c9f07c6610d78f41b7e1870075aa6b2, type: 3}
+  m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: {x: 0, y: 0, z: 0}
+  currentSceneIndex: 0
