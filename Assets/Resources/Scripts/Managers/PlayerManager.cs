@@ -35,7 +35,7 @@ public class PlayerManager : IManageables
 
         if (!isLoaded)
         {
-            player.transform.position = new Vector3(40,13);
+            player.transform.position = new Vector3(10,13);
         }
         else
         {

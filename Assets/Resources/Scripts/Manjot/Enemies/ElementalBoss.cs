@@ -244,4 +244,15 @@ public class ElementalBoss : BossUnit
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+            }
+        }
+    }
+
 }
