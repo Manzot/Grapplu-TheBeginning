@@ -19,11 +19,13 @@ public class SaveLoadManager
     public void Initialize()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
+        playerData = new PlayerData(player);
         /*checkpoint = GameObject.FindObjectOfType<Checkpoint>();*/
     }
     public void Save() {
-        
-        playerData = new PlayerData(player);
+
+        /*playerData = new PlayerData(player);
+        */
         position = Checkpoint.location;
         player.savePoint = position;
        /* Debug.Log(position);*/
