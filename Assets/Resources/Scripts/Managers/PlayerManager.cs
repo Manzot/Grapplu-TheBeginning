@@ -29,7 +29,7 @@ public class PlayerManager : IManageables
     {
         GameObject playerPrefab = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Karan/Player"));
         player = GameObject.FindObjectOfType<PlayerController>();
-        player.transform.position = new Vector2(43, 13);
+        player.transform.position = new Vector2(10, 15);
         player.isAlive = true;
         player.Initialize();
     }
