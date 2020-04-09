@@ -26,8 +26,6 @@ public class EnemySpawner : MonoBehaviour
     int enemyID = 0;
     bool waveSpawned;
     bool isTriggered;
-    public bool enableDisableGameobjectsAtStart;
-    public bool enableDisableGameobjectsAtEnd;
 
     public GameObject gameObjectToEnableAtStart;
     public GameObject gameObjectToDisableAtStart;
@@ -87,7 +85,7 @@ public class EnemySpawner : MonoBehaviour
                             {
 
                                 EnemySpawnerManager.Instance.enemySpawnersList.Remove(this);
-                                 DisableEnableGOatEnd(gameObjectToEnableAtEnd, gameObjectToDisableAtEnd);    
+                                DisableEnableGOatEnd(gameObjectToEnableAtEnd, gameObjectToDisableAtEnd);    
                                 Destroy(gameObject, 1f);
                             }
                         }
@@ -109,10 +107,8 @@ public class EnemySpawner : MonoBehaviour
         {
                 if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
-                    if (enableDisableGameobjectsAtStart)
-                    {
-                        DisableEnableGOatStart(gameObjectToEnableAtStart, gameObjectToDisableAtStart);
-                    }
+                    
+                    DisableEnableGOatStart(gameObjectToEnableAtStart, gameObjectToDisableAtStart);
                     if (ToSpawnBossesEnableThis)
                     {
                         BossUnit boss = BossManager.Instance.SpawnBoss(bossToSpawn.GetComponent<BossUnit>(), bossLocation.position);

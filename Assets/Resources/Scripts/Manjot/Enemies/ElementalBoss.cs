@@ -22,6 +22,8 @@ public class ElementalBoss : BossUnit
     bool doOnce = false;
     int randomAttack;
 
+    Collider2D coli;
+
     ThrowAttacks newBigLaser;
     ThrowAttacks newSmallLaser;
     GameObject laser;
@@ -34,6 +36,7 @@ public class ElementalBoss : BossUnit
         base.Initialize();
         waitTimeForAttack = WAIT_TO_ATTACK_TIME;
         laser = Resources.Load<GameObject>("Prefabs/Manjot/Laser");
+        coli = GetComponent<Collider2D>();
     }
 
     public override void PostInitialize()
@@ -51,7 +54,8 @@ public class ElementalBoss : BossUnit
         {
             Timers();
             LookingAtTarget();
-            if(!isAttacking)
+
+            //if (!isAttacking)
                 CheckGroundCollision();
             
             anim.SetBool("is_attacking", isAttacking);
@@ -276,8 +280,10 @@ public class ElementalBoss : BossUnit
 
         if (coll)
         {
+            //coli.isTrigger = true;
             if (!isAttacking)
             {
+                
                // moveTimeCounter = 0;
                // moveRight = !moveRight;
                 if (Grounded())
