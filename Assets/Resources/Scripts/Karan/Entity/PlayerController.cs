@@ -65,13 +65,16 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isCoolingDown = false;
     private float rewindTimer;
 
+    public PlayerData playerData { get; private set; }
+
     public void Initialize()
     {
+        playerData = PlayerPersistence.LoadData(this);
         if (health <= 0)
         {
             health = MAX_HEALTH;
         }
-        
+
         isAlive = true;
 
         rb = GetComponent<Rigidbody2D>();
@@ -79,6 +82,7 @@ public class PlayerController : MonoBehaviour, IDamage
         animator = GetComponent<Animator>();
         timeSlowMo = new TimeSlowMo();
         healthBar = GameObject.FindGameObjectWithTag("PlayerHealthUI").GetComponent<UnityEngine.UI.Image>();
+
     }
     public void PostInitialize()
     {
@@ -155,14 +159,14 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
 
-   
+
     public void PhysicsRefresh()
     {
         if (!Dead())
         {
             GravityCheck();
 
-            if(!isAttacking)
+            if (!isAttacking)
                 Movement();
 
             if (isSwinging)
@@ -216,6 +220,7 @@ public class PlayerController : MonoBehaviour, IDamage
         var angle2 = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         go.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
     }
+
     /*Get a normalized direction vector from the player to the hook point 
      * and  Inverse the direction to get a perpendicular direction based on the HorizontalInput */
     private Vector2 CalculatePerpendicularDirection()
@@ -227,21 +232,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Input.GetAxis("Horizontal") < 0)
         {
-           // sprite.flipX = true;
+            // sprite.flipX = true;
             perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
             var leftPerpPos = (Vector2)transform.position + perpendicularDirection;
-          //  Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
+            //  Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
         }
         else
         {
-           // sprite.flipX = false;
+            // sprite.flipX = false;
             perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
             var rightPerpPos = (Vector2)transform.position - perpendicularDirection;
-           // Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
+            // Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
         }
 
         return perpendicularDirection;
     }
+
     /* Applying the force towards the perpendicular direction */
     public void SwingDirectionForce()
     {
@@ -273,12 +279,12 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 if (Mathf.Abs(angle) < 90)
                 {
-                  //  sprite.flipX = false;
+                    //  sprite.flipX = false;
                     transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
                 }
                 else if (Mathf.Abs(angle) > 90)
                 {
-                   // sprite.flipX = true;
+                    // sprite.flipX = true;
                     transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 }
             }
@@ -306,7 +312,7 @@ public class PlayerController : MonoBehaviour, IDamage
                     transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 }
             }
-            else if(!RopeSystem.isClimbing)
+            else if (!RopeSystem.isClimbing)
             {
                 if (rb.velocity.x > 0)
                     transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
@@ -317,9 +323,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (!isSwinging && !RopeSystem.isThrowingHook)
         {
-                rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
+            rb.velocity = new Vector2(horizontal * speed * timeSlowMo.customFixedUnscaledDeltaTime, rb.velocity.y);
         }
-        
+
     }
     public void Jump()
     {
@@ -394,7 +400,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void DisableBools()
     {
         isAttacking = false;
-      
+
     }
 
     public void TakeDamage(int damage)
@@ -423,8 +429,8 @@ public class PlayerController : MonoBehaviour, IDamage
             rb.velocity = Vector2.zero;
             SoundManager.Instance.Play("PlayerDeath");
             isAlive = false;
-            deathLoc = this.transform.position;
-            TimerDelg.Instance.Add(() => this.gameObject.SetActive(false), 2);
+            TimerDelg.Instance.Add(() => this.gameObject.SetActive(false), 1);
+
             PlayerManager.Instance.IsDead();
             return true;
         }
@@ -494,10 +500,10 @@ public class PlayerController : MonoBehaviour, IDamage
     public void DamageEnemies(int _damage)
     {
         Collider2D bossCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Boss"));
-        Collider2D enemyCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Enemy","FlyingEnemy"));
+        Collider2D enemyCol = Physics2D.OverlapCapsule(punchesPos.position, Vector2.one / 1.5f, CapsuleDirection2D.Horizontal, 0, LayerMask.GetMask("Enemy", "FlyingEnemy"));
         Collider2D deflectCol = Physics2D.OverlapCircle(punchesPos.position, 0.3f, LayerMask.GetMask("Throwable"));
 
-        
+
         if (bossCol)
         {
             bossCol.gameObject.GetComponent<BossUnit>().TakeDamage(damage);
@@ -515,14 +521,18 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    /*IEnumerator CoolDown(float _cooldown)
-    {
-        float cooldown = 2 * _cooldown;
-        yield return new WaitForSeconds(cooldown);
 
-        isCoolingDown = false;
-    }*/
-}
+    
+
+
+}        /*IEnumerator CoolDown(float _cooldown)
+        {
+            float cooldown = 2 * _cooldown;
+            yield return new WaitForSeconds(cooldown);
+
+            isCoolingDown = false;
+        }*/
+
 
 
 

@@ -20,5 +20,42 @@ public class UIManager : MonoBehaviour
     //}
 
 
+//******* FOR PAUSE MENU //*******
+
+   public void ResumeButton()
+    {
+
+    }
+    public void RestartButton()
+    {
+
+    }
+    public void LoadButton()
+    {
+
+    }
+
+   // **** FOR MAIN MENU // **** 
+
+    public void ContinueButton()
+    {
+
+    }
+    public void NewGameButton()
+    {
+
+    }
+    public void SoundButton()
+    {
+
+    }
+    public void QuitButton()
+    {
+
+
+    }
     
+
+
+
 }
