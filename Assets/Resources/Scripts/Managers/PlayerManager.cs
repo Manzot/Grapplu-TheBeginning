@@ -33,7 +33,7 @@ public class PlayerManager : IManageables
         GameObject playerPrefab = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Karan/Player"));
         player = GameObject.FindObjectOfType<PlayerController>();
 
-        if (!isLoaded)
+        if (!SaveLoadManager.isLoaded)
         {
             player.transform.position = new Vector3(10,13);
         }

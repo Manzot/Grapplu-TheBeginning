@@ -15,7 +15,7 @@ public class SaveLoadManager
     GameObject checkpoint;
     public Vector3 position;
     int sceneIndex;
-    bool isLoaded;
+    public static bool isLoaded;
     public void Initialize()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
@@ -41,9 +41,7 @@ public class SaveLoadManager
       
         PlayerData playerdata = PlayerPersistence.LoadData();
 
-        float x = playerdata.position[0];
-        float y = playerdata.position[1];
-        float z = 0;
+       
         if (!checkpoint)
         {
 
@@ -51,15 +49,26 @@ public class SaveLoadManager
         }
 
         else {
+            float x = playerdata.position[0];
+            float y = playerdata.position[1];
+            float z = 0;
+            position = new Vector3(x, y, z);
             sceneIndex = Checkpoint.currentSceneIndex;
         }
        
         
-        position = new Vector3(x, y, z);
+        
         SceneManager.LoadScene(sceneIndex);
         /*player.transform.position = position;*/
         player.transform.rotation = Quaternion.Euler(Vector3.zero);
         isLoaded = true;
+    }
+
+    public void ResetPosition()
+    {
+        playerData.position[0] = 10f;
+        playerData.position[1] = 13f;
+
     }
 
 }

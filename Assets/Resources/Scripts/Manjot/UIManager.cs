@@ -89,6 +89,7 @@ public class UIManager : MonoBehaviour
     }
     public void RestartButton()
     {
+        SaveLoadManager.Instance.ResetPosition();
         string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
     }
