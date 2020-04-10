@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 543617704}
   - component: {fileID: 543617706}
   - component: {fileID: 444705353783455535}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Checkpoint (2)
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 543617703}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 84.32, y: 6.72, z: 12.6640625}
-  m_LocalScale: {x: 1.725, y: 1.4096756, z: 1}
+  m_LocalScale: {x: 1.725, y: 25.22, z: 1}
   m_Children: []
   m_Father: {fileID: 7071696068993144315}
   m_RootOrder: 2
@@ -70,8 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  location: {x: 0, y: 0, z: 0}
-  currentSceneIndex: 0
 --- !u!1 &744221577
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +81,7 @@ GameObject:
   - component: {fileID: 744221578}
   - component: {fileID: 744221580}
   - component: {fileID: 9041486142480435390}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Checkpoint (1)
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -99,7 +97,7 @@ Transform:
   m_GameObject: {fileID: 744221577}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 52.32, y: 7.68, z: 12.6640625}
-  m_LocalScale: {x: 1.725, y: 1.4096756, z: 1}
+  m_LocalScale: {x: 1.725, y: 25.22, z: 1}
   m_Children: []
   m_Father: {fileID: 7071696068993144315}
   m_RootOrder: 1
@@ -142,8 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  location: {x: 0, y: 0, z: 0}
-  currentSceneIndex: 0
 --- !u!1 &804033653
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +151,7 @@ GameObject:
   - component: {fileID: 804033654}
   - component: {fileID: 804033656}
   - component: {fileID: 8236253110847886942}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Checkpoint (3)
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -171,7 +167,7 @@ Transform:
   m_GameObject: {fileID: 804033653}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 168.21, y: 7.65, z: 12.6640625}
-  m_LocalScale: {x: 1.725, y: 1.4096756, z: 1}
+  m_LocalScale: {x: 1.725, y: 25.22, z: 1}
   m_Children: []
   m_Father: {fileID: 7071696068993144315}
   m_RootOrder: 3
@@ -214,8 +210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  location: {x: 0, y: 0, z: 0}
-  currentSceneIndex: 0
 --- !u!1 &1578206707
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +221,7 @@ GameObject:
   - component: {fileID: 1578206708}
   - component: {fileID: 1578206710}
   - component: {fileID: 4715434695752632969}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Checkpoint (4)
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -243,7 +237,7 @@ Transform:
   m_GameObject: {fileID: 1578206707}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 217.23, y: 7.65, z: 12.6640625}
-  m_LocalScale: {x: 1.725, y: 1.4096756, z: 1}
+  m_LocalScale: {x: 1.725, y: 25.22, z: 1}
   m_Children: []
   m_Father: {fileID: 7071696068993144315}
   m_RootOrder: 4
@@ -286,8 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  location: {x: 0, y: 0, z: 0}
-  currentSceneIndex: 0
 --- !u!1 &7071696068993144316
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7071696068993144315}
   m_Layer: 0
-  m_Name: Checkpoints
+  m_Name: Checkpoint
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -334,7 +326,7 @@ GameObject:
   - component: {fileID: 7632489406587768905}
   - component: {fileID: 7632489406587768904}
   - component: {fileID: 7478435089699194899}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Checkpoint
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -350,7 +342,7 @@ Transform:
   m_GameObject: {fileID: 7632489406587768918}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -16.63, y: 6.64, z: 12.6640625}
-  m_LocalScale: {x: 1.725, y: 1.4096756, z: 1}
+  m_LocalScale: {x: 1.725, y: 25.22, z: 1}
   m_Children: []
   m_Father: {fileID: 7071696068993144315}
   m_RootOrder: 0
@@ -393,5 +385,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e680e9d44f167984688208c557539b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  location: {x: 0, y: 0, z: 0}
-  currentSceneIndex: 0
