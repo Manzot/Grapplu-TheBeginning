@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public Animator animator;
 
     public Vector2 angleDirection;
-    public  Vector2 savePoint;
+    public Vector2 savePoint;
     public Vector3 deathLoc;
 
     public GameObject crosshair;
@@ -93,15 +93,12 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void Refresh()
     {
-
         //Debug.Log(health);
         if (!Dead())
         {
             Jump();
             SetCrossairPoint(CrossairDirection());
-            /*
-                        if (!isCoolingDown)
-                        {*/
+
             Timers();
             if (Input.GetButtonDown("TimeSlow"))
             {
@@ -119,10 +116,6 @@ public class PlayerController : MonoBehaviour, IDamage
                 }
             }
             TimeSlowReset();
-            /* StartCoroutine(CoolDown(slowMoCooldown));*/
-
-            /*}*/
-
         }
         Attack();
 
@@ -143,7 +136,6 @@ public class PlayerController : MonoBehaviour, IDamage
                         rewindTimer = rewindCooldown;
                     }
                 }
-                /* StartCoroutine(CoolDown(rewindCooldown));*/
 
             }
 
@@ -151,7 +143,6 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 StopRewind();
                 SoundManager.Instance.StopPlaying("PlayerTimeRewind");
-                /*          StopCoroutine(CoolDown(rewindCooldown));*/
             }
 
         }
@@ -254,14 +245,13 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (rb.velocity.x < 0f || rb.velocity.x > 0f)
         {
-            if (isSwinging)
+           // if (isSwinging)
             {
                 Vector2 perpendicularDirection = CalculatePerpendicularDirection();
 
                 var force = perpendicularDirection * swingForce;
                 rb.AddForce(force);
             }
-
         }
     }
 
@@ -274,46 +264,15 @@ public class PlayerController : MonoBehaviour, IDamage
         float direction = CrossairDirection();
         float angle = CrossairDirection() * Mathf.Rad2Deg;
 
-        if (!RopeSystem.isRopeAttached)
         {
-            if (rb.velocity.x == 0)
+            if (!isSwinging || Grounded())
             {
-                if (Mathf.Abs(angle) < 90)
-                {
-                    //  sprite.flipX = false;
+                if (horizontal > 0)
                     transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                }
-                else if (Mathf.Abs(angle) > 90)
-                {
-                    // sprite.flipX = true;
-                    transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-                }
-            }
-            else
-            {
-                if (rb.velocity.x > 0)
-                    transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                else if (rb.velocity.x < 0)
+                else if (horizontal < 0)
                     transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
             }
-        }
-        else
-        {
-
-            if (Grounded())
-            {
-                if (Mathf.Abs(angle) < 90)
-                {
-                    //sprite.flipX = false;
-                    transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                }
-                else if (Mathf.Abs(angle) > 90)
-                {
-                    //sprite.flipX = true;
-                    transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-                }
-            }
-            else if (!RopeSystem.isClimbing)
+            else if(!RopeSystem.isClimbing)
             {
                 if (rb.velocity.x > 0)
                     transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
@@ -322,7 +281,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-        if (!isSwinging && !RopeSystem.isThrowingHook )
+        if (!isSwinging && !RopeSystem.isThrowingHook)
         {
             if (!timeSlow)
             {
@@ -330,7 +289,20 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else
             {
-                rb.velocity = new Vector2(horizontal * speed  + 1 /*timeSlowMo.customFixedUnscaledDeltaTime*/, rb.velocity.y); ;
+                rb.velocity = new Vector2(horizontal * speed   /*timeSlowMo.customFixedUnscaledDeltaTime*/, rb.velocity.y); ;
+            }
+        }
+        else if (!isSwinging)
+        {
+            if (Mathf.Abs(angle) < 90)
+            {
+                //  sprite.flipX = false;
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            }
+            else if (Mathf.Abs(angle) > 90)
+            {
+                // sprite.flipX = true;
+                transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
             }
         }
 
@@ -338,21 +310,22 @@ public class PlayerController : MonoBehaviour, IDamage
     /* Player Jump */
     public void Jump()
     {
-        if (Grounded())
+        if (Grounded() && !RopeSystem.isRopeAttached)
         {
             animator.SetBool("isJumping", false);
-            if (Input.GetButtonDown("Jump") && !isJumping)
+            if (Input.GetButtonDown("Jump"))
             {
-                SoundManager.Instance.Play("PlayerJump");
+                if (!isJumping)
+                {
+                    if (!timeSlow)
+                        rb.AddForce(new Vector2(rb.velocity.x, jumpForce /** timeSlowMo.customFixedUnscaledDeltaTime*/), ForceMode2D.Impulse);
+                    else
+                        rb.AddForce(new Vector2(rb.velocity.x, jumpForce /** timeSlowMo.customFixedUnscaledDeltaTime*/), ForceMode2D.Impulse);
 
-                if (!timeSlow)
-                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce /** timeSlowMo.customFixedUnscaledDeltaTime*/), ForceMode2D.Impulse);
-                else
-
-                    rb.AddForce(new Vector2(rb.velocity.x, jumpForce /** timeSlowMo.customFixedUnscaledDeltaTime*/), ForceMode2D.Impulse);
-
-                isJumping = true;
-                TimerDelg.Instance.Add(() => { isJumping = false; }, .5f);
+                    isJumping = true;
+                    SoundManager.Instance.Play("PlayerJump");
+                    TimerDelg.Instance.Add(() => { isJumping = false; }, .5f);
+                }
             }
         }
         else
@@ -363,7 +336,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /* Checking for ground collision */
     public bool Grounded()
     {
-        return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.1f, LayerMask.GetMask("Ground", "IObject", "Platform"));
+        return groundCheckColi = Physics2D.OverlapCircle(feet.position, 0.3f, LayerMask.GetMask("Ground", "IObject", "Platform"));
     }
     /* getting a direction and angle between User mouse and User */
     float CrossairDirection()
@@ -373,15 +346,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
         aimAngle = Mathf.Atan2(faceDirection.y, faceDirection.x);
 
-        /*if (aimAngle < 0)
-        {
-            return aimAngle = Mathf.PI * 2 + aimAngle;
-        }*/
-
         angleDirection = Quaternion.Euler(0, 0, aimAngle * Mathf.Rad2Deg) * Vector2.right;
         return aimAngle;
     }
-    
+
     public void SetCrossairPoint(float aimAngle)
     {
 
@@ -462,7 +430,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
     }
-    
+
     private void StartRewind()
     {
         this.GetComponent<SpriteRenderer>().material.color = Color.blue;
@@ -535,7 +503,11 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-
+    public void PlaySound(string soundName)
+    {
+        if (soundName == "jump")
+            SoundManager.Instance.Play("PlayerJump");
+    }
 
 
 }

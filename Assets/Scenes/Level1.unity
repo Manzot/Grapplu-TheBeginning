@@ -5300,17 +5300,17 @@ PrefabInstance:
     - target: {fileID: 5216936209996585885, guid: 2780664810e89b248ab7f31e8325cc60,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 175
+      value: 138.14
       objectReference: {fileID: 0}
     - target: {fileID: 5216936209996585885, guid: 2780664810e89b248ab7f31e8325cc60,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 45
+      value: 13.21
       objectReference: {fileID: 0}
     - target: {fileID: 5216936209996585885, guid: 2780664810e89b248ab7f31e8325cc60,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -212
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5216936209996585885, guid: 2780664810e89b248ab7f31e8325cc60,
         type: 3}
@@ -5355,17 +5355,22 @@ PrefabInstance:
     - target: {fileID: 5216936209996585885, guid: 2780664810e89b248ab7f31e8325cc60,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 14.1
+      value: 7.8782206
       objectReference: {fileID: 0}
     - target: {fileID: 5216936209996585885, guid: 2780664810e89b248ab7f31e8325cc60,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 6
+      value: 1.1899517
       objectReference: {fileID: 0}
     - target: {fileID: 5216936209996585886, guid: 2780664810e89b248ab7f31e8325cc60,
         type: 3}
       propertyPath: m_Name
       value: AStarManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5216936209996585886, guid: 2780664810e89b248ab7f31e8325cc60,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5216936209996585887, guid: 2780664810e89b248ab7f31e8325cc60,
         type: 3}
@@ -7925,7 +7930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116218578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.130764, y: 13.219999, z: -2491.2256}
+  m_LocalPosition: {x: 20.105293, y: 13.219999, z: -2491.2256}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -9041,6 +9046,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8584916420743062297, guid: c5cdf1ce462d20c4ea596420eb67797e,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8584916420891749318, guid: c5cdf1ce462d20c4ea596420eb67797e,
         type: 3}
       propertyPath: m_Name
@@ -9169,7 +9179,7 @@ MonoBehaviour:
   m_BoundingVolume: {fileID: 0}
   m_BoundingShape2D: {fileID: 1611332585}
   m_ConfineScreenEdges: 1
-  m_Damping: 0
+  m_Damping: 1.07
 --- !u!114 &8899147102812980349
 MonoBehaviour:
   m_ObjectHideFlags: 0

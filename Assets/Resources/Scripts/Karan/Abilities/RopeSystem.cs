@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class RopeSystem : MonoBehaviour
 {
+    const float ROPE_LENGTH = 35;
 
     public SpringJoint2D joint;
     public PlayerController player;
@@ -48,6 +49,7 @@ public class RopeSystem : MonoBehaviour
     }
     void Update()
     {
+
         if (player.health > 0)
         {
             HandleInput(player.angleDirection);
@@ -63,6 +65,9 @@ public class RopeSystem : MonoBehaviour
                     player.animator.SetBool("is_grappling", true);
 
                     player.animator.SetBool("throwRope", false);
+
+                    if (joint.distance >= 5.8f)
+                        joint.distance = 5.8f;
                 }
                 else
                 {
@@ -119,7 +124,7 @@ public class RopeSystem : MonoBehaviour
             isRopeAttached = true;
             hook.transform.SetParent(grappleCheck.transform);
         }
-        if ((hook.transform.position - player.transform.position).sqrMagnitude >= 35)
+        if ((hook.transform.position - player.transform.position).sqrMagnitude >= ROPE_LENGTH)
         {
             hook.gameObject.SetActive(false);
             ropeLine.gameObject.SetActive(false);
@@ -144,7 +149,6 @@ public class RopeSystem : MonoBehaviour
         }
         else
         {
-
             player.SetCrossairPoint(player.aimAngle);
             player.isSwinging = false;
             joint.enabled = false;
@@ -162,9 +166,9 @@ public class RopeSystem : MonoBehaviour
                 isClimbing = true;
             }
         }
-        else if (Input.GetKey(KeyCode.S)/* && isRopeAttached*/)
+        else if (Input.GetKey(KeyCode.S )/* && isRopeAttached*/)
         {
-            if (!player.Grounded())
+            if (joint.distance <= 5.8f - 0.5f && !player.Grounded())
             {
                 joint.distance += climbSpeed * Time.deltaTime;
                 isClimbing = true;

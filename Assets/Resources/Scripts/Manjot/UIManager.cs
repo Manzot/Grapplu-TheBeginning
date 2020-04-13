@@ -28,16 +28,16 @@ public class UIManager : MonoBehaviour
         string scene = SceneManager.GetActiveScene().name;
         if (scene == "MainMenu")
         {
-            continueButton = GameObject.Find("ContinueButton").GetComponent<Button>();
+            //continueButton = GameObject.Find("ContinueButton").GetComponent<Button>();
 
-            if (!continueButton)
-            {
+            //if (!continueButton)
+            //{
 
-                Debug.Log("Continue Button is not there in this Scene..");
-            }
+            //    Debug.Log("Continue Button is not there in this Scene..");
+            //}
             
-                continueButton.interactable = canContinue;
-                continueButton.gameObject.SetActive(false);
+            //    continueButton.interactable = canContinue;
+            //    continueButton.gameObject.SetActive(false);
         }
 
 
@@ -151,6 +151,10 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void LoadScene(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
+    }
 
 
 

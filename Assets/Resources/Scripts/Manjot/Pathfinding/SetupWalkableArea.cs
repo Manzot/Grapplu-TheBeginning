@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class SetupWalkableArea : MonoBehaviour
 {
     SpriteRenderer map;
+    //public Tilemap map2;
     public Tilemap tilemap;
 
    public bool[,] walkAbleArea;
