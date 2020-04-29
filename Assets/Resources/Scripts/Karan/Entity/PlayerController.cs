@@ -67,6 +67,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private float rewindTimer;
     public int currentSceneIndex;
 
+
+
     public void Initialize()
     {
         if (health <= 0)
@@ -93,6 +95,20 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void Refresh()
     {
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rb.gravityScale = 0;
+            rb.isKinematic = true;
+            rb.velocity = new Vector2(horizontal, Input.GetAxis("Vertical") * 2);
+        }
+        else
+        {
+            rb.gravityScale = 3;
+            rb.isKinematic = false;
+
+        }
+
         //Debug.Log(health);
         if (!Dead())
         {
@@ -136,7 +152,6 @@ public class PlayerController : MonoBehaviour, IDamage
                         rewindTimer = rewindCooldown;
                     }
                 }
-
             }
 
             if (Input.GetButtonUp("TimeRewind"))
@@ -388,8 +403,10 @@ public class PlayerController : MonoBehaviour, IDamage
             isHurt = true;
             SoundManager.Instance.Play("PlayerHurt");
             health -= damage;
-            animator.SetTrigger("isHurt");
-            TimerDelg.Instance.Add(() => { isHurt = false; }, 0.7f);
+            sprite.material.color = Color.red;
+            //animator.SetTrigger("isHurt");
+            TimerDelg.Instance.Add(() => { sprite.material.color = Color.white; }, 0.5f);
+            TimerDelg.Instance.Add(() => { isHurt = false; }, 0.8f);
         }
         healthBar.fillAmount = health / MAX_HEALTH;
     }
@@ -400,15 +417,19 @@ public class PlayerController : MonoBehaviour, IDamage
         if (health <= 0)
         {
             //animator.SetTrigger("isDead");
+            isSwinging = false;
+            GetComponent<RopeSystem>().RopeDisattached();
+            animator.SetBool("isJumping", false);
             animator.SetBool("is_dead", true);
+            rb.velocity = new Vector2(rb.velocity.x / 4, rb.velocity.y);
             if (timeSlow)
             {
                 timeSlowMo.InstantResetTime();
             }
-            rb.velocity = Vector2.zero;
+            //rb.velocity = Vector2.zero;
             SoundManager.Instance.Play("PlayerDeath");
             isAlive = false;
-            TimerDelg.Instance.Add(() => this.gameObject.SetActive(false), 1);
+            TimerDelg.Instance.Add(() => this.gameObject.SetActive(false), 1.5f);
 
             PlayerManager.Instance.IsDead();
             return true;

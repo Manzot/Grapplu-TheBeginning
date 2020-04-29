@@ -11,7 +11,8 @@ public class LoadScene : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            TimerDelg.Instance.Add(() => { SceneManager.LoadScene(sceneName); }, loadAfter);        
+            TimerDelg.Instance.Add(() => { SceneManager.LoadScene(sceneName); }, loadAfter);
+            SaveLoadManager.Instance.position = new Vector2(10, 13);
         }
     }
     

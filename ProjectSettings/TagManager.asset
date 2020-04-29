@@ -35,7 +35,7 @@ TagManager:
   - Platform
   - NonGrappableWalls
   - FlyingEnemy
-  - 
+  - PlayerSideFriction
   - 
   - 
   - 

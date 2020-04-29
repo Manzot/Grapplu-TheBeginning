@@ -179,6 +179,25 @@ public class RopeSystem : MonoBehaviour
             isClimbing = false;
         }
     }
+
+    public void RopeDisattached()
+    {
+        hook.gameObject.SetActive(false);
+        ropeLine.gameObject.SetActive(false);
+        hook.hookRb.isKinematic = false;
+        player.animator.SetBool("is_grappling", false);
+        player.animator.SetBool("throwRope", false);
+        hook.transform.SetParent(null);
+        if (isRopeAttached && !player.Grounded())
+            rb.AddForce(new Vector2(player.horizontal, 2f) * 3f, ForceMode2D.Impulse);
+        if (isRopeAttached)
+            rb.AddForce(new Vector2(player.horizontal, 1f) * 1f, ForceMode2D.Impulse);
+
+        isRopeAttached = false;
+        joint.enabled = false;
+
+        player.animator.SetBool("is_dead", true);
+    }
     //private void OnDrawGizmos()
     //{
     //    Gizmos.color = Color.red;

@@ -269,9 +269,9 @@ public class EnemyUnit : MonoBehaviour, IDamage
 
         if (hit.collider)
         {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player") || hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerSideFriction"))
             {
-                hit.collider.gameObject.GetComponent<PlayerController>().TakeDamage(_damage);
+               target.GetComponent<PlayerController>().TakeDamage(_damage);
             }
         }
     }
