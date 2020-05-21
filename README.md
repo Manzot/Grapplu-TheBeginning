@@ -4,6 +4,6 @@
 
 Watch Gameplay here: https://manzot.github.io/#projectVideo1
 
-<img src="https://i.imgur.com/AYnDRV0.png" height="720">
+<img src="https://i.imgur.com/K91BjAp.png" height="480">
 
 
