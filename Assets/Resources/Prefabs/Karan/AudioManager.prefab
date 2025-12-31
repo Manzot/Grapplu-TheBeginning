@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8929046737287131296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8929046737287131302}
+  - component: {fileID: 8929046737287131303}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8929046737287131302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8929046737287131296}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 37.10243, y: 21.188217, z: -22.720531}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8929046737287131303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8929046737287131296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06de9039b666ef346a7b2f01a5325775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Theme
+    clip: {fileID: 8300000, guid: 0a9ad2e2e9c63a040ac7284cf20bc8b7, type: 3}
+    volume: 0.8
+    pitch: 0.9
+    loop: 1
+    source: {fileID: 0}
+  - name: PlayerAttack
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerDeath
+    clip: {fileID: 8300000, guid: 1c2ccf209ce487144bcc42e1f86f559d, type: 3}
+    volume: 1
+    pitch: 1.71
+    loop: 0
+    source: {fileID: 0}
+  - name: EnemyDeath
+    clip: {fileID: 8300000, guid: 0282cb8483499714a9b4d728de6c0d57, type: 3}
+    volume: 1
+    pitch: 1.71
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerHurt
+    clip: {fileID: 8300000, guid: de96077d40762f7459f77801791d2a40, type: 3}
+    volume: 1
+    pitch: 1.71
+    loop: 0
+    source: {fileID: 0}
+  - name: EnemyHurt
+    clip: {fileID: 8300000, guid: 0ccdf32fb5752bc4e8836d7cc2e78c55, type: 3}
+    volume: 1
+    pitch: 1.71
+    loop: 0
+    source: {fileID: 0}
+  - name: MonsterHurt
+    clip: {fileID: 8300000, guid: 22e9d337696328b4bba25cdeedd9a0ea, type: 3}
+    volume: 1
+    pitch: 1.71
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerJump
+    clip: {fileID: 8300000, guid: aa0391bf8b03e1546af50e5eed9ee28c, type: 3}
+    volume: 1
+    pitch: 1.71
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerTimeSlow
+    clip: {fileID: 8300000, guid: ff0c49606a0ac25499b54722a8f8fbb1, type: 3}
+    volume: 1
+    pitch: 3
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerTimeRewind
+    clip: {fileID: 8300000, guid: c120cfe57648e754c9021aa4ddeb4d06, type: 3}
+    volume: 0.51
+    pitch: 1.54
+    loop: 0
+    source: {fileID: 0}

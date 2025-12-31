@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameFlow: IManageables
+public class GameFlow : IManageables
 {
     #region Singleton
 
@@ -10,7 +10,8 @@ public class GameFlow: IManageables
 
     public GameFlow() { }
 
-    public static GameFlow Instance {
+    public static GameFlow Instance
+    {
         get
         {
             if (instance == null)
@@ -25,23 +26,37 @@ public class GameFlow: IManageables
 
     public void Initialize()
     {
+        PlayerManager.Instance.Initialize();
         EnemyManager.Instance.Initialize();
-        //PlayerManager.Instance.Initialize();
+        BossManager.Instance.Initialize();
+        SaveLoadManager.Instance.Initialize();
+        //  SoundManager.Instance.Initialize();
+        EnemySpawnerManager.Instance.Initialize();
     }
     public void PostInitialize()
     {
+        PlayerManager.Instance.PostInitialize();
         EnemyManager.Instance.PostInitialize();
-       // PlayerManager.Instance.PostInitialize();
+        BossManager.Instance.PostInitialize();
+        EnemySpawnerManager.Instance.PostInitialize();
+        TimerDelg.Instance.PostInitialize();
+
     }
     public void Refresh()
     {
+        PlayerManager.Instance.Refresh();
         EnemyManager.Instance.Refresh();
-        //PlayerManager.Instance.Refresh();
+        BossManager.Instance.Refresh();
+        EnemySpawnerManager.Instance.Refresh();
+        TimerDelg.Instance.Refresh();
+        /*SoundManager.Instance.Refresh();*/
     }
     public void PhysicsRefresh()
     {
+        PlayerManager.Instance.PhysicsRefresh();
         EnemyManager.Instance.PhysicsRefresh();
-        //PlayerManager.Instance.PhysicsRefresh();
+        BossManager.Instance.PhysicsRefresh();
+        /*SoundManager.Instance.PhysicsRefresh();*/
     }
 
 }
